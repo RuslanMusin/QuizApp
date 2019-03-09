@@ -6,6 +6,8 @@ import com.example.quiz.di.modules.AppModule
 import com.example.quiz.ui.base.App
 import com.example.quiz.ui.login.fragments.login.LoginFragmentPresenter
 import com.example.quiz.ui.login.fragments.signup.SignUpPresenter
+import com.example.quiz.ui.profile.StudentFragment
+import com.example.quiz.ui.profile.StudentPresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -26,4 +28,8 @@ interface AppComponent {
 
     fun inject(presenter: LoginFragmentPresenter)
 
-    fun inject(presenter: SignUpPresenter) }
+    fun inject(presenter: SignUpPresenter)
+
+    fun inject(presenter: StudentPresenter)
+
+}

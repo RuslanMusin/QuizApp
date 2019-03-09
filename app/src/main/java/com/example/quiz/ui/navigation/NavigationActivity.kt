@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.Toolbar
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.quiz.R
+import com.example.quiz.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_navigation.*
 
-open class NavigationActivity: MvpAppCompatActivity(), NavigationView {
+open class NavigationActivity: BaseActivity(), NavigationView {
 
     @InjectPresenter
     lateinit var navigationPresenter: NavigationPresenter
@@ -21,7 +23,7 @@ open class NavigationActivity: MvpAppCompatActivity(), NavigationView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
 
-        setSupportActionBar(toolbar as Toolbar)
+//        setSupportActionBar(toolbar as Toolbar)
         val navFragment = host as NavHostFragment
         setupBottomNavMenu(navFragment.navController)
 
@@ -31,5 +33,7 @@ open class NavigationActivity: MvpAppCompatActivity(), NavigationView {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottomNav?.setupWithNavController(navController)
     }
+
+
 
 }

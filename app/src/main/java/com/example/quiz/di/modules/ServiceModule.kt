@@ -14,7 +14,7 @@ public class ServiceModule {
     @Provides
     @Singleton
     fun provideAuthService(
-        @Named("auth_retrofit") retrofit: Retrofit
+        @Named("auth") retrofit: Retrofit
     ): AuthService {
         return retrofit.create(AuthService::class.java)
     }
@@ -22,7 +22,7 @@ public class ServiceModule {
     @Provides
     @Singleton
     fun provideCuratorService(
-        @Named("main_retrofit") retrofit: Retrofit
+        @Named("auth") retrofit: Retrofit
     ): UserService {
         return retrofit.create(UserService::class.java)
     }

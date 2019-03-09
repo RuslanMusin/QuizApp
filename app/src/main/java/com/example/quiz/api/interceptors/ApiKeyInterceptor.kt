@@ -15,7 +15,7 @@ class ApiKeyInterceptor private constructor() : Interceptor {
         val original = chain.request()
         return chain.proceed(original.newBuilder()
                 .addHeader(ACCEPT, APP_JSON)
-                .addHeader(AUTHORIZATION, AUTH_VALUE)
+//                .addHeader(AUTHORIZATION, AUTH_VALUE)
                 .build())
     }
 

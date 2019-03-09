@@ -6,22 +6,23 @@ import com.google.gson.annotations.SerializedName
 abstract class User: Identified {
 
     override lateinit var id: String
-    @SerializedName("username")
     lateinit var email: String
     lateinit var password: String
+    lateinit var username: String
+    @SerializedName("first_name")
     lateinit var name: String
     @SerializedName("last_name")
     lateinit var lastname: String
-    lateinit var patronymic: String
 
     constructor() {}
 
     constructor(email: String, password: String) {
         this.email = email
         this.password = password
+        this.username = email
     }
 
     fun getFullName(): String {
-        return "$lastname $name $patronymic"
+        return "$lastname $name"
     }
 }

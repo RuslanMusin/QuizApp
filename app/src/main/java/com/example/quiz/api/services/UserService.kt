@@ -1,5 +1,6 @@
 package com.example.quiz.api.services
 
+import com.example.quiz.model.user.Lector
 import com.example.quiz.model.user.User
 import io.reactivex.Single
 import retrofit2.adapter.rxjava2.Result
@@ -7,7 +8,7 @@ import retrofit2.http.*
 
 interface UserService {
 
-    @POST("logout")
+    @POST("auth/logout/")
     fun logout(): Single<Result<Void>>
 
     @GET("curators/{curator_id}")
@@ -24,9 +25,9 @@ interface UserService {
         @Body curator: User
     ): Single<Result<User>>
 
-    @POST("users")
+    @POST("auth/register/")
     fun create(
         @Body user: User
-    ): Single<Result<User>>
+    ): Single<Result<Lector>>
 
 }

@@ -4,7 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.R
-import com.example.quiz.model.user.Listener
+import com.example.quiz.model.user.Lector
 import com.example.quiz.model.user.User
 import com.example.quiz.repository.auth.AuthRepository
 import com.example.quiz.repository.curator.UserRepository
@@ -40,7 +40,7 @@ class LoginFragmentPresenter: BasePresenter<LoginFragmentView>() {
 
         viewState.showProgressDialog(R.string.progress_message)
 
-        val curator = Listener(email, password)
+        val curator = Lector(email, password)
 
         val disposable = authRepository.login(curator).subscribe { res ->
             val response = res?.response()
@@ -57,10 +57,10 @@ class LoginFragmentPresenter: BasePresenter<LoginFragmentView>() {
                     Log.d(TAG_LOG, "signInWithEmail:success")
                     viewState.createCookie(email, password)
                     loginResult?.let {result ->
-                        Const.AUTH_VALUE = "Token ${result.token}"
-                        Log.d(TAG_LOG, "token = ${result.token} and id = ${result.userId}")
-                        Log.d(TAG_LOG, "auth_value (token) = ${AUTH_VALUE}")
-                        updateUI(result.userId)
+                        Const.AUTH_VALUE = result.key
+                        Log.d(TAG_LOG, "key = ${result.key}")
+                        Log.d(TAG_LOG, "auth_value (key) = ${AUTH_VALUE}")
+                        updateUI(result.key)
                         viewState.hideProgressDialog()
                     }
                 } else {
@@ -101,7 +101,7 @@ class LoginFragmentPresenter: BasePresenter<LoginFragmentView>() {
     }
 
     private fun updateUI(userId: String) {
-        val disposable = userRepository.findById(userId).subscribe { res ->
+       /* val disposable = userRepository.findById(userId).subscribe { res ->
             res?.response()?.let {
                 if(it.isSuccessful) {
                     val curator = it.body()
@@ -121,7 +121,8 @@ class LoginFragmentPresenter: BasePresenter<LoginFragmentView>() {
                 viewState.hideProgressDialog()
             }
         }
-        compositeDisposable.add(disposable)
+        compositeDisposable.add(disposable)*/
+        viewState.goToProfile(Lector())
     }
 
     fun setUserSession(curator: User) {

@@ -22,22 +22,53 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_enter"
-            android:layout_width="fill_parent"
+    <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:paddingTop="56dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_cover"
+            android:src="@drawable/student"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center_horizontal"
+            android:alpha="1"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"
+    />
+
+    <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/authorized"
+            android:textSize="@dimen/text.24"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:padding="12dp"
-            android:background="@color/primary"
-            android:textColor="@color/white"
-            android:text="@string/menu_profile"
-            android:layout_gravity="center"
     />
 
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:id="@+id/tv_text"
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_quit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:background="@color/primary"
+                android:textColor="@color/white"
+                android:text="@string/quit"/>
 
-    />
+    </LinearLayout>
 
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

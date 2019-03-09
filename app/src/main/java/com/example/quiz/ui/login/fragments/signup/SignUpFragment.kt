@@ -28,6 +28,7 @@ class SignUpFragment: BaseFragment(), SignUpView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBottomVisibility(false)
         initViews()
     }
 
@@ -38,21 +39,37 @@ class SignUpFragment: BaseFragment(), SignUpView, View.OnClickListener {
     private fun setListeners() {
         btn_sign_up.setOnClickListener(this)
         btn_login.setOnClickListener(this)
+        iv_cover.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_sign_up -> {
-                val email = "rust@ma.ru"
-                val password = "rustamka"
-                val user = Lector()
-                user.email = email
-                user.password = password
+                val user = buildUser()
                 signUpPresenter.createAccount(user)
             }
 
             R.id.btn_login -> goToLogin()
+
+            R.id.iv_cover -> setupText()
         }
+    }
+
+    private fun setupText() {
+        et_email.setText("rast@ma.ru")
+        et_password.setText("rastamka")
+        et_lastname.setText("rastamka")
+        et_name.setText("rastamka")
+    }
+
+    private fun buildUser(): Lector {
+        val user = Lector()
+        user.email = et_email.text.toString()
+        user.password = et_password.text.toString()
+        user.username = user.email
+        user.name = et_name.text.toString()
+        user.lastname = et_lastname.text.toString()
+        return user
     }
 
     override fun showError() {
@@ -79,13 +96,13 @@ class SignUpFragment: BaseFragment(), SignUpView, View.OnClickListener {
     }
 
     private fun goToLogin() {
-        Navigation.findNavController(btn_login).navigate(R.id.loginFragment)
+        Navigation.findNavController(btn_login).navigate(R.id.action_signUpFragment_to_loginFragment2)
     }
 
     override fun goToProfile(user: User) {
         val args = Bundle()
         args.putString(KEY, "Button")
-        Navigation.findNavController(btn_sign_up).navigate(R.id.navigationActivity, args)
+        Navigation.findNavController(btn_sign_up).navigate(R.id.action_signUpFragment_to_studentFragment2, args)
     }
 
 

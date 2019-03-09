@@ -16,5 +16,5 @@ interface UserRepository {
 
     fun update(id: String, curator: User): Single<Result<User>>
 
-    fun createUser(user: User): Single<Result<User>>
+    fun createUser(user: User): Single<Result<Lector>>
 }

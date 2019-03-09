@@ -12,6 +12,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.quiz.R
 import com.example.quiz.model.user.User
 import com.example.quiz.ui.base.BaseFragment
+import com.example.quiz.ui.navigation.NavigationView
 import com.example.quiz.utils.Const.TAG
 import com.example.quiz.utils.Const.TAG_LOG
 import com.example.quiz.utils.Const.USER_DATA_PREFERENCES
@@ -32,6 +33,7 @@ class LoginFragment : BaseFragment(), LoginFragmentView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBottomVisibility(false)
         initViews()
     }
 
@@ -40,16 +42,16 @@ class LoginFragment : BaseFragment(), LoginFragmentView, View.OnClickListener {
     }
 
     private fun signUp(v: View) {
-        val options = NavOptions.Builder().apply {
+     /*   val options = NavOptions.Builder().apply {
             setEnterAnim(R.anim.slide_in_right)
             setExitAnim(R.anim.slide_out_left)
             setPopEnterAnim(R.anim.slide_in_left)
             setPopExitAnim(R.anim.slide_out_right)
-        }.build()
+        }.build()*/
 
         val args = Bundle()
         args.putString(KEY, "Button")
-        findNavController(v).navigate(R.id.signUpFragment, args, options)
+        findNavController(v).navigate(R.id.signUpAciton)
     }
 
     private fun checkUserSession() {
@@ -82,6 +84,7 @@ class LoginFragment : BaseFragment(), LoginFragmentView, View.OnClickListener {
 
     private fun setListeners() {
         btn_enter.setOnClickListener(this)
+        btn_sign_up.setOnClickListener(this)
         iv_cover.setOnClickListener(this)
         tv_name.setOnClickListener(this)
     }
@@ -91,14 +94,14 @@ class LoginFragment : BaseFragment(), LoginFragmentView, View.OnClickListener {
         when (view.id) {
 
             R.id.btn_enter -> {
-                val username = et_email.getText().toString();
+                val email = et_email.getText().toString();
                 val password = et_password.getText().toString();
-                loginFragmentPresenter.signIn(username, password)
+                loginFragmentPresenter.signIn(email, password)
             }
 
             R.id.tv_name -> {
-                et_email.setText("Феликс.Туполев.Ипатович")
-                et_password.setText("Феликс.Туполев.Ипатович")
+                et_email.setText("rast@ma.ru")
+                et_password.setText("rastamka")
 
             }
 
@@ -115,7 +118,7 @@ class LoginFragment : BaseFragment(), LoginFragmentView, View.OnClickListener {
         Log.d(TAG,"login")
         val args = Bundle()
         args.putString(KEY, "Button")
-        findNavController(btn_enter).navigate(R.id.loginAction, args)
+        findNavController(btn_enter).navigate(R.id.action_loginFragment_to_studentFragment2)
         Log.d(TAG,"loginAfter")
     }
 
