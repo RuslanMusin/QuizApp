@@ -25,7 +25,7 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    @Named("main_retrofit")
+    @Named("main")
     fun provideMainRetrofit(
         @Named("main") okHttpClient: OkHttpClient,
         builder: Retrofit.Builder
@@ -38,7 +38,7 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    @Named("auth_retrofit")
+    @Named("auth")
     fun provideAuthRetrofit(
         @Named("auth") okHttpClient: OkHttpClient,
         builder: Retrofit.Builder

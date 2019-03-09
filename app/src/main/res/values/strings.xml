@@ -24,4 +24,8 @@
 
     <string name="if_member_login">Уже зарегистрированы? Войти</string>
     <string name="create_new_account">Создать аккаунт</string>
+    <string name="authorized">Вы успешно авторизованы!</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="quit">Выйти</string>
 </resources>

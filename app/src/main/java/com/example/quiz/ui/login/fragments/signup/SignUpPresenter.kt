@@ -57,7 +57,7 @@ class SignUpPresenter: BasePresenter<SignUpView>() {
                         viewState.hideProgressDialog()
                     }
                 } else {
-                    val error = ErrorUtils.parseError(it)
+//                    val error = ErrorUtils.parseError(it)
                     viewState.hideProgressDialog()
                     viewState.showSnackBar(R.string.error_authentication)
                     viewState.showError()

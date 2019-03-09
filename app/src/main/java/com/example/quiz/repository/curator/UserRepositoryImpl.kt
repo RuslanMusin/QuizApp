@@ -1,6 +1,7 @@
 package com.example.quiz.repository.curator
 
 import com.example.quiz.api.services.UserService
+import com.example.quiz.model.user.Lector
 import com.example.quiz.model.user.User
 import com.example.quiz.utils.RxUtils
 import io.reactivex.Single
@@ -27,7 +28,7 @@ class UserRepositoryImpl @Inject constructor() :
         return apiService.update(id, curator).compose(RxUtils.asyncSingle())
     }
 
-    override fun createUser(user: User): Single<Result<User>> {
+    override fun createUser(user: User): Single<Result<Lector>> {
         return apiService.create(user).compose(RxUtils.asyncSingle())
     }
 

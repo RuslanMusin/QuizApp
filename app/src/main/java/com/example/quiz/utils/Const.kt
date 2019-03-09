@@ -6,7 +6,7 @@ object Const {
 
     const val TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
-    const val BASE_URL = "http://mobilelab-backend.herokuapp.com/api/v1/"
+    const val BASE_URL = "https://quiez-api.herokuapp.com/api/"
 
     // Http request
     const val AUTHORIZATION = "Authorization"

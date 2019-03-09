@@ -11,9 +11,12 @@ import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
 import dagger.android.support.HasSupportFragmentInjector
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.View
 import android.widget.TextView
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.example.quiz.ui.base.interfaces.BasicFunctional
+import kotlinx.android.synthetic.main.activity_navigation.*
 
 
 abstract class BaseActivity : MvpAppCompatActivity(), HasSupportFragmentInjector, BasicFunctional {
@@ -67,6 +70,22 @@ abstract class BaseActivity : MvpAppCompatActivity(), HasSupportFragmentInjector
 
     override fun showSnackBar(messageId: Int) {
         showSnackBar(getString(messageId))
+    }
+
+    override fun setActionBar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+    }
+
+    override fun setToolbarTitle(id: Int) {
+        supportActionBar?.title = getString(id)
+    }
+
+    override fun setBottomVisibility(flag: Boolean) {
+        if(flag) {
+            bottom_nav_view.visibility = View.VISIBLE
+        } else {
+            bottom_nav_view.visibility = View.GONE
+        }
     }
 
 }

@@ -28,7 +28,7 @@ class OkHttpClientModule {
         return okHttpClient
             .newBuilder()
             .addInterceptor(ApiKeyInterceptor.create())
-            .addInterceptor(ErrorHandlingInterceptor.create())
+//            .addInterceptor(ErrorHandlingInterceptor.create())
             .build()
     }
 }
