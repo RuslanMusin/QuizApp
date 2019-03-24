@@ -33,11 +33,11 @@ class LoginFragment : BaseFragment(), LoginFragmentView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBottomVisibility(false)
         initViews()
     }
 
     private fun initViews() {
+        setBottomVisibility(false)
         setListeners()
     }
 

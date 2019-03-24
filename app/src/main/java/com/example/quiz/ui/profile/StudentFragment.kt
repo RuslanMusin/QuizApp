@@ -24,11 +24,11 @@ class StudentFragment: BaseFragment(), StudentView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBottomVisibility(true)
         initViews()
     }
 
     private fun initViews() {
+        setBottomVisibility(true)
         setActionBar(toolbar)
         setToolbarTitle(R.string.menu_profile)
         setListeners()

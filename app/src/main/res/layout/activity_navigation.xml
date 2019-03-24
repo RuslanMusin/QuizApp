@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:id="@+id/host"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/login_navigation"
+            app:navGraph="@navigation/main_navigation"
             app:defaultNavHost="true"
     />
 
