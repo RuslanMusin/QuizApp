@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">QuizApp</string>
 
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="login">Войти</string>
 
     <!--Новое приложение-->
     <string name="menu_profile">Профиль</string>
@@ -28,4 +28,9 @@
     <string name="first_name">Имя</string>
     <string name="last_name">Фамилия</string>
     <string name="quit">Выйти</string>
+
+    <!-- Exception -->
+    <string name="exception_no_connection">Отсутствует интернет соединение</string>
+    <string name="exception_time_out">Сервер просыпается&#8230;&#8230;&#8230;</string>
+    <string name="exception_unknown">Неизвестная ошибка</string>
 </resources>
