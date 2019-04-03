@@ -9,8 +9,10 @@ import com.example.quiz.data.repository.auth.AuthRepository
 import com.example.quiz.data.repository.curator.UserRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
+import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @InjectViewState
@@ -21,6 +23,8 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var exceptionProcessor: ExceptionProcessor
+    @Inject
+    lateinit var router: Router
 
     fun signIn(email: String, password: String) {
         if (!validateForm(email, password)) {
@@ -34,6 +38,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
+                    viewState.hideProgressDialog()
                     viewState.createCookie(lector.email, lector.password)
                     viewState.goToProfile(lector)
                 }, {
@@ -65,4 +70,17 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
             true
         }
     }
+
+    fun onForwardCommandClick() {
+        router.navigateTo(Screens.SignUpScreen())
+    }
+
+    fun onNewRootCommandClick() {
+        router.newRootScreen(Screens.ProfileScreen())
+    }
+
+    fun onBackCommandClick() {
+        router.exit()
+    }
+
 }

@@ -27,7 +27,7 @@ import javax.inject.Provider
 
 open class MainActivity: BaseActivity(), MainView, ChainHolder {
 
-    lateinit var screensSchemeTV: TextView
+//    lateinit var screensSchemeTV: TextView
     override val chain = ArrayList<WeakReference<Fragment>>()
 
     @InjectPresenter
@@ -46,7 +46,7 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         override fun applyCommands(commands: Array<Command>) {
             super.applyCommands(commands)
             supportFragmentManager.executePendingTransactions()
-            printScreensScheme()
+//            printScreensScheme()
         }
     }
 
@@ -55,10 +55,10 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        screensSchemeTV = findViewById(R.id.screens_scheme) as TextView
+//        screensSchemeTV = findViewById(R.id.screens_scheme) as TextView
 
         if (savedInstanceState == null) {
-            navigator.applyCommands(arrayOf(Replace(Screens.SampleScreen(1))))
+            navigator.applyCommands(arrayOf(Replace(Screens.SignInScreen())))
         } else {
             printScreensScheme()
         }
@@ -105,7 +105,7 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         for (fragment in fragments) {
             keys.add(fragment.number)
         }
-        screensSchemeTV.setText("Chain: " + keys.toString() + "")
+//        screensSchemeTV.setText("Chain: " + keys.toString() + "")
     }
 
 

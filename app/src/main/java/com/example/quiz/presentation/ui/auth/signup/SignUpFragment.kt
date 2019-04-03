@@ -1,6 +1,7 @@
 package com.example.quiz.presentation.ui.auth.signup
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,13 @@ import com.example.quiz.R
 import com.example.quiz.presentation.model.user.Lector
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.ui.auth.signin.SignInFragment
+import com.example.quiz.presentation.ui.common.BackButtonListener
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class SignUpFragment: BaseFragment(), SignUpView, View.OnClickListener {
+class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnClickListener {
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter
@@ -37,7 +40,7 @@ class SignUpFragment: BaseFragment(), SignUpView, View.OnClickListener {
     }
 
     private fun initViews() {
-        setBottomVisibility(false)
+//        setBottomVisibility(false)
         setListeners()
     }
 
@@ -101,18 +104,32 @@ class SignUpFragment: BaseFragment(), SignUpView, View.OnClickListener {
     }
 
     private fun goToLogin() {
-        Navigation.findNavController(btn_login).navigate(R.id.action_signUpFragment_to_loginFragment2)
+        presenter.onSignInCommandClick()
+//        Navigation.findNavController(btn_login).navigate(R.id.action_signUpFragment_to_loginFragment2)
     }
 
     override fun goToProfile(user: User) {
-        Navigation.findNavController(btn_sign_up).navigate(R.id.action_signUpFragment_to_studentFragment2)
+        presenter.onProfileCommandClick()
+//        Navigation.findNavController(btn_sign_up).navigate(R.id.action_signUpFragment_to_studentFragment2)
+    }
+
+    override fun onBackPressed(): Boolean {
+        presenter.onBackCommandClick()
+        return true
     }
 
 
     companion object {
 
-        private val GALLERY_PHOTO = 0
+        fun newInstance(args: Bundle): Fragment {
+            val fragment = SignUpFragment()
+            fragment.arguments = args
+            return fragment
+        }
 
-        private val STANDART_PHOTO = 1
+        fun newInstance(): Fragment {
+            val fragment = SignUpFragment()
+            return fragment
+        }
     }
 }

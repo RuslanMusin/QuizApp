@@ -2,6 +2,7 @@ package com.example.quiz.presentation.ui.auth.signin
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +13,12 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.ui.common.BackButtonListener
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class SignInFragment : BaseFragment(), SignInView, View.OnClickListener {
-
-    companion object {
-        private const val USER_DATA_PREFERENCES = "user_data"
-        private const val USER_USERNAME = "user_username"
-        private const val USER_PASSWORD = "user_password"
-    }
+class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnClickListener {
 
     @InjectPresenter
     lateinit var presenter: SignInPresenter
@@ -44,12 +40,13 @@ class SignInFragment : BaseFragment(), SignInView, View.OnClickListener {
     }
 
     private fun initViews() {
-        setBottomVisibility(false)
+//        setBottomVisibility(false)
         setListeners()
     }
 
     private fun signUp(v: View) {
-        findNavController(v).navigate(R.id.signUpAciton)
+        presenter.onForwardCommandClick()
+//        findNavController(v).navigate(R.id.signUpAciton)
     }
 
     private fun checkUserSession() {
@@ -113,7 +110,8 @@ class SignInFragment : BaseFragment(), SignInView, View.OnClickListener {
     }
 
     override fun goToProfile(curator: User) {
-        findNavController(btn_enter).navigate(R.id.action_loginFragment_to_studentFragment2)
+        presenter.onNewRootCommandClick()
+//        findNavController(btn_enter).navigate(R.id.action_loginFragment_to_studentFragment2)
     }
 
     override fun showError() {
@@ -129,6 +127,29 @@ class SignInFragment : BaseFragment(), SignInView, View.OnClickListener {
                 editor.putString(USER_PASSWORD, password)
                 editor.apply()
             }
+        }
+    }
+
+    override fun onBackPressed(): Boolean {
+        presenter.onBackCommandClick()
+        return true
+    }
+
+    companion object {
+
+        private const val USER_DATA_PREFERENCES = "user_data"
+        private const val USER_USERNAME = "user_username"
+        private const val USER_PASSWORD = "user_password"
+
+        fun newInstance(args: Bundle): Fragment {
+            val fragment = SignInFragment()
+            fragment.arguments = args
+            return fragment
+        }
+
+        fun newInstance(): Fragment {
+            val fragment = SignInFragment()
+            return fragment
         }
     }
 }

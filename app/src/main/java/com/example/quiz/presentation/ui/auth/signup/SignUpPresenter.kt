@@ -10,8 +10,10 @@ import com.example.quiz.data.repository.curator.UserRepository
 import com.example.quiz.QuizApplication
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
+import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import io.reactivex.disposables.CompositeDisposable
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @InjectViewState
@@ -22,6 +24,8 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     lateinit var userRepository: UserRepository
     @Inject
     lateinit var exceptionProcessor: ExceptionProcessor
+    @Inject
+    lateinit var router: Router
 
     fun createAccount(user: User) {
         if (!validateForm(user)) {
@@ -61,6 +65,18 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             viewState.showPasswordError(false)
             true
         }
+    }
+
+    fun onSignInCommandClick() {
+        router.exit()
+    }
+
+    fun onProfileCommandClick() {
+        router.newRootScreen(Screens.ProfileScreen())
+    }
+
+    fun onBackCommandClick() {
+        router.finishChain()
     }
 
 }

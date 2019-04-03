@@ -95,6 +95,8 @@ dependencies {
 
     //Custom Views
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.jaredrummler:material-spinner:1.2.5'
+
 
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"

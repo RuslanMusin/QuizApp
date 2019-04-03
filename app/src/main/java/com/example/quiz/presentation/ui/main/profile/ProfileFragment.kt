@@ -1,6 +1,7 @@
 package com.example.quiz.presentation.ui.main.profile
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.navigation.Navigation
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.ui.auth.signup.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener {
@@ -26,7 +28,7 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener {
     }
 
     private fun initViews() {
-        setBottomVisibility(true)
+//        setBottomVisibility(true)
         setActionBar(toolbar)
         setToolbarTitle(R.string.menu_profile)
         setListeners()
@@ -45,5 +47,19 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener {
 
     override fun logout() {
         Navigation.findNavController(btn_quit).navigate(R.id.action_studentFragment2_to_loginFragment)
+    }
+
+    companion object {
+
+        fun newInstance(args: Bundle): Fragment {
+            val fragment = ProfileFragment()
+            fragment.arguments = args
+            return fragment
+        }
+
+        fun newInstance(): Fragment {
+            val fragment = ProfileFragment()
+            return fragment
+        }
     }
 }

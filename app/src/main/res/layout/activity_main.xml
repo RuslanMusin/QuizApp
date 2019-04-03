@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+>
+<!--
     <TextView
             android:id="@+id/screens_scheme"
             android:layout_width="match_parent"
@@ -15,7 +17,7 @@
             android:ellipsize="middle"
             android:textColor="@android:color/white"
             android:textSize="13sp"
-            tools:text="1➔2➔3➔4➔2➔3➔4➔2➔3➔4➔2➔3➔4➔2➔3➔4➔2➔3➔4" android:singleLine="true"/>
+            tools:text="1➔2➔3➔4➔2➔3➔4➔2➔3➔4➔2➔3➔4➔2➔3➔4➔2➔3➔4" android:singleLine="true"/>-->
 
     <FrameLayout
         android:id="@+id/main_container"
