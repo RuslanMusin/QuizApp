@@ -35,6 +35,7 @@ ext {
     okhttp = "3.9.1"
     retrofit = "2.3.0"
     nav_version = "1.0.0-alpha11"
+    cicerone = '4.0.2'
 
 }
 
@@ -97,4 +98,12 @@ dependencies {
 
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
+
+    //Cicerone
+    implementation "ru.terrakok.cicerone:cicerone:$cicerone"
+
+    //Bottom Navigation Bar
+    implementation ('com.ashokvarma.android:bottom-navigation-bar:1.3.0') {
+        exclude group: "com.android.support", module: "design"
+    }
 }

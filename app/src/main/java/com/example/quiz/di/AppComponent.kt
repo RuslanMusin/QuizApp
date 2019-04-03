@@ -5,6 +5,8 @@ import dagger.BindsInstance
 import com.example.quiz.QuizApplication
 import com.example.quiz.data.DataModule
 import com.example.quiz.di.modules.AppContextModule
+import com.example.quiz.di.modules.navigation.LocalNavigationModule
+import com.example.quiz.di.modules.navigation.NavigationModule
 import com.example.quiz.presentation.PresentationModule
 import com.example.quiz.presentation.ui.RootBuilder
 import com.example.quiz.presentation.ui.auth.signin.SignInPresenter
@@ -24,6 +26,8 @@ import javax.inject.Singleton
         DataModule::class,
         PresentationModule::class,
         RootBuilder::class,
+        LocalNavigationModule::class,
+        NavigationModule::class,
         AndroidSupportInjectionModule::class
     ]
 )
