@@ -10,23 +10,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.bumptech.glide.Glide
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.ui.auth.signin.SignInPresenter
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.gson
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_add_test.*
 import javax.inject.Inject
+import javax.inject.Provider
 
-class AddMainTestFragment : BaseFragment(), AddMainTestView, View.OnClickListener {
-
-    @Inject
-    lateinit var gson: Gson
+class AddMainTestFragment : BaseFragment(), AddMainTestView, BackButtonListener, View.OnClickListener {
 
     @InjectPresenter
     lateinit var presenter: AddMainTestPresenter
+
+    @Inject
+    lateinit var presenterProvider: Provider<AddMainTestPresenter>
+
+    @ProvidePresenter
+    fun providePresenter(): AddMainTestPresenter = presenterProvider.get()
 
     lateinit var test: Test
 
@@ -104,6 +112,11 @@ class AddMainTestFragment : BaseFragment(), AddMainTestView, View.OnClickListene
             }
         }
         return flag
+    }
+
+    override fun onBackPressed(): Boolean {
+        presenter.onBackCommandClick()
+        return true
     }
 
     companion object {

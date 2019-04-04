@@ -24,9 +24,6 @@ interface BaseView: MvpView {
     fun showSnackBar(messageId: Int)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun setBottomVisibility(flag: Boolean)
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun setActionBar(toolbar: Toolbar)
 
     @StateStrategyType(OneExecutionStateStrategy::class)

@@ -9,10 +9,6 @@ class Question : Identified {
 
     var description: String? = null
 
-    var answers: MutableList<String> = ArrayList()
-
-    var rightAnswers: MutableList<String> = ArrayList()
-
-    var weight: Int = 0
+    var answers: MutableList<Answer> = ArrayList()
 
 }

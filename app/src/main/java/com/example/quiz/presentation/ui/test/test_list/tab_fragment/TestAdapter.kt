@@ -1,15 +1,16 @@
 package com.example.quiz.presentation.ui.test.test_list.tab_fragment
 
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import com.example.quiz.presentation.base.recycler.BaseAdapter
+import com.example.quiz.presentation.model.test.Test
 
-class ThemeAdapter(items: MutableList<Test>) : BaseAdapter<Test, ThemeItemHolder>(items) {
+class TestAdapter(items: MutableList<Test>) : BaseAdapter<Test, TestItemHolder>(items) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThemeItemHolder {
-        return ThemeItemHolder.create(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestItemHolder {
+        return TestItemHolder.create(parent)
     }
 
-    override fun onBindViewHolder(holder: ThemeItemHolder, position: Int) {
+    override fun onBindViewHolder(holder: TestItemHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         val item = getItem(position)
         holder.bind(item)

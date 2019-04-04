@@ -1,11 +1,10 @@
 package com.example.quiz.data.network.request
 
 import com.example.quiz.presentation.model.auth.LoginResult
-import com.example.quiz.presentation.model.user.Lector
+import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.*
 
 interface QuizApiRequest {
@@ -17,14 +16,23 @@ interface QuizApiRequest {
     fun logout(): Completable
 
     @POST("auth/register/")
-    fun signUp(@Body user: User): Single<Lector>
+    fun signUp(@Body user: User): Single<User>
 
     @GET("curators/{curator_id}")
-    fun getCurator(@Path(value = "curator_id") id: String): Single<User>
+    fun getUser(@Path(value = "curator_id") id: String): Single<User>
 
     @GET("curators")
-    fun getAllCurators(): Single<List<User>>
+    fun getUsers(): Single<List<User>>
 
     @PUT("curators/{curator_id}")
-    fun updateCurator(@Path(value = "curator_id") id: String, @Body curator: User): Single<User>
+    fun updateUser(@Path(value = "curator_id") id: String, @Body curator: User): Single<User>
+
+    @GET("curators/{curator_id}")
+    fun getTest(@Path(value = "curator_id") id: String): Single<Test>
+
+    @GET("curators")
+    fun getTests(): Single<List<Test>>
+
+    fun createTest(test: Test): Single<Test>
+
 }

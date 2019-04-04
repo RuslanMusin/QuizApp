@@ -1,17 +1,14 @@
 package com.example.quiz.presentation.ui.auth.signin
 
 import android.text.TextUtils
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
-import com.example.quiz.R
-import com.example.quiz.presentation.model.user.Lector
 import com.example.quiz.data.repository.auth.AuthRepository
-import com.example.quiz.data.repository.curator.UserRepository
+import com.example.quiz.data.repository.user.UserRepository
 import com.example.quiz.presentation.base.BasePresenter
+import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
-import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -30,17 +27,17 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
         if (!validateForm(email, password)) {
             return
         }
-        val lector = Lector(email, password)
+        val user = User(email, password)
 
         authRepository
-                .login(lector)
+                .login(user)
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
                     viewState.hideProgressDialog()
-                    viewState.createCookie(lector.email, lector.password)
-                    viewState.goToProfile(lector)
+                    viewState.createCookie(user.email, user.password)
+                    viewState.goToProfile(user)
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
@@ -76,7 +73,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     }
 
     fun onNewRootCommandClick() {
-        router.newRootScreen(Screens.ProfileScreen())
+        router.newRootScreen(Screens.TestListScreen())
     }
 
     fun onBackCommandClick() {

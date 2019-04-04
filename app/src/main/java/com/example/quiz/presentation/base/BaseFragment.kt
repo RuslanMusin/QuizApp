@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
 import com.arellomobile.mvp.MvpAppCompatFragment
-import com.example.quiz.presentation.ui.sample.ChainHolder
+import com.example.quiz.presentation.base.navigation.ChainHolder
 import java.lang.ref.WeakReference
 
 
@@ -35,10 +35,6 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
 
     override fun showSnackBar(messageId: Int) {
         (activity as BaseView).showSnackBar(messageId)
-    }
-
-    override fun setBottomVisibility(flag: Boolean) {
-        (activity as BaseView).setBottomVisibility(flag)
     }
 
     override fun setActionBar(toolbar: Toolbar) {

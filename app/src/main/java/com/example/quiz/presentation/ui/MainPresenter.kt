@@ -11,8 +11,4 @@ class MainPresenter @Inject constructor(): BasePresenter<MainView>() {
     @Inject
     lateinit var router: Router
 
-    fun onMultiPressed() {
-        router.navigateTo(Screens.BottomNavigationScreen())
-    }
-
 }

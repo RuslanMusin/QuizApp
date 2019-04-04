@@ -1,18 +1,14 @@
 package com.example.quiz.presentation.ui.auth.signup
 
 import android.text.TextUtils
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
-import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.data.repository.auth.AuthRepository
-import com.example.quiz.data.repository.curator.UserRepository
-import com.example.quiz.QuizApplication
+import com.example.quiz.data.repository.user.UserRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
-import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -72,7 +68,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     }
 
     fun onProfileCommandClick() {
-        router.newRootScreen(Screens.ProfileScreen())
+        router.newRootScreen(Screens.TestListScreen())
     }
 
     fun onBackCommandClick() {

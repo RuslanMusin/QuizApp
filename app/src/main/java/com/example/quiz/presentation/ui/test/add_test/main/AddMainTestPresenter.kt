@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 
 @InjectViewState
-class AddMainTestPresenter: BasePresenter<AddMainTestView>() {
+class AddMainTestPresenter @Inject constructor() : BasePresenter<AddMainTestView>() {
 
     @Inject
     lateinit var router: Router

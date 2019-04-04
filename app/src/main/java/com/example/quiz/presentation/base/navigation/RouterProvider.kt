@@ -1,4 +1,4 @@
-package com.example.quiz.presentation.ui.common
+package com.example.quiz.presentation.base.navigation
 
 import ru.terrakok.cicerone.Router
 

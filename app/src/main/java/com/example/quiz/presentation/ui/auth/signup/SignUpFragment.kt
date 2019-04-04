@@ -5,15 +5,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
-import com.example.quiz.presentation.model.user.Lector
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
-import com.example.quiz.presentation.ui.auth.signin.SignInFragment
-import com.example.quiz.presentation.ui.common.BackButtonListener
+import com.example.quiz.presentation.base.navigation.BackButtonListener
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -70,8 +67,8 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
         et_name.setText("rastamka")
     }
 
-    private fun buildUser(): Lector {
-        val user = Lector()
+    private fun buildUser(): User {
+        val user = User()
         user.email = et_email.text.toString()
         user.password = et_password.text.toString()
         user.username = user.email

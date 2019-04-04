@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
@@ -46,7 +45,7 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener {
     }
 
     override fun logout() {
-        Navigation.findNavController(btn_quit).navigate(R.id.action_studentFragment2_to_loginFragment)
+
     }
 
     companion object {

@@ -5,10 +5,9 @@ import com.example.quiz.data.network.exception.TimeOutException
 import com.example.quiz.data.network.exception.UnknownException
 import com.example.quiz.data.network.exception.domain.DomainException
 import com.example.quiz.presentation.model.auth.LoginResult
-import com.example.quiz.presentation.model.user.Lector
+import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.*
-import retrofit2.adapter.rxjava2.Result
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -55,28 +54,40 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
                 .compose(ApiRequestErrorCompletableTransformer())
     }
 
-    override fun getCurator(id: String): Single<User> {
+    override fun getUser(id: String): Single<User> {
         return apiRequest
-                .getCurator(id)
+                .getUser(id)
                 .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getAllCurators(): Single<List<User>> {
+    override fun getUsers(): Single<List<User>> {
         return apiRequest
-                .getAllCurators()
+                .getUsers()
                 .compose(ApiRequestErrorSingleTransformer())
 
     }
 
-    override fun updateCurator(id: String, curator: User): Single<User> {
+    override fun updateUser(id: String, curator: User): Single<User> {
         return apiRequest
-                .updateCurator(id, curator)
+                .updateUser(id, curator)
                 .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun signUp(user: User): Single<Lector> {
+    override fun signUp(user: User): Single<User> {
         return apiRequest
                 .signUp(user)
                 .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun getTest(id: String): Single<Test> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getTests(): Single<List<Test>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun createTest(test: Test): Single<Test> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

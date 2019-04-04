@@ -1,17 +1,34 @@
 package com.example.quiz.presentation.ui.test.test_list
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.base.recycler.ReloadableView
+import com.example.quiz.presentation.base.recycler.SearchListener
+import com.example.quiz.presentation.ui.test.test_list.tab_fragment.all_test_list.AllTestsFragment
+import com.example.quiz.presentation.ui.test.test_list.tab_fragment.all_test_list.AllTestsPresenter
+import com.example.quiz.presentation.ui.test.test_list.tab_fragment.ended_test_list.EndedTestsFragment
+import com.example.quiz.presentation.util.Const.TAG_LOG
+import kotlinx.android.synthetic.main.fragment_theme_tabs.*
+import javax.inject.Inject
+import javax.inject.Provider
 
 class TestListFragment : BaseFragment(), TestListView {
 
     @InjectPresenter
     lateinit var presenter: TestListPresenter
-
-    private var currentType: String? = null
+    @Inject
+    lateinit var presenterProvider: Provider<TestListPresenter>
+    @ProvidePresenter
+    fun providePresenter(): TestListPresenter = presenterProvider.get()
 
     private var fragments: MutableList<Fragment> = ArrayList()
     lateinit private var currentFragment: SearchListener
@@ -32,13 +49,12 @@ class TestListFragment : BaseFragment(), TestListView {
     }
 
     private fun initViews() {
-        mainListener.setToolbar(toolbar)
-        mainListener.setToolbarTitle(getString(R.string.themes))
+        setActionBar(toolbar)
+        setToolbarTitle(R.string.tests)
         setupViewPager(viewpager)
         tab_layout.setupWithViewPager(viewpager)
         viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
         setTabListener()
-        mainListener.hideLoading()
     }
 
     private fun setTabListener() {
@@ -46,7 +62,7 @@ class TestListFragment : BaseFragment(), TestListView {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.d(TAG_LOG, "on tab selected")
                 viewpager.currentItem = tab.position
-                (fragments[tab.position] as ReloadableListView).reloadList()
+                (fragments[tab.position] as ReloadableView).reloadList()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -62,13 +78,10 @@ class TestListFragment : BaseFragment(), TestListView {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = FragViewPagerAdapter(childFragmentManager)
-        val args = Bundle()
-        args.putString(ID_KEY, AppHelper.currentCurator.id)
-        fragments.add(SuggestionListFragment.newInstance(args, mainListener))
-        fragments.add(MyThemeListFragment.newInstance(args, mainListener))
-        adapter.addFragment(fragments[0], getString(R.string.suggestions))
-        adapter.addFragment(fragments[1], getString(R.string.my_themes))
-        this.currentType = SUGGESTIONS_LIST
+        fragments.add(AllTestsFragment.newInstance())
+        fragments.add(EndedTestsFragment.newInstance())
+        adapter.addFragment(fragments[0], getString(R.string.all_tests))
+        adapter.addFragment(fragments[1], getString(R.string.my_tests))
         viewPager.adapter = adapter
     }
 
@@ -103,6 +116,14 @@ class TestListFragment : BaseFragment(), TestListView {
             }
         })
 
+    }
+
+    companion object {
+
+        fun newInstance(): Fragment {
+            val fragment = TestListFragment()
+            return fragment
+        }
     }
 
 }

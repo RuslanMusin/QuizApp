@@ -13,6 +13,4 @@ class Test : Identified {
 
     var questions: MutableList<Question> = ArrayList()
 
-    var grade: Grade? = null
-
 }

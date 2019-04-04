@@ -1,10 +1,6 @@
 package com.example.quiz.presentation.ui.test.add_test.question
 
-import android.app.Activity
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -13,34 +9,47 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.base.navigation.BackButtonListener
+import com.example.quiz.presentation.model.test.Answer
+import com.example.quiz.presentation.ui.test.add_test.main.AddMainTestPresenter
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
+import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.TEST_MANY_TYPE
+import com.example.quiz.presentation.util.Const.TEST_ONE_TYPE
+import com.example.quiz.presentation.util.Const.gson
 import com.google.gson.Gson
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_add_question.*
 import kotlinx.android.synthetic.main.toolbar_back_cancel_forward.*
 import java.util.ArrayList
 import javax.inject.Inject
+import javax.inject.Provider
 
-class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClickListener {
-
-    @Inject
-    lateinit var gson: Gson
+class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
+    BackButtonListener, View.OnClickListener {
 
     @InjectPresenter
     lateinit var presenter: AddQuestionTestPresenter
-
+    @Inject
+    lateinit var presenterProvider: Provider<AddQuestionTestPresenter>
+    @ProvidePresenter
+    fun providePresenter(): AddQuestionTestPresenter = presenterProvider.get()
 
     lateinit var test: Test
     private lateinit var question: Question
     private var number: Int = 0
 
-    private var answers: MutableList<String> = ArrayList()
+    private var answers: MutableList<Answer> = ArrayList()
+    private var rightAnswers: MutableList<String> = ArrayList()
     private var answerSize: Int = 0
 
     private var editTexts: MutableList<EditText> = ArrayList()
@@ -56,23 +65,13 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
 
     private lateinit var checkListener: View.OnClickListener
 
-    override fun performBackPressed() {
-        beforeQuestion()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_add_question, container, false)
-        model = activity?.run {
-            ViewModelProviders.of(this).get(TestViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-        model.test.value?.let {
-            test = it
-        }
-        model.number.value?.let {
-            number = it
-        }
 
-//
+        arguments?.let {
+            test = gson.fromJson(it.getString(TEST_ITEM), Test::class.java)
+            number = it.getInt(QUESTION_NUMBER)
+        }
         return view
     }
 
@@ -99,19 +98,22 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
     }
 
     private fun setQuestionData() {
-        et_question.setText(question.question)
+        et_question.setText(question.description)
         for(i in question.answers.indices) {
             if(i >= checkBoxes.size) {
                 addAnswer()
             }
-            checkBoxes[i].isChecked = question.answers?.get(i)?.isRight ?: false
-            editTexts[i].setText(question.answers?.get(i)?.text)
+            checkBoxes[i].isChecked = question.answers?.get(i)?.isRight
+            editTexts[i].setText(question.answers?.get(i).text)
         }
+        /*for(i in question.rightAnswers) {
+            checkBoxes[i.toInt()].isChecked = true
+        }*/
     }
 
     private fun initViews(view: View) {
         setActionBar(toolbar_back_cancel_forward)
-        setToolbarTitle(toolbar_title, getString(R.string.add_question_number, number + 1))
+        toolbar_title.text = getString(R.string.add_question_number, number + 1)
         spinner.setItems(getString(R.string.test_type_one), getString(R.string.test_type_many))
 
         answers = ArrayList()
@@ -201,11 +203,10 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
     }
 
     override fun navigateToTest() {
-        removeStackDownTo()
+//        removeStackDownTo()
         val args = Bundle()
         args.putString(TEST_ITEM, gson.toJson(test))
-        val fragment = TestFragment.newInstance(args)
-        pushFragments(fragment, true)
+        presenter.onTestClick(args)
     }
 
     private fun nextQuestion() {
@@ -215,15 +216,14 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
                 val args: Bundle = Bundle()
                 args.putString(TEST_ITEM, gson.toJson(test))
                 args.putInt(QUESTION_NUMBER, ++number)
-                val fragment = AddQuestionTestFragment.newInstance(args)
-                pushFragments(fragment, true)
+                presenter.onNextQuestionClick(args)
             }
         }
     }
 
     private fun checkQuestion(): Boolean {
         var flag: Boolean = true
-        if(question.question == null || question.question?.trim().equals("")) {
+        if(question.description == null || question.description?.trim().equals("")) {
             ti_question.error = "Введите вопрос!"
             flag = false
         } else {
@@ -253,9 +253,13 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
 
     private fun beforeQuestion() {
 //        removeStackDownTo(1)
-        model.selectTest(test)
+        val args = Bundle()
+        args.putString(TEST_ITEM, gson.toJson(test))
+        args.putInt(QUESTION_NUMBER, --number)
+        presenter.onBeforeQuestionClick(args)
+    /*    model.selectTest(test)
         model.selectNumber(--number)
-        super.performBackPressed()
+        super.performBackPressed()*/
     }
 
     override fun onClick(v: View) {
@@ -294,9 +298,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
                     .negativeText(R.string.disagree)
                     .onPositive(object : MaterialDialog.SingleButtonCallback {
                         override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                            val fragment = TestListFragment.newInstance()
-                            pushFragments(fragment, true)
-//                            TestListActivity.start(activity as Activity)
+                            presenter.onTestListClick()
                         }
 
                     })
@@ -337,33 +339,25 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView, View.OnClic
     private fun prepareQuestion() {
 
         for (i in checkBoxes!!.indices) {
+
             val answer = Answer()
             answer.text = editTexts!![i].text.toString()
             if (checkBoxes!![i].isChecked) {
+//                rightAnswers.add(i.toString())
                 answer.isRight = true
             }
             answers!!.add(answer)
         }
 
-        question!!.question = et_question.text.toString()
+        question!!.description = et_question.text.toString()
         question!!.answers = answers.toMutableList()
         question.id = number.toString()
 
     }
 
-    private fun addPhoto() {
-        val photoPickerIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        photoPickerIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        photoPickerIntent.type = "image/*"
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
-    }
-
-    override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(reqCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            imageUri = data!!.data
-        }
+    override fun onBackPressed(): Boolean {
+        beforeQuestion()
+        return true
     }
 
     companion object {

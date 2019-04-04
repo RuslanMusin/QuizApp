@@ -41,8 +41,25 @@
     <string name="test_type_one">Один ответ</string>
     <string name="test_type_many">Много ответов</string>
 
+    <string name="question_number">Вопрос %1$d/%2$d</string>
+    <string name="add_question_number">Вопрос %1$d</string>
+    <string name="answer">Ответ</string>
+
+    <string name="search">Поиск</string>
+
+
+    <!--Test dialog-->
+    <string name="agree">Да</string>
+    <string name="disagree">Нет</string>
+    <string name="question_dialog_content">При выходе результат будет потерян. Выйти ?</string>
+    <string name="question_dialog_title">Вы точно хотите выйти?</string>
+
+
     <!-- Exception -->
     <string name="exception_no_connection">Отсутствует интернет соединение</string>
     <string name="exception_time_out">Сервер просыпается&#8230;&#8230;&#8230;</string>
     <string name="exception_unknown">Неизвестная ошибка</string>
+    <string name="tests">Тесты</string>
+    <string name="all_tests">Все</string>
+    <string name="my_tests">Пройденные</string>
 </resources>
