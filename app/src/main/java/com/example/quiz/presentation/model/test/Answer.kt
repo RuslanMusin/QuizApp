@@ -7,4 +7,6 @@ class Answer {
     var isRight: Boolean = false
 
     var userClicked: Boolean = false
+
+
 }

@@ -11,4 +11,6 @@ class Question : Identified {
 
     var answers: MutableList<Answer> = ArrayList()
 
+    var userRight: Boolean = false
+
 }

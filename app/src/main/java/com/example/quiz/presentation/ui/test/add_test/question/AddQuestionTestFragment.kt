@@ -19,17 +19,16 @@ import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Answer
-import com.example.quiz.presentation.ui.test.add_test.main.AddMainTestPresenter
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.TEST_MANY_TYPE
 import com.example.quiz.presentation.util.Const.TEST_ONE_TYPE
 import com.example.quiz.presentation.util.Const.gson
-import com.google.gson.Gson
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_add_question.*
-import kotlinx.android.synthetic.main.toolbar_back_cancel_forward.*
+import kotlinx.android.synthetic.main.layout_test.*
+import kotlinx.android.synthetic.main.toolbar_add_test.*
 import java.util.ArrayList
 import javax.inject.Inject
 import javax.inject.Provider
@@ -66,8 +65,8 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     private lateinit var checkListener: View.OnClickListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        changeWindowsSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         val view = inflater.inflate(R.layout.fragment_add_question, container, false)
-
         arguments?.let {
             test = gson.fromJson(it.getString(TEST_ITEM), Test::class.java)
             number = it.getInt(QUESTION_NUMBER)
@@ -79,14 +78,6 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViews(view)
         setListeners()
-        if(number >= 2) {
-            btn_ok.visibility = View.VISIBLE
-//            (activity as ChangeToolbarListener).showOk(true)
-        } else {
-            btn_ok.visibility = View.GONE
-//            (activity as ChangeToolbarListener).showOk(false)
-        }
-
         if(test.questions.size > number) {
             question = test.questions[number]
             setQuestionData()
@@ -112,10 +103,11 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     }
 
     private fun initViews(view: View) {
-        setActionBar(toolbar_back_cancel_forward)
+        setActionBar(toolbar_add_test)
         toolbar_title.text = getString(R.string.add_question_number, number + 1)
         spinner.setItems(getString(R.string.test_type_one), getString(R.string.test_type_many))
 
+        et_question.setText("Question ${number + 1}")
         answers = ArrayList()
         editTexts = ArrayList()
         radioButtons = ArrayList()
@@ -194,7 +186,6 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
 
     private fun finishQuestions() {
         prepareQuestion()
-//        addTestView!!.createTest()
         Log.d(TAG_LOG, "after preparing")
         if(checkQuestion()) {
             Log.d(TAG_LOG, "create test")
@@ -210,14 +201,12 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     }
 
     private fun nextQuestion() {
-        if(number <= 9) {
-            prepareQuestion()
-            if(checkQuestion()) {
-                val args: Bundle = Bundle()
-                args.putString(TEST_ITEM, gson.toJson(test))
-                args.putInt(QUESTION_NUMBER, ++number)
-                presenter.onNextQuestionClick(args)
-            }
+        prepareQuestion()
+        if(checkQuestion()) {
+            val args: Bundle = Bundle()
+            args.putString(TEST_ITEM, gson.toJson(test))
+            args.putInt(QUESTION_NUMBER, ++number)
+            presenter.onNextQuestionClick(args)
         }
     }
 
@@ -263,7 +252,6 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     }
 
     override fun onClick(v: View) {
-
 
         when (v.id) {
 
@@ -327,6 +315,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         val editText: EditText = view.findViewById(R.id.et_answer)
         val checkBox: CheckBox = view.findViewById(R.id.checkbox)
 
+        editText.setText("Answer $answerSize")
         checkBox.setOnClickListener(checkListener)
 
         editTexts?.add(editText)

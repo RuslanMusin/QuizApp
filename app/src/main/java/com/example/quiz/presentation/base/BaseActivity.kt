@@ -78,4 +78,8 @@ abstract class BaseActivity : MvpAppCompatActivity(), HasSupportFragmentInjector
         supportActionBar?.title = getString(id)
     }
 
+    override fun changeWindowsSoftInputMode(mode: Int) {
+        this.window.setSoftInputMode(mode);
+    }
+
 }

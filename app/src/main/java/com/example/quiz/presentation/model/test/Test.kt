@@ -13,4 +13,10 @@ class Test : Identified {
 
     var questions: MutableList<Question> = ArrayList()
 
+    var type: String? = null
+
+    lateinit var rightQuestions: List<Question>
+
+    lateinit var wrongQuestions: List<Question>
+
 }

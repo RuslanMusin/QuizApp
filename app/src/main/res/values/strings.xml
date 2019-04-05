@@ -43,7 +43,6 @@
 
     <string name="question_number">Вопрос %1$d/%2$d</string>
     <string name="add_question_number">Вопрос %1$d</string>
-    <string name="answer">Ответ</string>
 
     <string name="search">Поиск</string>
 
@@ -62,4 +61,14 @@
     <string name="tests">Тесты</string>
     <string name="all_tests">Все</string>
     <string name="my_tests">Пройденные</string>
+    <string name="test_questions">Количество вопросов</string>
+    <string name="description">Описание</string>
+    <string name="do_test">Пройти тест</string>
+    <string name="question_text">Вопрос</string>
+    <string name="set_answer">Ответить</string>
+    <string name="add_test">Новый тест</string>
+    <string name="right_asnwers">Правильных ответов</string>
+    <string name="wrong_answers">Неправильных ответов</string>
+    <string name="answer">Ответ</string>
+    <string name="new_test">Новый тест</string>
 </resources>

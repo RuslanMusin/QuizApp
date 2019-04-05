@@ -28,4 +28,7 @@ interface BaseView: MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun setToolbarTitle(id: Int)
+
+    fun changeWindowsSoftInputMode(mode: Int)
+
 }

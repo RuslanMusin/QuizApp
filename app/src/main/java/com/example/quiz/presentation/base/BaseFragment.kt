@@ -69,4 +69,8 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
         }
         super.onDetach()
     }
+
+    override fun changeWindowsSoftInputMode(mode: Int) {
+        (activity as BaseView).changeWindowsSoftInputMode(mode)
+    }
 }
