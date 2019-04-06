@@ -23,6 +23,7 @@ object Const {
     //TestType
     const val TEST_ONE_TYPE = "test_one_type"
     const val TEST_MANY_TYPE = "test_many_type"
+    const val TEST_TEXT_TYPE = "test_text_type"
 
     val gson = Gson()
 

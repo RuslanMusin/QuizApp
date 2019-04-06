@@ -6,7 +6,6 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.Const.TESTS
 import com.example.quiz.presentation.util.Const.gson
@@ -41,20 +40,19 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()*/
         val type = object : TypeToken<List<Test>>(){}.type
-
         val listStr = prefs.getString(TESTS, "")
         var list: MutableList<Test> = ArrayList()
         if(!listStr.equals("")) {
             list = gson.fromJson(listStr, type)
         }
         val editor = prefs.edit()
-        var flag = true
+        var flag = false
         for(item in list) {
             if(item.name?.equals(test.name)!!) {
                 flag = true
             }
         }
-        if(flag) {
+        if(!flag) {
             list.add(test)
         }
         editor.putString(TESTS, gson.toJson(list))
@@ -66,13 +64,17 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
         router.navigateTo(Screens.TestListScreen())
     }
 
-    fun onBeforeQuestionClick(args: Bundle) {
+    fun onBeforeQuestionClick(args: Bundle, toQuestion: Boolean) {
 //        router.navigateTo(Screens.AddQuestionScreen(args))
-        router.exit()
+        if(toQuestion) {
+            router.replaceScreen(Screens.AddQuestionScreen(args))
+        } else {
+            router.replaceScreen(Screens.AddTestScreen(args))
+        }
     }
 
     fun onNextQuestionClick(args: Bundle) {
-        router.navigateTo(Screens.AddQuestionScreen(args))
+        router.replaceScreen(Screens.AddQuestionScreen(args))
     }
 
     fun onTestClick(args: Bundle) {

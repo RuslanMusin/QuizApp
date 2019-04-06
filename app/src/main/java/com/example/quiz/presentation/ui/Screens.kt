@@ -2,7 +2,6 @@ package com.example.quiz.presentation.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.example.quiz.presentation.ui.auth.signin.SignInFragment
@@ -43,9 +42,9 @@ class Screens {
         }
     }
 
-    class AddTestScreen : SupportAppScreen() {
+    class AddTestScreen(val args: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment {
-            return AddMainTestFragment.newInstance()
+            return AddMainTestFragment.newInstance(args)
         }
     }
 

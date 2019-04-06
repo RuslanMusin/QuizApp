@@ -26,8 +26,10 @@ import com.example.quiz.presentation.ui.test.test_item.finish.FinishFragment
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.android.synthetic.main.layout_item_add_text_question.*
 import kotlinx.android.synthetic.main.toolbar_test.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -130,12 +132,21 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         }
         tv_question.text = question.description
 
-        setStartAnswers()
+        if(!question.type.equals(TEST_TEXT_TYPE)) {
+            setStartAnswers()
+        } else {
+            setTextAnswer()
+        }
     }
 
     private fun setToolbar() {
         setActionBar(toolbar_test)
         toolbar_title.text = getString(R.string.question_number, number + 1, test.questions.size)
+    }
+
+    private fun setTextAnswer() {
+        layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
+//        li_answers.addView(view)
     }
 
     private fun setStartAnswers() {
@@ -219,19 +230,32 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     }
 
     private fun checkAnswers() {
-        Log.d(TAG_LOG,"questioin = ${question.description}")
-        question.userRight = true
-        for(i in question.answers.indices) {
-            val answer: Answer = question.answers[i]
-                if(checkBoxes.get(i).isChecked) {
+        if(!question.type.equals(TEST_TEXT_TYPE)) {
+            Log.d(TAG_LOG, "questioin = ${question.description}")
+            question.userRight = true
+            for (i in question.answers.indices) {
+                val answer: Answer = question.answers[i]
+                if (checkBoxes.get(i).isChecked) {
                     answer.userClicked = true
-                    Log.d(TAG_LOG,"checked answer = ${answer.text}")
+                    Log.d(TAG_LOG, "checked answer = ${answer.text}")
                 }
-            if(answer.userClicked != answer.isRight) {
-                question.userRight = false
-                Log.d(TAG_LOG, "wrong i = $i and answer = " + question.answers[i])
+                if (answer.userClicked != answer.isRight) {
+                    question.userRight = false
+                    Log.d(TAG_LOG, "wrong i = $i and answer = " + question.answers[i])
+                }
+                Log.d(
+                    TAG_LOG,
+                    "userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.text}"
+                )
             }
-            Log.d(TAG_LOG,"userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.text}")
+        } else {
+            val rightAnswer = question.answers[0].text
+            val userAnswer = et_text_answer.text.toString()
+            if(rightAnswer.equals(userAnswer)) {
+                question.userRight = true
+            } else {
+                question.userRight = false
+            }
         }
     }
 

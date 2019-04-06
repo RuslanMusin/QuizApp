@@ -26,6 +26,7 @@ import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.WRONG_ANSWERS
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_question.*
@@ -114,25 +115,33 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     }
 
     private fun setStartAnswers() {
-        colorStateList = ColorStateList(
-                arrayOf(intArrayOf(-android.R.attr.state_checked), // unchecked
-                        intArrayOf(android.R.attr.state_checked))// checked
+        if(!question.type.equals(TEST_TEXT_TYPE)) {
+            colorStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked), // unchecked
+                    intArrayOf(android.R.attr.state_checked)
+                )// checked
                 ,
                 intArrayOf(Color.parseColor("#FFFFFF"), Color.parseColor("#DC143C"))
-        )
+            )
 
-        rightStateList = ColorStateList(
-                arrayOf(intArrayOf(-android.R.attr.state_checked), // unchecked
-                        intArrayOf(android.R.attr.state_checked))// checked
+            rightStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked), // unchecked
+                    intArrayOf(android.R.attr.state_checked)
+                )// checked
                 ,
                 intArrayOf(Color.parseColor("#FFFFFF"), Color.parseColor("#00cc00"))
-        )
+            )
 
-        for (answer in question.answers) {
-            addAnswer(answer)
-        }
-        for(tv in textViews!!) {
-            Log.d(TAG_LOG,"content = " + tv.text)
+            for (answer in question.answers) {
+                addAnswer(answer)
+            }
+            for (tv in textViews!!) {
+                Log.d(TAG_LOG, "content = " + tv.text)
+            }
+        } else {
+            addTextAnswer()
         }
 
 
@@ -205,6 +214,10 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
             R.id.btn_forward -> nextQuestion()
 
         }
+    }
+
+    private fun addTextAnswer() {
+
     }
 
     private fun addAnswer(answer: Answer) {

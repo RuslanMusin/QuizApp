@@ -1,12 +1,15 @@
 package com.example.quiz.presentation.ui.test.test_list.tab_fragment.all_test_list
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
-import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
+import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
+import com.google.gson.reflect.TypeToken
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -18,9 +21,11 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
     lateinit var exceptionProcessor: ExceptionProcessor
     @Inject
     lateinit var router: Router
+    @Inject
+    lateinit var prefs: SharedPreferences
 
     fun loadTests() {
-        testRepository
+        /*testRepository
             .findAll()
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
@@ -29,15 +34,22 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
                 viewState.changeDataSet(it)
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
-            }).disposeWhenDestroy()
+            }).disposeWhenDestroy()*/
+        val type = object : TypeToken<List<Test>>(){}.type
+        val listStr = prefs.getString(Const.TESTS, "")
+        var list: MutableList<Test> = ArrayList()
+        if(!listStr.equals("")) {
+            list = Const.gson.fromJson(listStr, type)
+        }
+        viewState.changeDataSet(list)
     }
 
     fun onTestClick(args: Bundle) {
-        router.navigateTo(Screens.TestListScreen())
+        router.navigateTo(Screens.TestScreen(args))
     }
 
     fun onAddTestClick() {
-        router.navigateTo(Screens.AddTestScreen())
+        router.navigateTo(Screens.AddTestScreen(null))
     }
 
 }

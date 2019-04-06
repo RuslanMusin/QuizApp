@@ -1,6 +1,7 @@
 package com.example.quiz.presentation.model.test
 
 import com.example.quiz.presentation.model.common.Identified
+import com.example.quiz.presentation.util.Const.TEST_ONE_TYPE
 import java.util.ArrayList
 
 class Question : Identified {
@@ -10,6 +11,8 @@ class Question : Identified {
     var description: String? = null
 
     var answers: MutableList<Answer> = ArrayList()
+
+    var type: String = TEST_ONE_TYPE
 
     var userRight: Boolean = false
 

@@ -40,6 +40,8 @@
     <string name="select_test_type">Выберите тип теста</string>
     <string name="test_type_one">Один ответ</string>
     <string name="test_type_many">Много ответов</string>
+    <string name="test_type_text">Текстовый ответ</string>
+
 
     <string name="question_number">Вопрос %1$d/%2$d</string>
     <string name="add_question_number">Вопрос %1$d</string>

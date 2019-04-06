@@ -14,7 +14,7 @@ class AnswersPresenter @Inject constructor() : BasePresenter<AnswersView>() {
     lateinit var router: Router
 
     fun onBeforeAnswerClick(args: Bundle) {
-        router.exit()
+        router.replaceScreen(Screens.AnswersScreen(args))
     }
 
     fun onFinishClick(args: Bundle) {
@@ -22,7 +22,7 @@ class AnswersPresenter @Inject constructor() : BasePresenter<AnswersView>() {
     }
 
     fun onNextAnswerClick(args: Bundle) {
-        router.navigateTo(Screens.AnswersScreen(args))
+        router.replaceScreen(Screens.AnswersScreen(args))
     }
 
 }

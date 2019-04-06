@@ -49,12 +49,12 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-//        presenter.loadTests()
+        presenter.loadTests()
     }
 
     override fun reloadList() {
         if(themes.size > 0) {
-//            presenter.loadTests()
+            presenter.loadTests()
         }
     }
 

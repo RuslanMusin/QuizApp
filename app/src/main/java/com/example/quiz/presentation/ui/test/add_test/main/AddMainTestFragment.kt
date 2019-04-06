@@ -128,7 +128,7 @@ class AddMainTestFragment : BaseFragment(), AddMainTestView, BackButtonListener,
 
     companion object {
 
-        fun newInstance(args: Bundle): Fragment {
+        fun newInstance(args: Bundle?): Fragment {
             val fragment = AddMainTestFragment()
             fragment.arguments = args
             return fragment

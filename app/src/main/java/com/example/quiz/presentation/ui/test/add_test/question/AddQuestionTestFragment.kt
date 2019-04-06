@@ -24,9 +24,12 @@ import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.TEST_MANY_TYPE
 import com.example.quiz.presentation.util.Const.TEST_ONE_TYPE
+import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.gson
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_add_question.*
+import kotlinx.android.synthetic.main.layout_item_add_question.*
+import kotlinx.android.synthetic.main.layout_item_add_text_question.*
 import kotlinx.android.synthetic.main.layout_test.*
 import kotlinx.android.synthetic.main.toolbar_add_test.*
 import java.util.ArrayList
@@ -50,6 +53,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     private var answers: MutableList<Answer> = ArrayList()
     private var rightAnswers: MutableList<String> = ArrayList()
     private var answerSize: Int = 0
+
 
     private var editTexts: MutableList<EditText> = ArrayList()
     private var checkBoxes: MutableList<CheckBox> = ArrayList()
@@ -90,12 +94,17 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
 
     private fun setQuestionData() {
         et_question.setText(question.description)
-        for(i in question.answers.indices) {
-            if(i >= checkBoxes.size) {
-                addAnswer()
+        if(!question.type.equals(TEST_TEXT_TYPE)) {
+            for (i in question.answers.indices) {
+                if (i >= checkBoxes.size) {
+                    addAnswer()
+                }
+                checkBoxes[i].isChecked = question.answers?.get(i)?.isRight
+                editTexts[i].setText(question.answers?.get(i).text)
             }
-            checkBoxes[i].isChecked = question.answers?.get(i)?.isRight
-            editTexts[i].setText(question.answers?.get(i).text)
+        } else {
+            changeToTextType()
+            et_text_answer.setText(question.answers[0].text)
         }
         /*for(i in question.rightAnswers) {
             checkBoxes[i.toInt()].isChecked = true
@@ -105,9 +114,9 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     private fun initViews(view: View) {
         setActionBar(toolbar_add_test)
         toolbar_title.text = getString(R.string.add_question_number, number + 1)
-        spinner.setItems(getString(R.string.test_type_one), getString(R.string.test_type_many))
+        spinner.setItems(getString(R.string.test_type_one), getString(R.string.test_type_many), getString(R.string.test_type_text))
 
-        et_question.setText("Question ${number + 1}")
+        et_question.setText(getString(R.string.add_question_number, number + 1))
         answers = ArrayList()
         editTexts = ArrayList()
         radioButtons = ArrayList()
@@ -127,7 +136,6 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
             }
 
         }
-
 
         for (i in 0..2) {
             addAnswer()
@@ -152,19 +160,37 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
                     1 -> {
                         changeToManyType()
                     }
+
+                    2 -> changeToTextType()
                 }
             }
 
         })
     }
 
+    private fun changeToTextType() {
+        testType = TEST_TEXT_TYPE
+        answers.clear()
+        editTexts.clear()
+        checkBoxes.clear()
+        li_answers.removeAllViews()
+        layoutInflater.inflate(R.layout.layout_item_add_text_question, li_answers, true)
+//        li_answers.addView(view)
+    }
+
     private fun changeToManyType() {
+        if(testType.equals(TEST_TEXT_TYPE)) {
+            setStartAnswers()
+        }
         testType = TEST_MANY_TYPE
 
     }
 
     private fun changeToOneType(check: CheckBox?) {
         Log.d(TAG_LOG,"change to one type")
+        if(testType.equals(TEST_TEXT_TYPE)) {
+            setStartAnswers()
+        }
         testType = TEST_ONE_TYPE
         var count = if (check == null) 0 else 1
         val boxes: MutableList<CheckBox> = ArrayList()
@@ -218,21 +244,30 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         } else {
             ti_question.error = null
         }
-        var count: Int = 0
-        for(i in question.answers.indices) {
-            if(question.answers[i].isRight) {
-                count++
+        if(!testType.equals(TEST_TEXT_TYPE)) {
+            var count: Int = 0
+            for (i in question.answers.indices) {
+                if (question.answers[i].isRight) {
+                    count++
+                }
+                if (question.answers[i].text == null || question.answers[i].text?.trim().equals("")) {
+                    editTexts[i].error = "Напишите вариант ответа"
+                    flag = false
+                } else {
+                    editTexts[i].error = null
+                }
             }
-            if(question.answers[i].text == null || question.answers[i].text?.trim().equals("")) {
-                editTexts[i].error = "Напишите вариант ответа"
+            if (count == 0) {
                 flag = false
-            }else {
-                editTexts[i].error = null
+                showSnackBar("Выберите хотя бы один ответ!")
             }
-        }
-        if(count == 0) {
-            flag = false
-            showSnackBar("Выберите хотя бы один ответ!")
+        } else {
+            if (question.answers[0].text == null || question.answers[0].text?.trim().equals("")) {
+                ti_answer.error = "Напишите вариант ответа"
+                flag = false
+            } else {
+                ti_answer.error = null
+            }
         }
 
         answers.clear()
@@ -244,8 +279,12 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
 //        removeStackDownTo(1)
         val args = Bundle()
         args.putString(TEST_ITEM, gson.toJson(test))
+        var toQuestion = true
+        if(number == 0) {
+            toQuestion = false
+        }
         args.putInt(QUESTION_NUMBER, --number)
-        presenter.onBeforeQuestionClick(args)
+        presenter.onBeforeQuestionClick(args, toQuestion)
     /*    model.selectTest(test)
         model.selectNumber(--number)
         super.performBackPressed()*/
@@ -310,37 +349,46 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
      }
  */
     private fun addAnswer() {
-        answerSize++
-        val view: View = layoutInflater.inflate(R.layout.layout_item_add_question,li_answers,false)
-        val editText: EditText = view.findViewById(R.id.et_answer)
-        val checkBox: CheckBox = view.findViewById(R.id.checkbox)
+        if (!testType.equals(TEST_TEXT_TYPE)) {
+            answerSize++
+            val view: View = layoutInflater.inflate(R.layout.layout_item_add_question, li_answers, false)
+            val editText: EditText = view.findViewById(R.id.et_answer)
+            val checkBox: CheckBox = view.findViewById(R.id.checkbox)
 
-        editText.setText("Answer $answerSize")
-        checkBox.setOnClickListener(checkListener)
+            editText.setText("Answer $answerSize")
+            checkBox.setOnClickListener(checkListener)
 
-        editTexts?.add(editText)
-        checkBoxes?.add(checkBox)
+            editTexts?.add(editText)
+            checkBoxes?.add(checkBox)
 
-        li_answers.addView(view)
+            li_answers.addView(view)
+        }
     }
 
 
     private fun prepareQuestion() {
+        if(!testType.equals(TEST_TEXT_TYPE)) {
+            for (i in checkBoxes!!.indices) {
 
-        for (i in checkBoxes!!.indices) {
-
-            val answer = Answer()
-            answer.text = editTexts!![i].text.toString()
-            if (checkBoxes!![i].isChecked) {
+                val answer = Answer()
+                answer.text = editTexts!![i].text.toString()
+                if (checkBoxes!![i].isChecked) {
 //                rightAnswers.add(i.toString())
-                answer.isRight = true
+                    answer.isRight = true
+                }
+                answers!!.add(answer)
             }
-            answers!!.add(answer)
+        } else {
+            val answer = Answer()
+            answer.text =  et_text_answer.text.toString()
+            answer.isRight = true
+            answers.add(answer)
         }
 
         question!!.description = et_question.text.toString()
         question!!.answers = answers.toMutableList()
         question.id = number.toString()
+        question.type = testType
 
     }
 
