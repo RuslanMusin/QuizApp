@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -34,7 +33,7 @@ ext {
     gson = "2.8.2"
     okhttp = "3.9.1"
     retrofit = "2.3.0"
-    nav_version = "1.0.0-alpha11"
+    cicerone = '4.0.2'
 
 }
 
@@ -94,7 +93,12 @@ dependencies {
 
     //Custom Views
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.jaredrummler:material-spinner:1.2.5'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.ms-square:expandableTextView:0.1.4'
 
-    implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version" // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
+
+    //Cicerone
+    implementation "ru.terrakok.cicerone:cicerone:$cicerone"
+    
 }

@@ -11,5 +11,14 @@
     <color name="primary_light">#FFCDD2</color>
     <color name="accent">#FFC107</color>
     <color name="primary_text">#212121</color>
+    <color name="secondary_text">#434343</color>
+
+
+    <color name="alizarin">#e74c3c</color>
+    <color name="carrot">#e67e22</color>
+    <color name="sunflower">#f1c40f</color>
+    <color name="greensea">#16a085</color>
+    <color name="nephritis">#27ae60</color>
+    <color name="belizehole">#2980b9</color>
 </resources>
 
