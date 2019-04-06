@@ -11,6 +11,7 @@ import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
+import com.example.quiz.presentation.util.Const.currentUser
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -106,6 +107,7 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
     }
 
     override fun goToProfile(user: User) {
+        currentUser = user
         presenter.onProfileCommandClick()
 //        Navigation.findNavController(btn_sign_up).navigate(R.id.action_signUpFragment_to_studentFragment2)
     }

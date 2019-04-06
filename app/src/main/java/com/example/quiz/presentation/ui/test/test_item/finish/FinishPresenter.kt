@@ -25,8 +25,9 @@ class FinishPresenter @Inject constructor() : BasePresenter<FinishView>() {
 
     fun finishTest(test: Test) {
         val editor = prefs.edit()
-        val key = "${currentUser.email} ${test.name}"
+        val key = "${currentUser.email}${test.name}"
         editor.putString(key, gson.toJson(test))
+        editor.apply()
        /* AppHelper.currentUser?.let {user ->
             val absId = test.card?.cardId
             absId?.let {

@@ -11,7 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal"
-            android:text="@string/test_name"
+            android:text="@string/right_answer"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.16" />
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal"
-            android:text="@string/test_questions"
+            android:text="@string/your_answer"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.16" />
 

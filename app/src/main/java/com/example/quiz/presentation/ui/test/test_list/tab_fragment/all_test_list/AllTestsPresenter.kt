@@ -41,7 +41,7 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
         if(!listStr.equals("")) {
             list = Const.gson.fromJson(listStr, type)
         }
-        viewState.changeDataSet(list)
+        viewState.showItems(list)
     }
 
     fun onTestClick(args: Bundle) {

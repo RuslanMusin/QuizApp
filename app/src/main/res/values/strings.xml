@@ -73,4 +73,6 @@
     <string name="wrong_answers">Неправильных ответов</string>
     <string name="answer">Ответ</string>
     <string name="new_test">Новый тест</string>
+    <string name="right_answer">Правильный ответ</string>
+    <string name="your_answer">Ваш ответ</string>
 </resources>

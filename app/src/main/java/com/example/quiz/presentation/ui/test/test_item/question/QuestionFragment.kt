@@ -146,6 +146,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
 
     private fun setTextAnswer() {
         layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
+        changeButtons()
 //        li_answers.addView(view)
     }
 
@@ -157,11 +158,13 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         for(tv in textViews!!) {
             Log.d(TAG_LOG,"content = " + tv.text)
         }
+        changeButtons()
+    }
 
-        if(number == (test.questions.size-1)) {
+    private fun changeButtons() {
+        if(number + 1 == test.questions.size) {
             btn_next_question.visibility = View.GONE
             btn_finish_questions.visibility = View.VISIBLE
-//            (activity as ChangeToolbarListener).showOk(true)
         }
     }
 
@@ -251,6 +254,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         } else {
             val rightAnswer = question.answers[0].text
             val userAnswer = et_text_answer.text.toString()
+            question.userAnswer = userAnswer
             if(rightAnswer.equals(userAnswer)) {
                 question.userRight = true
             } else {

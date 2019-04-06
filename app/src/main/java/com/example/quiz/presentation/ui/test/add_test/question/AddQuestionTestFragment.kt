@@ -88,11 +88,15 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         } else {
             question = Question()
             test.questions.add(question)
+            setStartFields()
+            setStartAnswers()
         }
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setQuestionData() {
+        testType = question.type
+        selectIndex()
         et_question.setText(question.description)
         if(!question.type.equals(TEST_TEXT_TYPE)) {
             for (i in question.answers.indices) {
@@ -102,13 +106,36 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
                 checkBoxes[i].isChecked = question.answers?.get(i)?.isRight
                 editTexts[i].setText(question.answers?.get(i).text)
             }
+            if(editTexts.size == 0) {
+                setStartParams()
+            }
         } else {
-            changeToTextType()
             et_text_answer.setText(question.answers[0].text)
+            if(et_text_answer.text.equals(null)) {
+                setStartParams()
+            }
         }
         /*for(i in question.rightAnswers) {
             checkBoxes[i.toInt()].isChecked = true
         }*/
+    }
+
+    private fun selectIndex() {
+        Log.d(TAG_LOG, "type = ${question.type}")
+        when {
+
+            TEST_ONE_TYPE.equals(testType) -> spinner.selectedIndex = 0
+
+            TEST_MANY_TYPE.equals(testType) -> spinner.selectedIndex = 1
+
+            TEST_TEXT_TYPE.equals(question.type) -> {
+                Log.d(TAG_LOG, "spinner clicked")
+                spinner.selectedIndex = 2
+                changeToTextType()
+
+            }
+
+        }
     }
 
     private fun initViews(view: View) {
@@ -116,30 +143,24 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         toolbar_title.text = getString(R.string.add_question_number, number + 1)
         spinner.setItems(getString(R.string.test_type_one), getString(R.string.test_type_many), getString(R.string.test_type_text))
 
-        et_question.setText(getString(R.string.add_question_number, number + 1))
         answers = ArrayList()
         editTexts = ArrayList()
         radioButtons = ArrayList()
         checkBoxes = ArrayList()
+    }
 
+    private fun setStartParams() {
+        setStartFields()
         setStartAnswers()
     }
 
+    private fun setStartFields() {
+        et_question.setText(getString(R.string.add_question_number, number + 1))
+    }
+
     private fun setStartAnswers() {
-        checkListener = object: View.OnClickListener{
-            override fun onClick(v: View?) {
-                if(testType.equals(TEST_ONE_TYPE)) {
-                    Log.d(TAG_LOG,"change on one type")
-                    changeToOneType(v as CheckBox)
-
-                }
-            }
-
-        }
-
         for (i in 0..2) {
             addAnswer()
-
         }
     }
 
@@ -150,7 +171,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         btn_back.setOnClickListener(this)
         btn_forward.setOnClickListener(this)
         btn_cancel.setOnClickListener(this)
-        spinner?.setOnItemSelectedListener(object : MaterialSpinner.OnItemSelectedListener<Any> {
+        val listener = object : MaterialSpinner.OnItemSelectedListener<Any> {
             override fun onItemSelected(view: MaterialSpinner?, position: Int, id: Long, item: Any?) {
                 when (position) {
                     0 -> {
@@ -165,11 +186,23 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
                 }
             }
 
-        })
+        }
+        spinner?.setOnItemSelectedListener(listener)
+        checkListener = object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                if(testType.equals(TEST_ONE_TYPE)) {
+                    Log.d(TAG_LOG,"change on one type")
+                    changeToOneType(v as CheckBox)
+
+                }
+            }
+        }
     }
 
     private fun changeToTextType() {
+        Log.d(TAG_LOG, "changeToTextType")
         testType = TEST_TEXT_TYPE
+        btn_add_answer.visibility = View.GONE
         answers.clear()
         editTexts.clear()
         checkBoxes.clear()
@@ -179,17 +212,22 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     }
 
     private fun changeToManyType() {
+        Log.d(TAG_LOG, "changeToManyType")
         if(testType.equals(TEST_TEXT_TYPE)) {
+            li_answers.removeAllViews()
             setStartAnswers()
+            btn_add_answer.visibility = View.VISIBLE
         }
         testType = TEST_MANY_TYPE
 
     }
 
     private fun changeToOneType(check: CheckBox?) {
-        Log.d(TAG_LOG,"change to one type")
+        Log.d(TAG_LOG, "changeToOneType")
         if(testType.equals(TEST_TEXT_TYPE)) {
+            li_answers.removeAllViews()
             setStartAnswers()
+            btn_add_answer.visibility = View.VISIBLE
         }
         testType = TEST_ONE_TYPE
         var count = if (check == null) 0 else 1
@@ -349,20 +387,19 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
      }
  */
     private fun addAnswer() {
-        if (!testType.equals(TEST_TEXT_TYPE)) {
-            answerSize++
-            val view: View = layoutInflater.inflate(R.layout.layout_item_add_question, li_answers, false)
-            val editText: EditText = view.findViewById(R.id.et_answer)
-            val checkBox: CheckBox = view.findViewById(R.id.checkbox)
+        answerSize++
+        val view: View = layoutInflater.inflate(R.layout.layout_item_add_question, li_answers, false)
+        val editText: EditText = view.findViewById(R.id.et_answer)
+        val checkBox: CheckBox = view.findViewById(R.id.checkbox)
 
-            editText.setText("Answer $answerSize")
-            checkBox.setOnClickListener(checkListener)
+        editText.setText("Answer $answerSize")
+        checkBox.setOnClickListener(checkListener)
 
-            editTexts?.add(editText)
-            checkBoxes?.add(checkBox)
+        editTexts?.add(editText)
+        checkBoxes?.add(checkBox)
 
-            li_answers.addView(view)
-        }
+        li_answers.addView(view)
+
     }
 
 

@@ -6,4 +6,5 @@ import com.example.quiz.presentation.model.test.Test
 
 interface AllTestsView: BaseRecyclerView<Test>, ReloadableView {
 
+    fun showItems(tests: List<Test>)
 }

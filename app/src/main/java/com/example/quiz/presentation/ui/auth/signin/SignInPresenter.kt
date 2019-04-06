@@ -8,6 +8,7 @@ import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject

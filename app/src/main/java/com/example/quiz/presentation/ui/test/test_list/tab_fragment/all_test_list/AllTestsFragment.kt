@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.ui.test.add_test.main.AddMainTestPresenter
 import com.example.quiz.presentation.ui.test.test_list.tab_fragment.TestAdapter
-import com.example.quiz.presentation.ui.test.test_list.tab_fragment.ended_test_list.EndedTestsPresenter
-import com.example.quiz.presentation.ui.test.test_list.tab_fragment.ended_test_list.EndedTestsView
 import com.example.quiz.presentation.util.Const
+import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.gson
-import com.google.gson.Gson
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_theme_list.*
 import kotlinx.android.synthetic.main.layout_recycler_list.*
@@ -31,7 +29,7 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
 
     private lateinit var adapter: TestAdapter
 
-    var themes: MutableList<Test> = ArrayList()
+    var tests: MutableList<Test> = ArrayList()
     lateinit var userId: String
 
     @InjectPresenter
@@ -53,7 +51,7 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
     }
 
     override fun reloadList() {
-        if(themes.size > 0) {
+        if(tests.size > 0) {
             presenter.loadTests()
         }
     }
@@ -86,6 +84,11 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
     override fun changeDataSet(tests: List<Test>) {
         adapter.changeDataSet(tests)
         hideLoading()
+    }
+
+    override fun showItems(tests: List<Test>) {
+        this.tests = tests.toMutableList()
+        changeDataSet(tests)
     }
 
     override fun handleError(throwable: Throwable) {
@@ -125,11 +128,12 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
     override fun findByQuery(query: String) {
         val pattern: Pattern = Pattern.compile("${query.toLowerCase()}.*")
         val list: MutableList<Test> = java.util.ArrayList()
-        for(skill in themes) {
+        for(skill in tests) {
             if(pattern.matcher(skill.name?.toLowerCase()).matches()) {
                 list.add(skill)
             }
         }
+        Log.d(TAG_LOG, "list.size = ${list.size}")
         changeDataSet(list)
     }
 

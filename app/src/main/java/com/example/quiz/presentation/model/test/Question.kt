@@ -16,4 +16,6 @@ class Question : Identified {
 
     var userRight: Boolean = false
 
+    lateinit var userAnswer: String
+
 }

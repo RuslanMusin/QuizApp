@@ -12,6 +12,7 @@ import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
+import com.example.quiz.presentation.util.Const
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -105,7 +106,8 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
         }
     }
 
-    override fun goToProfile(curator: User) {
+    override fun goToProfile(user: User) {
+        Const.currentUser = user
         presenter.onNewRootCommandClick()
     }
 

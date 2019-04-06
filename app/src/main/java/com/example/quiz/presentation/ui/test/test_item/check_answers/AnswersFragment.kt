@@ -30,6 +30,7 @@ import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.WRONG_ANSWERS
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.android.synthetic.main.layout_text_question.*
 import kotlinx.android.synthetic.main.toolbar_test.*
 import java.util.ArrayList
 import javax.inject.Inject
@@ -217,7 +218,10 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     }
 
     private fun addTextAnswer() {
-
+        val view: LinearLayout = layoutInflater.inflate(R.layout.layout_text_question,li_answers,false) as LinearLayout
+        li_answers.addView(view)
+        tv_right_answer.text = question.answers[0].text
+        tv_your_answer.text = question.userAnswer
     }
 
     private fun addAnswer(answer: Answer) {
