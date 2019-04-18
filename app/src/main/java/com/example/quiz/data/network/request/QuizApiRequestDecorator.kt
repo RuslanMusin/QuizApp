@@ -6,6 +6,7 @@ import com.example.quiz.data.network.exception.UnknownException
 import com.example.quiz.data.network.exception.domain.DomainException
 import com.example.quiz.presentation.model.auth.LoginResult
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.*
 import java.net.SocketTimeoutException
@@ -74,14 +75,16 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
     }
 
     override fun getTest(id: String): Single<Test> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return apiRequest
+            .getTest(id)
+            .compose(ApiRequestErrorSingleTransformer())
     }
 
     override fun getTests(): Single<List<Test>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun createTest(test: Test): Single<String> {
+    override fun createTest(test: Test): Single<TestResult> {
         return apiRequest
             .createTest(test)
             .compose(ApiRequestErrorSingleTransformer())

@@ -2,6 +2,7 @@ package com.example.quiz.data.network.request
 
 import com.example.quiz.presentation.model.auth.LoginResult
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -31,6 +32,6 @@ interface QuizApiRequest {
     fun getTests(): Single<List<Test>>
 
     @POST("test")
-    fun createTest(@Body test: Test): Single<String>
+    fun createTest(@Body test: Test): Single<TestResult>
 
 }

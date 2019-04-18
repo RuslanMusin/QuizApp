@@ -42,7 +42,7 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
                 viewState.navigateToTest()
             }, {
                 Log.d(TAG_LOG,"error process")
-                viewState.showSnackBar(exceptionProcessor.processException(it))
+//                viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
        /* val type = object : TypeToken<List<Test>>(){}.type
         val listStr = prefs.getString(TESTS, "")

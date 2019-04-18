@@ -6,6 +6,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
@@ -25,23 +26,25 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
     lateinit var prefs: SharedPreferences
 
     fun loadTests() {
-        /*testRepository
-            .findAll()
+        testRepository
+            .findByName("3")
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
-                viewState.changeDataSet(it)
+                val list: MutableList<Test> = ArrayList()
+                list.add(it)
+                viewState.showItems(list)
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
-            }).disposeWhenDestroy()*/
-        val type = object : TypeToken<List<Test>>(){}.type
+            }).disposeWhenDestroy()
+       /* val type = object : TypeToken<List<Test>>(){}.type
         val listStr = prefs.getString(Const.TESTS, "")
         var list: MutableList<Test> = ArrayList()
         if(!listStr.equals("")) {
             list = Const.gson.fromJson(listStr, type)
         }
-        viewState.showItems(list)
+        viewState.showItems(list)*/
     }
 
     fun onTestClick(args: Bundle) {

@@ -1,6 +1,7 @@
 package com.example.quiz.data.repository.test
 
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.Single
 
@@ -12,5 +13,5 @@ interface TestRepository {
 
     fun findByUser(userId: String): Single<List<Test>>
 
-    fun createTest(test: Test): Single<String>
+    fun createTest(test: Test): Single<TestResult>
 }
