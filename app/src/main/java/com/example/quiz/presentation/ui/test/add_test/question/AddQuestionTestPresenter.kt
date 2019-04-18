@@ -2,11 +2,14 @@ package com.example.quiz.presentation.ui.test.add_test.question
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TESTS
 import com.example.quiz.presentation.util.Const.gson
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
@@ -29,17 +32,19 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
     lateinit var prefs: SharedPreferences
 
     fun createTest(test: Test) {
-        /*testRepository
+        testRepository
             .createTest(test)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
+                Log.d(TAG_LOG, "Test id = $it")
                 viewState.navigateToTest()
             }, {
+                Log.d(TAG_LOG,"error process")
                 viewState.showSnackBar(exceptionProcessor.processException(it))
-            }).disposeWhenDestroy()*/
-        val type = object : TypeToken<List<Test>>(){}.type
+            }).disposeWhenDestroy()
+       /* val type = object : TypeToken<List<Test>>(){}.type
         val listStr = prefs.getString(TESTS, "")
         var list: MutableList<Test> = ArrayList()
         if(!listStr.equals("")) {
@@ -56,8 +61,8 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
             list.add(test)
         }
         editor.putString(TESTS, gson.toJson(list))
-        editor.apply()
-        viewState.navigateToTest()
+        editor.apply()*/
+//        viewState.navigateToTest()
     }
 
     fun onTestListClick() {

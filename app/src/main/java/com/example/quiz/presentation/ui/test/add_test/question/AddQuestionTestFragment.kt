@@ -28,9 +28,7 @@ import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.gson
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_add_question.*
-import kotlinx.android.synthetic.main.layout_item_add_question.*
 import kotlinx.android.synthetic.main.layout_item_add_text_question.*
-import kotlinx.android.synthetic.main.layout_test.*
 import kotlinx.android.synthetic.main.toolbar_add_test.*
 import java.util.ArrayList
 import javax.inject.Inject
@@ -104,13 +102,13 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
                     addAnswer()
                 }
                 checkBoxes[i].isChecked = question.answers?.get(i)?.isRight
-                editTexts[i].setText(question.answers?.get(i).text)
+                editTexts[i].setText(question.answers?.get(i).content)
             }
             if(editTexts.size == 0) {
                 setStartParams()
             }
         } else {
-            et_text_answer.setText(question.answers[0].text)
+            et_text_answer.setText(question.answers[0].content)
             if(et_text_answer.text.equals(null)) {
                 setStartParams()
             }
@@ -288,7 +286,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
                 if (question.answers[i].isRight) {
                     count++
                 }
-                if (question.answers[i].text == null || question.answers[i].text?.trim().equals("")) {
+                if (question.answers[i].content == null || question.answers[i].content?.trim().equals("")) {
                     editTexts[i].error = "Напишите вариант ответа"
                     flag = false
                 } else {
@@ -300,7 +298,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
                 showSnackBar("Выберите хотя бы один ответ!")
             }
         } else {
-            if (question.answers[0].text == null || question.answers[0].text?.trim().equals("")) {
+            if (question.answers[0].content == null || question.answers[0].content?.trim().equals("")) {
                 ti_answer.error = "Напишите вариант ответа"
                 flag = false
             } else {
@@ -408,7 +406,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
             for (i in checkBoxes!!.indices) {
 
                 val answer = Answer()
-                answer.text = editTexts!![i].text.toString()
+                answer.content = editTexts!![i].text.toString()
                 if (checkBoxes!![i].isChecked) {
 //                rightAnswers.add(i.toString())
                     answer.isRight = true
@@ -417,7 +415,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
             }
         } else {
             val answer = Answer()
-            answer.text =  et_text_answer.text.toString()
+            answer.content =  et_text_answer.text.toString()
             answer.isRight = true
             answers.add(answer)
         }

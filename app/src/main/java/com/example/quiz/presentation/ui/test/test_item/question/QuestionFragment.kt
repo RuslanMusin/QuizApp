@@ -240,7 +240,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 val answer: Answer = question.answers[i]
                 if (checkBoxes.get(i).isChecked) {
                     answer.userClicked = true
-                    Log.d(TAG_LOG, "checked answer = ${answer.text}")
+                    Log.d(TAG_LOG, "checked answer = ${answer.content}")
                 }
                 if (answer.userClicked != answer.isRight) {
                     question.userRight = false
@@ -248,11 +248,11 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 }
                 Log.d(
                     TAG_LOG,
-                    "userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.text}"
+                    "userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.content}"
                 )
             }
         } else {
-            val rightAnswer = question.answers[0].text
+            val rightAnswer = question.answers[0].content
             val userAnswer = et_text_answer.text.toString()
             question.userAnswer = userAnswer
             if(rightAnswer.equals(userAnswer)) {
@@ -266,7 +266,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     private fun addAnswer(answer: Answer) {
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_item_question,li_answers,false) as LinearLayout
         val tvAnswer: TextView = view.findViewWithTag("tv_answer")
-        tvAnswer.text = answer.text
+        tvAnswer.text = answer.content
         textViews?.add(tvAnswer)
         Log.d(TAG_LOG,"content tv = ${tvAnswer.text}")
         val checkBox: CheckBox = view.findViewWithTag("checkbox")

@@ -11,7 +11,7 @@ import io.reactivex.*
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
+class AuthRequestDecorator(val authApiRequest: AuthApiRequest) : AuthApiRequest {
 
     companion object {
         fun processApiThrowable(t: Throwable): Throwable {
@@ -42,48 +42,9 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
         }
     }
 
-    override fun logout(): Completable {
-        return apiRequest
-                .logout()
-                .compose(ApiRequestErrorCompletableTransformer())
-    }
-
-    override fun getUser(id: String): Single<User> {
-        return apiRequest
-                .getUser(id)
-                .compose(ApiRequestErrorSingleTransformer())
-    }
-
-    override fun getUsers(): Single<List<User>> {
-        return apiRequest
-                .getUsers()
-                .compose(ApiRequestErrorSingleTransformer())
-
-    }
-
-    override fun updateUser(id: String, curator: User): Single<User> {
-        return apiRequest
-                .updateUser(id, curator)
-                .compose(ApiRequestErrorSingleTransformer())
-    }
-
-    override fun signUp(user: User): Single<User> {
-        return apiRequest
-                .signUp(user)
-                .compose(ApiRequestErrorSingleTransformer())
-    }
-
-    override fun getTest(id: String): Single<Test> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getTests(): Single<List<Test>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun createTest(test: Test): Single<String> {
-        return apiRequest
-            .createTest(test)
+    override fun login(user: User): Single<LoginResult> {
+        return authApiRequest
+            .login(user)
             .compose(ApiRequestErrorSingleTransformer())
     }
 }

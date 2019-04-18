@@ -4,6 +4,7 @@ import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Named
 
 class UserRepositoryImpl @Inject constructor() : UserRepository {
 

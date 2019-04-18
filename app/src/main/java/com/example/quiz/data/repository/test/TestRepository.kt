@@ -12,5 +12,5 @@ interface TestRepository {
 
     fun findByUser(userId: String): Single<List<Test>>
 
-    fun createTest(test: Test): Single<Test>
+    fun createTest(test: Test): Single<String>
 }

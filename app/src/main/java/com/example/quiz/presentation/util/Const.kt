@@ -21,11 +21,15 @@ object Const {
     const val ANSWERS_TYPE = "type_answers"
 
     //TestType
-    const val TEST_ONE_TYPE = "test_one_type"
-    const val TEST_MANY_TYPE = "test_many_type"
-    const val TEST_TEXT_TYPE = "test_text_type"
+    const val TEST_ONE_TYPE = "one"
+    const val TEST_MANY_TYPE = "many"
+    const val TEST_TEXT_TYPE = "text"
 
     val gson = Gson()
 
     lateinit var currentUser: User
+
+    //Http request
+    const val AUTHORIZATION = "Authorization"
+    var TOKEN = "Token "
 }

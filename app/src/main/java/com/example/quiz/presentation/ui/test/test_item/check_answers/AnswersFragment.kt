@@ -220,14 +220,14 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     private fun addTextAnswer() {
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_text_question,li_answers,false) as LinearLayout
         li_answers.addView(view)
-        tv_right_answer.text = question.answers[0].text
+        tv_right_answer.text = question.answers[0].content
         tv_your_answer.text = question.userAnswer
     }
 
     private fun addAnswer(answer: Answer) {
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_item_question,li_answers,false) as LinearLayout
         val tvAnswer: TextView = view.findViewWithTag("tv_answer")
-        tvAnswer.text = answer.text
+        tvAnswer.text = answer.content
         textViews?.add(tvAnswer)
         val checkBox: CheckBox = view.findViewWithTag("checkbox")
         if(answer.isRight) {
