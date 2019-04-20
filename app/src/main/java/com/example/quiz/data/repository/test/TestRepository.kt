@@ -1,17 +1,29 @@
 package com.example.quiz.data.repository.test
 
+import com.example.quiz.presentation.model.common.ElementId
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
-import com.example.quiz.presentation.model.user.User
+import com.google.gson.JsonObject
 import io.reactivex.Single
 
 interface TestRepository {
 
-    fun findByName(name: String): Single<Test>
+    fun findById(id: Int): Single<Test>
 
     fun findAll(): Single<List<Test>>
 
-    fun findByUser(userId: String): Single<List<Test>>
+    fun findByUser(userId: Int): Single<List<Test>>
 
-    fun createTest(test: Test): Single<TestResult>
+    fun createTest(test: Test): Single<ElementId>
+
+    fun openTest(id: Int): Single<JsonObject>
+
+    fun closeTest(id: Int): Single<JsonObject>
+
+    fun postTestResult(testId: Int, testResult: TestResult): Single<JsonObject>
+
+    fun getTestResult(testId: Int, userId: Int): Single<JsonObject>
+
+    fun getTestResults(id: Int): Single<JsonObject>
+
 }

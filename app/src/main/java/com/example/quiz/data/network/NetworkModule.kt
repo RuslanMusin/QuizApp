@@ -5,6 +5,8 @@ import com.example.quiz.data.network.request.AuthApiRequest
 import com.example.quiz.data.network.request.AuthRequestDecorator
 import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.data.network.request.QuizApiRequestDecorator
+import com.example.quiz.presentation.util.Const.TIME_FORMAT
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -65,9 +67,10 @@ class NetworkModule {
     @Provides
     @Named("AuthRetrofit")
     fun provideAuthRetrofit(@Named("AuthClient") okHttpClient: OkHttpClient): Retrofit {
+        val gson = GsonBuilder().setDateFormat(TIME_FORMAT).create()
         return Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()

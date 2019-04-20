@@ -4,10 +4,11 @@ import com.example.quiz.data.network.exception.NoInternetConnectionException
 import com.example.quiz.data.network.exception.TimeOutException
 import com.example.quiz.data.network.exception.UnknownException
 import com.example.quiz.data.network.exception.domain.DomainException
-import com.example.quiz.presentation.model.auth.LoginResult
+import com.example.quiz.presentation.model.common.ElementId
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.model.user.User
+import com.google.gson.JsonObject
 import io.reactivex.*
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -49,7 +50,7 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
                 .compose(ApiRequestErrorCompletableTransformer())
     }
 
-    override fun getUser(id: String): Single<User> {
+    override fun getUser(id: Int): Single<User> {
         return apiRequest
                 .getUser(id)
                 .compose(ApiRequestErrorSingleTransformer())
@@ -62,7 +63,7 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
 
     }
 
-    override fun updateUser(id: String, curator: User): Single<User> {
+    override fun updateUser(id: Int, curator: User): Single<User> {
         return apiRequest
                 .updateUser(id, curator)
                 .compose(ApiRequestErrorSingleTransformer())
@@ -74,19 +75,65 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
                 .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getTest(id: String): Single<Test> {
+    override fun getTest(id: Int): Single<Test> {
         return apiRequest
             .getTest(id)
             .compose(ApiRequestErrorSingleTransformer())
     }
 
     override fun getTests(): Single<List<Test>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return apiRequest
+            .getTests()
+            .compose(ApiRequestErrorSingleTransformer())
+
     }
 
-    override fun createTest(test: Test): Single<TestResult> {
+    override fun getTestsByUser(id: Int): Single<List<Test>> {
+        return apiRequest
+            .getTestsByUser(id)
+            .compose(ApiRequestErrorSingleTransformer())
+
+    }
+
+    override fun createTest(test: Test): Single<ElementId> {
         return apiRequest
             .createTest(test)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun openTest(id: Int): Single<JsonObject> {
+        return apiRequest
+            .openTest(id)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun closeTest(id: Int): Single<JsonObject> {
+        return apiRequest
+            .closeTest(id)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun postTestResult(id: Int, testResult: TestResult): Single<JsonObject> {
+        return apiRequest
+            .postTestResult(id, testResult)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun getTestResult(testId: Int, userId: Int): Single<JsonObject> {
+        return apiRequest
+            .getTestResult(testId, userId)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun getTestResults(id: Int): Single<JsonObject> {
+        return apiRequest
+            .getTestResults(id)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
+
+    override fun findUser(): Single<User> {
+        return apiRequest
+            .findUser()
             .compose(ApiRequestErrorSingleTransformer())
     }
 }

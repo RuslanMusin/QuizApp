@@ -32,4 +32,7 @@ object Const {
     //Http request
     const val AUTHORIZATION = "Authorization"
     var TOKEN = "Token "
+
+    const val TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
 }

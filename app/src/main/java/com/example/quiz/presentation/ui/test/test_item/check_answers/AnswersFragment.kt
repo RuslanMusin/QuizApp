@@ -199,7 +199,7 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
                 args.putString(TEST_JSON, gsonConverter.toJson(test))
                 activity!!.supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.fragment_container, TestFragment.newInstance(args))
+                        .replace(R.pk.fragment_container, TestFragment.newInstance(args))
                         .addToBackStack("AddQuestionFragment")
                         .commit()        */
             }

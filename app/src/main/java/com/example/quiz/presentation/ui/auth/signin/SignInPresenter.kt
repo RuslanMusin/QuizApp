@@ -39,6 +39,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
                     TOKEN = TOKEN + it.key
+                    findUser()
                     Log.d(TAG_LOG, "Token = $TOKEN")
                     viewState.hideProgressDialog()
                     viewState.createCookie(user.email, user.password)
@@ -47,6 +48,21 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
 
+    }
+
+    private fun findUser() {
+        userRepository
+            .findUser()
+            .compose(PresentationSingleTransformer())
+            .doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }
+            .subscribe({user ->
+                viewState.hideProgressDialog()
+                viewState.createCookie(user.email, user.password)
+                viewState.goToProfile(user)
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
     }
 
     private fun validateForm(email: String, password: String): Boolean {

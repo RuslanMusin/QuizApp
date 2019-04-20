@@ -1,6 +1,5 @@
 package com.example.quiz.presentation.ui.test.test_item.finish
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -13,16 +12,14 @@ import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.ui.test.test_item.check_answers.AnswersPresenter
+import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.util.Const.ANSWERS_TYPE
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.WRONG_ANSWERS
 import com.example.quiz.presentation.util.Const.gson
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_finish_test.*
-import kotlinx.android.synthetic.main.toolbar_test.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -55,11 +52,24 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
        /* (activity as BaseBackActivity).currentTag = TestActivity.FINISH_FRAGMENT
         (activity as ChangeToolbarListener).changeToolbar(FINISH_FRAGMENT,"Результат")*/
 
-        test = gson.fromJson(arguments?.getString(TEST_ITEM),Test::class.java)
-        for(question in test.questions) {
+       test = gson.fromJson(arguments?.getString(TEST_ITEM),Test::class.java)
+       val testSubmit = TestResult()
+       for(question in test.questions) {
             if(question.userRight) {
+                val questionRes = Question()
+                for(answer in question.answers) {
+                    if(answer.userClicked) {
+                        questionRes.answers.add(answer)
+                    }
+                }
                 rightQuestions.add(question)
             } else {
+                val questionRes = Question()
+                for(answer in question.answers) {
+                    if(answer.userClicked) {
+                        questionRes.answers.add(answer)
+                    }
+                }
                 wrongQuestions.add(question)
             }
         }

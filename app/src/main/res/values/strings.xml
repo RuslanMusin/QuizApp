@@ -75,4 +75,13 @@
     <string name="new_test">Новый тест</string>
     <string name="right_answer">Правильный ответ</string>
     <string name="your_answer">Ваш ответ</string>
+    <string name="open_test">Открыть тест</string>
+    <string name="close_test">Закрыть тест</string>
+    <string name="test_opened">Тест открыт</string>
+    <string name="test_closed">Тест закрыт</string>
+    <string name="pass_feedback_next">Основной тест был пройден. Оцените выступление, ответив на пару вопросов</string>
+    <string name="evaluate_lector">Оценить</string>
+    <string name="give_feedback">Отзыв</string>
+    <string name="wait_test_result">Ожидайте результата теста</string>
+
 </resources>

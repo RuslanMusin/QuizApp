@@ -6,4 +6,8 @@ interface TestView: BaseView {
 
     fun setData()
 
+    fun afterTestOpened()
+
+    fun afterTestClosed()
+
 }

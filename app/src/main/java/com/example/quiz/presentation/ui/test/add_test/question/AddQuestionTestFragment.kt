@@ -422,7 +422,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
 
         question!!.description = et_question.text.toString()
         question!!.answers = answers.toMutableList()
-        question.id = number.toString()
+        question.id = number
         question.type = testType
 
     }

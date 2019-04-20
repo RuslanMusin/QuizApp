@@ -27,14 +27,14 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
 
     fun loadTests() {
         testRepository
-            .findByName("3")
+            .findAll()
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
-                val list: MutableList<Test> = ArrayList()
-                list.add(it)
-                viewState.showItems(list)
+               /* val list: MutableList<Test> = ArrayList()
+                list.add(it)*/
+                viewState.showItems(it)
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()

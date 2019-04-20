@@ -11,7 +11,12 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
     @Inject
     lateinit var apiRequest: QuizApiRequest
 
-    override fun findById(id: String): Single<User> {
+    override fun findUser(): Single<User> {
+        return apiRequest
+            .findUser()
+    }
+
+    override fun findById(id: Int): Single<User> {
         return apiRequest
                 .getUser(id)
     }
@@ -21,7 +26,7 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
                 .getUsers()
     }
 
-    override fun update(id: String, curator: User): Single<User> {
+    override fun update(id: Int, curator: User): Single<User> {
         return apiRequest
                 .updateUser(id, curator)
     }

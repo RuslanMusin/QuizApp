@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
 
 class Test : Identified {
 
-    override lateinit var id: String
+    override var id: Int = -1
 
     var name: String? = null
 
@@ -24,7 +24,7 @@ class Test : Identified {
 
     var questions: MutableList<Question> = ArrayList()
     @SerializedName("questions_feedback")
-    var questionsFeedback: MutableList<Question> = ArrayList()
+    var feedbackQuestions: MutableList<Question> = ArrayList()
     lateinit var rightQuestions: List<Question>
 
     lateinit var wrongQuestions: List<Question>

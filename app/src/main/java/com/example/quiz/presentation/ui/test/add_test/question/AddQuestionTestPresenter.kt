@@ -38,7 +38,8 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
-                Log.d(TAG_LOG, "Test id = $it")
+                test.id = it.id
+                Log.d(TAG_LOG, "pk = ${test.id}")
                 viewState.navigateToTest()
             }, {
                 Log.d(TAG_LOG,"error process")

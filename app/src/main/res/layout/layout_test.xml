@@ -72,6 +72,32 @@
                     android:layout_marginBottom="@dimen/normal"
             />
 
+            <TextView
+                    android:id="@+id/tv_open_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_test"
+                    android:textSize="@dimen/text.16"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:layout_marginTop="@dimen/normal"
+                    android:layout_marginBottom="@dimen/normal"
+                    android:visibility="gone"
+            />
+
+            <TextView
+                    android:id="@+id/tv_close_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/close_test"
+                    android:textSize="@dimen/text.16"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:layout_marginTop="@dimen/normal"
+                    android:layout_marginBottom="@dimen/normal"
+                    android:visibility="gone"
+            />
+
             <include layout="@layout/layout_divider"/>
 
             <TextView

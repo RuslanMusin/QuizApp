@@ -1,17 +1,20 @@
-package com.example.quiz.presentation.ui.test.test_item.main
+package com.example.quiz.presentation.ui.test.test_item.feedback
 
 import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
+import com.example.quiz.R
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
+import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.ui.test.test_item.question.QuestionView
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @InjectViewState
-class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
+class FeedbackPresenter @Inject constructor() : BasePresenter<FeedbackView>() {
 
     @Inject
     lateinit var router: Router
@@ -20,37 +23,32 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
     @Inject
     lateinit var exceptionProcessor: ExceptionProcessor
 
-    fun onTestListClick() {
+    fun onTestClick(args: Bundle) {
+        router.newRootChain(Screens.TestScreen(args))
+    }
+
+    fun onFinishClick() {
+//        router.newRootChain(Screens.FinishScreen(args))
         router.newRootChain(Screens.TestListScreen())
     }
 
-    fun onQuestionClick(args: Bundle) {
-        router.newChain(Screens.QuestionScreen(args))
+    fun onNextQuestionClick(args: Bundle) {
+        router.replaceScreen(Screens.QuestionScreen(args))
     }
 
-    fun openTest(id: Int) {
+    fun postTestResult(testId: Int, testResult: TestResult) {
         testRepository
-            .openTest(id)
+            .postTestResult(testId, testResult)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
-                viewState.afterTestOpened()
+                viewState.showSnackBar(R.string.wait_test_result)
+                onFinishClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
     }
 
-    fun closeTest(id: Int) {
-        testRepository
-            .closeTest(id)
-            .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
-            .subscribe({
-                viewState.afterTestClosed()
-            }, {
-                viewState.showSnackBar(exceptionProcessor.processException(it))
-            }).disposeWhenDestroy()    }
 
 }

@@ -103,13 +103,13 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
 
     private fun goToLogin() {
         presenter.onSignInCommandClick()
-//        Navigation.findNavController(btn_login).navigate(R.id.action_signUpFragment_to_loginFragment2)
+//        Navigation.findNavController(btn_login).navigate(R.pk.action_signUpFragment_to_loginFragment2)
     }
 
     override fun goToProfile(user: User) {
         currentUser = user
         presenter.onProfileCommandClick()
-//        Navigation.findNavController(btn_sign_up).navigate(R.id.action_signUpFragment_to_studentFragment2)
+//        Navigation.findNavController(btn_sign_up).navigate(R.pk.action_signUpFragment_to_studentFragment2)
     }
 
     override fun onBackPressed(): Boolean {
