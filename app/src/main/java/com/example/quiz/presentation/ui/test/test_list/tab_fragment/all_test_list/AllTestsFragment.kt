@@ -121,7 +121,7 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
 
     override fun onItemClick(item: Test) {
         val args = Bundle()
-        args.putString(Const.TEST_ITEM, gson.toJson(item))
+        args.putString(Const.TEST_ITEM, item.id.toString())
         presenter.onTestClick(args)
     }
 

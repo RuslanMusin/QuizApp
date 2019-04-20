@@ -11,4 +11,7 @@ interface AuthApiRequest {
     @POST("auth/login/")
     fun login(@Body user: User): Single<LoginResult>
 
+    @POST("auth/register/")
+    fun signUp(@Body user: User): Single<User>
+
 }

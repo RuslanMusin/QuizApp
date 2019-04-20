@@ -1,6 +1,7 @@
 package com.example.quiz.presentation.ui.auth.signup
 
 import android.text.TextUtils
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.data.repository.auth.AuthRepository
@@ -8,6 +9,7 @@ import com.example.quiz.data.repository.user.UserRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -33,10 +35,26 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
-                    viewState.goToProfile(it)
+                    Const.currentUser = user
+                    login(user)
+                    onTestListClick()
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
+    }
+
+    private fun login(user: User) {
+        authRepository
+            .login(user)
+            .compose(PresentationSingleTransformer())
+            .doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }
+            .subscribe({
+                Const.TOKEN = Const.TOKEN + it.key
+                onTestListClick()
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
     }
 
     private fun validateForm(user: User): Boolean {
@@ -67,7 +85,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
         router.exit()
     }
 
-    fun onProfileCommandClick() {
+    fun onTestListClick() {
         router.newRootScreen(Screens.TestListScreen())
     }
 

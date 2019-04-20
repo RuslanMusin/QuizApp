@@ -255,10 +255,10 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         }
     }
 
-    override fun navigateToTest() {
+    override fun navigateToTest(id: Int) {
 //        removeStackDownTo()
         val args = Bundle()
-        args.putString(TEST_ITEM, gson.toJson(test))
+        args.putString(TEST_ITEM, id.toString())
         presenter.onTestClick(args)
     }
 

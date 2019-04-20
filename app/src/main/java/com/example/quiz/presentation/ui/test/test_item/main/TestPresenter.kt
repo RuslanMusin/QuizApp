@@ -28,6 +28,19 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
         router.newChain(Screens.QuestionScreen(args))
     }
 
+    fun findTest(testId: Int) {
+        testRepository
+            .findById(testId)
+            .compose(PresentationSingleTransformer())
+            .doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }
+            .subscribe({
+                viewState.setData(it)
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
+    }
+
     fun openTest(id: Int) {
         testRepository
             .openTest(id)

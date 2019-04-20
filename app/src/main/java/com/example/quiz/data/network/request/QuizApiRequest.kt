@@ -14,8 +14,7 @@ interface QuizApiRequest {
     @POST("auth/logout/")
     fun logout(): Completable
 
-    @POST("auth/register/")
-    fun signUp(@Body user: User): Single<User>
+
 
     @GET("curators/{curator_id}")
     fun getUser(@Path(value = "curator_id") id: Int): Single<User>

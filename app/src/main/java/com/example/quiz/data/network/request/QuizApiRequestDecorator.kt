@@ -69,11 +69,7 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
                 .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun signUp(user: User): Single<User> {
-        return apiRequest
-                .signUp(user)
-                .compose(ApiRequestErrorSingleTransformer())
-    }
+
 
     override fun getTest(id: Int): Single<Test> {
         return apiRequest

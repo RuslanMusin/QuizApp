@@ -47,4 +47,10 @@ class AuthRequestDecorator(val authApiRequest: AuthApiRequest) : AuthApiRequest 
             .login(user)
             .compose(ApiRequestErrorSingleTransformer())
     }
+
+    override fun signUp(user: User): Single<User> {
+        return authApiRequest
+            .signUp(user)
+            .compose(ApiRequestErrorSingleTransformer())
+    }
 }

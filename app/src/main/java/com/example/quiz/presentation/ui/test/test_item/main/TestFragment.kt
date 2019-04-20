@@ -62,21 +62,22 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_test, container, false)
 
-        val testStr: String? = arguments?.getString(TEST_ITEM)
-        test = gson.fromJson(testStr,Test::class.java)
-        Log.d(TAG_LOG, "test json = \n$testStr")
+        val testId: Int? = arguments?.getString(TEST_ITEM)?.toInt()
+        testId?.let { presenter.findTest(it) }
+        /*test = gson.fromJson(testId,Test::class.java)
+        Log.d(TAG_LOG, "test json = \n$testId")*/
         return view
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews(view)
         setListeners()
-        setData()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun setData() {
+    override fun setData(test: Test) {
+        this.test = test
+        initViews()
         expand_text_view.text = test.description
         tv_name.text = test.name
         tv_questions.text = test.questions.size.toString()
@@ -89,7 +90,7 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         }
     }
 
-    private fun initViews(view: View) {
+    private fun initViews() {
         setActionBar(toolbar)
         toolbar.title = test.name
         toolbar.setNavigationOnClickListener { presenter.onTestListClick() }
