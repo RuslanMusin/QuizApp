@@ -4,8 +4,6 @@ import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
-import com.example.quiz.presentation.model.test.TestResult
-import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router

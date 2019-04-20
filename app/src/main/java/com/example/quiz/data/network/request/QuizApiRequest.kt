@@ -3,6 +3,7 @@ package com.example.quiz.data.network.request
 import com.example.quiz.presentation.model.common.ElementId
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
+import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.model.user.User
 import com.google.gson.JsonObject
 import io.reactivex.Completable
@@ -45,16 +46,16 @@ interface QuizApiRequest {
 
     @POST("test/{test_id}/submit")
     fun postTestResult(@Path(value = "test_id") id: Int,
-                       @Body testResult: TestResult): Single<JsonObject>
+                       @Body testSubmit: TestSubmit): Single<JsonObject>
 
     @GET("test/{test_id}/result")
     fun getTestResults(@Path(value = "test_id") id: Int): Single<JsonObject>
 
     @GET("test/{test_id}/result/{user_id}")
     fun getTestResult(@Path(value = "test_id") testId: Int,
-                      @Path(value = "user_id") userId: Int): Single<JsonObject>
+                      @Path(value = "user_id") userId: Int): Single<TestResult>
 
-    @GET("auth/user/")
+    @GET("auth/user")
     fun findUser(): Single<User>
 
 }

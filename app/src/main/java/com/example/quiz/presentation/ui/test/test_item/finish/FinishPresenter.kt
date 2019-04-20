@@ -31,7 +31,7 @@ class FinishPresenter @Inject constructor() : BasePresenter<FinishView>() {
        /* AppHelper.currentUser?.let {user ->
             val absId = test.card?.cardId
             absId?.let {
-                cardRepository.findMyAbstractCardStates(absId, user.pk).subscribe { cards ->
+                cardRepository.findMyAbstractCardStates(absId, user.id).subscribe { cards ->
                     testRepository.finishTest(test, user, cards).subscribe() }
                 }
 

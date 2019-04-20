@@ -20,8 +20,7 @@ import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Answer
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.model.test.TestResult
-import com.example.quiz.presentation.ui.test.test_item.question.QuestionFragment
+import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.util.Const
 import kotlinx.android.synthetic.main.fragment_question.*
 import kotlinx.android.synthetic.main.layout_item_add_text_question.*
@@ -115,6 +114,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     private fun setTextAnswer() {
         layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
         changeButtons()
+        question.answers[0].userClicked = true
     }
 
     private fun setStartAnswers() {
@@ -200,8 +200,8 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
         }
     }
 
-    private fun getTestResult(): TestResult {
-        val testResult = TestResult()
+    private fun getTestResult(): TestSubmit {
+        val testResult = TestSubmit()
         var questionRes: Question
         for(question in test.questions) {
             questionRes = Question()
@@ -247,7 +247,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     companion object {
 
         fun newInstance(args: Bundle): Fragment {
-            val fragment = QuestionFragment()
+            val fragment = FeedbackFragment()
             fragment.arguments = args
             return fragment
         }

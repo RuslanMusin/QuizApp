@@ -22,7 +22,6 @@ import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Answer
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
@@ -123,6 +122,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     private fun setTextAnswer() {
         layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
         changeButtons()
+        question.answers[0].userClicked = true
     }
 
     private fun setStartAnswers() {

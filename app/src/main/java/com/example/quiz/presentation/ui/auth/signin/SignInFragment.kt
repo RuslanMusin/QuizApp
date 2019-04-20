@@ -103,19 +103,12 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
             }
 
             R.id.iv_cover -> {
-                et_email.setText("Прохор.Куклев.Брониславович")
-                et_password.setText("Прохор.Куклев.Брониславович")
+                et_email.setText("ryst@ma.ru")
+                et_password.setText("rystam")
             }
 
             R.id.btn_sign_up -> signUp(view)
         }
-    }
-
-    override fun goToProfile(user: User) {
-        Const.currentUser = user
-        Log.d(TAG_LOG,"go to Profile")
-        Log.d(TAG_LOG, "current user = ${user.email}")
-        presenter.onNewRootCommandClick()
     }
 
     override fun showError() {

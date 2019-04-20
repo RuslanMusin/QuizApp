@@ -14,7 +14,7 @@
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
 
     <ImageButton
         android:id="@+id/btn_back"

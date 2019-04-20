@@ -7,6 +7,7 @@ import com.example.quiz.data.network.exception.domain.DomainException
 import com.example.quiz.presentation.model.common.ElementId
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
+import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.model.user.User
 import com.google.gson.JsonObject
 import io.reactivex.*
@@ -109,13 +110,13 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun postTestResult(id: Int, testResult: TestResult): Single<JsonObject> {
+    override fun postTestResult(id: Int, testSubmit: TestSubmit): Single<JsonObject> {
         return apiRequest
-            .postTestResult(id, testResult)
+            .postTestResult(id, testSubmit)
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getTestResult(testId: Int, userId: Int): Single<JsonObject> {
+    override fun getTestResult(testId: Int, userId: Int): Single<TestResult> {
         return apiRequest
             .getTestResult(testId, userId)
             .compose(ApiRequestErrorSingleTransformer())

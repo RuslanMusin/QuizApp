@@ -9,8 +9,10 @@ import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TOKEN
+import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -40,10 +42,6 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .subscribe({
                     TOKEN = TOKEN + it.key
                     findUser()
-                    Log.d(TAG_LOG, "Token = $TOKEN")
-                    viewState.hideProgressDialog()
-                    viewState.createCookie(user.email, user.password)
-                    viewState.goToProfile(user)
                 }, {
                     viewState.showErrorDialog(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
@@ -58,8 +56,9 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({user ->
                 viewState.hideProgressDialog()
-                viewState.createCookie(user.email, user.password)
-                viewState.goToProfile(user)
+                Const.currentUser = user
+                Log.d(TAG_LOG, "userId = ${currentUser.id}")
+                onNewRootCommandClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()

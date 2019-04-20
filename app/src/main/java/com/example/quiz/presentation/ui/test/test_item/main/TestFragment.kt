@@ -82,10 +82,26 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         tv_name.text = test.name
         tv_questions.text = test.questions.size.toString()
 
-        test.owner?.pk?.let {
-            if(it.equals(currentUser.pk)) {
+        Log.d(TAG_LOG, "owner id = ${test.owner?.id} and userId = ${currentUser.id}")
+        test.owner?.id?.let {
+            if(it == currentUser.id) {
+                Log.d(TAG_LOG, "owner test")
                 tv_do_test.visibility = View.GONE
-                tv_open_test.visibility = View.VISIBLE
+                if(test.dateOpen != null) {
+                    tv_open_test.visibility = View.GONE
+                    tv_close_test.visibility = View.VISIBLE
+                } else {
+                    tv_open_test.visibility = View.VISIBLE
+                    tv_close_test.visibility = View.GONE
+                }
+                if(test.dateClose != null) {
+                    li_show_result.visibility = View.VISIBLE
+                }
+            } else {
+                if(test.dateClose != null) {
+                    li_show_result.visibility = View.VISIBLE
+                    li_do_test.visibility = View.GONE
+                }
             }
         }
     }
@@ -99,6 +115,8 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     private fun setListeners() {
         tv_do_test.setOnClickListener(this)
         tv_open_test.setOnClickListener(this)
+        tv_close_test.setOnClickListener(this)
+        tv_show_result.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -118,6 +136,18 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
 
             R.id.tv_close_test -> {
                 presenter.closeTest(test.id)
+            }
+
+            R.id.tv_show_result -> showResult()
+        }
+    }
+
+    private fun showResult() {
+        currentUser.id.let {
+            if(it == test.owner?.id) {
+                presenter.showResultOverview(test.id)
+            } else {
+                presenter.showResult(test.id, it)
             }
         }
     }

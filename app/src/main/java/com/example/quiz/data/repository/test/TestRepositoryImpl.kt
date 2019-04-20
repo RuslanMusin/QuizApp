@@ -4,6 +4,7 @@ import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.presentation.model.common.ElementId
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
+import com.example.quiz.presentation.model.test.TestSubmit
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import javax.inject.Inject
@@ -43,12 +44,12 @@ class TestRepositoryImpl @Inject constructor() : TestRepository {
             .closeTest(id)
     }
 
-    override fun postTestResult(testId: Int, testResult: TestResult): Single<JsonObject> {
+    override fun postTestResult(testId: Int, testSubmit: TestSubmit): Single<JsonObject> {
         return apiRequest
-            .postTestResult(testId, testResult)
+            .postTestResult(testId, testSubmit)
     }
 
-    override fun getTestResult(testId: Int, userId: Int): Single<JsonObject> {
+    override fun getTestResult(testId: Int, userId: Int): Single<TestResult> {
         return apiRequest
             .getTestResult(testId, userId)
     }
