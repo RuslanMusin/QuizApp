@@ -1,5 +1,6 @@
 package com.example.quiz.data.network.request
 
+import com.example.quiz.data.network.error.LoginSingleErrorFunction
 import com.example.quiz.data.network.exception.NoInternetConnectionException
 import com.example.quiz.data.network.exception.TimeOutException
 import com.example.quiz.data.network.exception.UnknownException
@@ -45,6 +46,7 @@ class AuthRequestDecorator(val authApiRequest: AuthApiRequest) : AuthApiRequest 
     override fun login(user: User): Single<LoginResult> {
         return authApiRequest
             .login(user)
+            .onErrorResumeNext(LoginSingleErrorFunction())
             .compose(ApiRequestErrorSingleTransformer())
     }
 }
