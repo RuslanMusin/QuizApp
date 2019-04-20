@@ -71,7 +71,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:background="@color/primary"
-            android:textColor="@color/white"
+            android:textColor="@color/colorWhite"
             android:text="@string/set_answer"/>
 
         <android.support.v7.widget.AppCompatButton
@@ -83,7 +83,7 @@
             android:padding="12dp"
             android:visibility="gone"
             android:background="@color/primary"
-            android:textColor="@color/white"
+            android:textColor="@color/colorWhite"
             android:text="@string/finish_questions"/>
 
     </LinearLayout>

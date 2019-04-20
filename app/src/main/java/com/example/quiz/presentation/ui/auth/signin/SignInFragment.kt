@@ -42,6 +42,8 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
     }
 
     private fun initViews() {
+        setActionBar(toolbar)
+        setToolbarTitle(R.string.toolbar_login)
         setListeners()
     }
 
@@ -149,9 +151,6 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
             return fragment
         }
 
-        fun newInstance(): Fragment {
-            val fragment = SignInFragment()
-            return fragment
-        }
+        fun newInstance() = SignInFragment()
     }
 }

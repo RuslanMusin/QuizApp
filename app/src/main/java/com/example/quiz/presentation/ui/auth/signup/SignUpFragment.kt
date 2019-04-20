@@ -38,6 +38,8 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
     }
 
     private fun initViews() {
+        setActionBar(toolbar)
+        setToolbarTitle(R.string.toolbar_create_acc)
 //        setBottomVisibility(false)
         setListeners()
     }

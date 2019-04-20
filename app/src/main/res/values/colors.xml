@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="white">#FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
     <color name="black">#000000</color>
 
     <color name="primary">#F44336</color>
@@ -20,5 +20,9 @@
     <color name="greensea">#16a085</color>
     <color name="nephritis">#27ae60</color>
     <color name="belizehole">#2980b9</color>
+
+    <color name="colorMain">#273e52</color>
+    <color name="colorSecondary">#92a7a7</color>
+    <color name="colorTertiary">#2c3e50</color>
 </resources>
 

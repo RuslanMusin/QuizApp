@@ -13,6 +13,15 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:dialogTheme">@style/Dialog</item>
+    </style>
+
+    <style name="Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">60%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="colorControlNormal">@color/colorTertiary</item>
+        <item name="android:background">@drawable/dialog_background</item>
     </style>
 
 </resources>

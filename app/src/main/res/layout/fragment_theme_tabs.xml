@@ -35,7 +35,7 @@
         android:layout_gravity="top"
         android:background="?attr/colorPrimary"
         app:tabMode="fixed"
-        app:tabTextColor="@color/white"
+        app:tabTextColor="@color/colorWhite"
         app:tabGravity="fill"
         />
 
