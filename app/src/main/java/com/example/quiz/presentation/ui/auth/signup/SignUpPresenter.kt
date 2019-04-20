@@ -90,7 +90,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     }
 
     fun onBackCommandClick() {
-        router.finishChain()
+        router.exit()
     }
 
 }

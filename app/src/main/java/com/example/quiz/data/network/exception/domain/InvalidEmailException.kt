@@ -1,6 +1,6 @@
 package com.example.quiz.data.network.exception.domain
 
-open class DomainException: Exception {
+class InvalidEmailException : DomainException {
     constructor() : super()
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable?) : super(message, cause)

@@ -9,13 +9,16 @@ import com.example.quiz.R
 interface BaseView: MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showProgressDialog(message: String)
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showProgressDialog(messageId: Int = R.string.progress_message)
+    fun showProgressDialog()
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun hideProgressDialog()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showErrorDialog(errorText: String)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showErrorDialog(errorText: Int)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showSnackBar(message: String)

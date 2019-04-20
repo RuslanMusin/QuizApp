@@ -22,7 +22,6 @@ import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.gson
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_add_test.*
-import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.layout_test.*
 import javax.inject.Inject
 import javax.inject.Provider

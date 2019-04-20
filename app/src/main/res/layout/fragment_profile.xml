@@ -1,74 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:id="@+id/main_content"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="true"
->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:elevation="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-            android:orientation="vertical"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="56dp"
+            android:orientation="vertical"
             android:paddingLeft="24dp"
+            android:paddingTop="56dp"
             android:paddingRight="24dp">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_cover"
-            android:src="@drawable/student"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="4dp"
-            android:layout_gravity="center_horizontal"
-            android:alpha="1"
-            app:civ_border_color="@color/black"
-            app:civ_border_width="1dp"
-    />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:alpha="1"
+                android:src="@drawable/student"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="1dp" />
 
-    <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/authorized"
-            android:textSize="@dimen/text.24"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-    />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:text="@string/authorized"
+                android:textSize="@dimen/text.24" />
 
-        <android.support.v7.widget.AppCompatButton
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_quit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="12dp"
                 android:background="@color/primary"
-                android:textColor="@color/white"
-                android:text="@string/quit"/>
+                android:padding="12dp"
+                android:text="@string/quit"
+                android:textColor="@color/colorWhite" />
 
-    </LinearLayout>
+        </LinearLayout>
 
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

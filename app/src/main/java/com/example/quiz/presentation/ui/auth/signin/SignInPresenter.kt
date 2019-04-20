@@ -45,7 +45,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                     viewState.createCookie(user.email, user.password)
                     viewState.goToProfile(user)
                 }, {
-                    viewState.showSnackBar(exceptionProcessor.processException(it))
+                    viewState.showErrorDialog(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
 
     }
@@ -70,7 +70,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     }
 
     private fun checkEmail(email: String): Boolean {
-        return if (TextUtils.isEmpty(email)) {
+        return if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             viewState.showEmailError(true)
             false
         } else {
