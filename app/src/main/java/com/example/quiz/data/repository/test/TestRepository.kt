@@ -22,9 +22,9 @@ interface TestRepository {
 
     fun closeTest(id: Int): Single<JsonObject>
 
-    fun postTestResult(testId: Int, testSubmit: TestSubmit): Single<JsonObject>
+    fun postTestResult(testId: Int, testSubmit: TestSubmit): Single<TestSubmit>
 
-    fun getParticipantTestResult(testId: Int, userId: Int): Single<JsonObject>
+    fun getParticipantTestResult(testId: Int, userId: Int): Single<TestResult>
 
     fun getAuthorTestResults(id: Int): Single<AuthorResult>
 

@@ -1,4 +1,4 @@
-package com.example.quiz.presentation.ui.test.test_item.feedback
+package com.example.quiz.presentation.ui.main.test.test_item.feedback
 
 import android.content.Context
 import android.os.Bundle

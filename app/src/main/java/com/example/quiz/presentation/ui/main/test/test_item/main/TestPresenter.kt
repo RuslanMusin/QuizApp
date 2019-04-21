@@ -53,7 +53,7 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
 
     fun showResult(testId: Int, userId: Int) {
         testRepository
-            .getTestResult(testId, userId)
+            .getParticipantTestResult(testId, userId)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
@@ -70,7 +70,7 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
 
     fun showResultOverview(testId: Int) {
         testRepository
-            .getTestResults(testId)
+            .getAuthorTestResults(testId)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }

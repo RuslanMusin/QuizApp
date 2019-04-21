@@ -11,8 +11,8 @@ class AuthorQuestion {
     val type: String? = null
     @field:SerializedName("answers")
     val answers: List<AuthorAnswer>? = null
-    @field:SerializedName("answer_number")
+    @field:SerializedName("answers_number")
     val tryAnswerNumber: Int? = null
-    @field:SerializedName("right_answer_number")
-    val rightTryAnswerNumber: Int? = null
+    @field:SerializedName("right_answers_number")
+    val rightAnswerNumber: Int? = null
 }

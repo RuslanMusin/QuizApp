@@ -16,6 +16,7 @@ import com.example.quiz.presentation.ui.main.test.test_item.finish.FinishFragmen
 import com.example.quiz.presentation.ui.main.test.test_item.main.TestFragment
 import com.example.quiz.presentation.ui.main.test.test_item.question.QuestionFragment
 import com.example.quiz.presentation.ui.main.test.test_list.TestListFragment
+import com.example.quiz.presentation.ui.main.testresult.author.AuthorResultScreen
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
@@ -98,4 +99,5 @@ object Screens {
         }
     }
 
+    fun getAuthorResultScreen(): AuthorResultScreen = AuthorResultScreen()
 }

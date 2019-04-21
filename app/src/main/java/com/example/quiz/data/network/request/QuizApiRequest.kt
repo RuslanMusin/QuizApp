@@ -48,8 +48,8 @@ interface QuizApiRequest {
     @POST("test/{test_id}/submit")
     fun postTestResult(
             @Path("test_id") id: Int,
-            @Body testResult: TestResult
-    ): Single<JsonObject>
+            @Body testResult: TestSubmit
+    ): Single<TestSubmit>
 
     @GET("test/{test_id}/result")
     fun getAuthorTestResults(@Path("test_id") id: Int): Single<AuthorResult>
@@ -58,7 +58,7 @@ interface QuizApiRequest {
     fun getParticipantTestResult(
             @Path("test_id") testId: Int,
             @Path("user_id") userId: Int
-    ): Single<JsonObject>
+    ): Single<TestResult>
 
     @GET("auth/user")
     fun findUser(): Single<User>

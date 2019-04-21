@@ -24,5 +24,6 @@
     <color name="colorMain">#273e52</color>
     <color name="colorSecondary">#92a7a7</color>
     <color name="colorTertiary">#2c3e50</color>
+    <color name="colorDivider">#e1e7e8</color>
 </resources>
 

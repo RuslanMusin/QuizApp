@@ -1,4 +1,4 @@
-package com.example.quiz.presentation.ui.test.add_test.question
+package com.example.quiz.presentation.ui.main.test.add.question
 
 import android.content.SharedPreferences
 import android.os.Bundle

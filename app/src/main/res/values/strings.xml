@@ -91,4 +91,7 @@
     <string name="toolbar_login">Вход</string>
     <string name="toolbar_create_acc">Регистрация</string>
     <string name="show_result">Посмотреть результат</string>
+    <string name="graph_axis">X - номер вопроса\nY - кол-во правильных ответов</string>
+    <string name="repeat">Повторить</string>
+    <string name="download_error">Произошла ошибка при загрузке данных</string>
 </resources>

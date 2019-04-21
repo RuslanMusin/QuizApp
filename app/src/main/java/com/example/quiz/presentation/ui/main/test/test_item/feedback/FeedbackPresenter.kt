@@ -1,4 +1,4 @@
-package com.example.quiz.presentation.ui.test.test_item.feedback
+package com.example.quiz.presentation.ui.main.test.test_item.feedback
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,7 @@ import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.ui.main.test.test_item.feedback.FeedbackView
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.gson
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor

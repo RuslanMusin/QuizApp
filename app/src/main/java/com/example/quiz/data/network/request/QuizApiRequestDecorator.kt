@@ -111,13 +111,13 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun postTestResult(id: Int, testSubmit: TestSubmit): Single<JsonObject> {
+    override fun postTestResult(id: Int, testSubmit: TestSubmit): Single<TestSubmit> {
         return apiRequest
             .postTestResult(id, testSubmit)
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getParticipantTestResult(testId: Int, userId: Int): Single<JsonObject> {
+    override fun getParticipantTestResult(testId: Int, userId: Int): Single<TestResult> {
         return apiRequest
             .getParticipantTestResult(testId, userId)
             .compose(ApiRequestErrorSingleTransformer())

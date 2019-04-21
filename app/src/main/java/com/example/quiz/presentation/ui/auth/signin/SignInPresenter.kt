@@ -93,7 +93,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     }
 
     fun onProfileClick() {
-        router.newRootScreen(Screens.ProfileScreen())
+        router.newRootScreen(Screens.getAuthorResultScreen())
     }
 
     fun onBackCommandClick() {

@@ -14,6 +14,8 @@ import com.example.quiz.presentation.ui.main.test.test_item.question.QuestionFra
 import com.example.quiz.presentation.ui.main.test.test_list.TestListFragment
 import com.example.quiz.presentation.ui.main.test.test_list.tab_fragment.all_test_list.AllTestsFragment
 import com.example.quiz.presentation.ui.main.test.test_list.tab_fragment.ended_test_list.EndedTestsFragment
+import com.example.quiz.presentation.ui.main.testresult.author.AuthorResultFragment
+import com.example.quiz.presentation.ui.main.testresult.author.AuthorResultModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -61,5 +63,8 @@ abstract class MainBuilder {
 
     @ContributesAndroidInjector
     abstract fun buildBeforeFeedbackFragment(): BeforeFeedbackFragment
+
+    @ContributesAndroidInjector(modules = [AuthorResultModule::class])
+    abstract fun buildAuthorResultFragment(): AuthorResultFragment
 
 }
