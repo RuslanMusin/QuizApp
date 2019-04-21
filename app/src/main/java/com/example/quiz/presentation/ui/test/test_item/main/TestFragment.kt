@@ -83,6 +83,7 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         initViews()
         expand_text_view.text = test.description
         tv_name.text = test.name
+        tv_id.text = test.id.toString()
         tv_questions.text = test.questions.size.toString()
         tv_date_creation.text = test.dateCreation?.let { getStringFromDate(it) }
 
@@ -100,15 +101,15 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
                 Log.d(TAG_LOG, "owner test")
                 tv_do_test.visibility = View.GONE
                 li_show_answers.visibility = View.VISIBLE
-                if(test.dateOpen == null) {
-                    tv_open_test.visibility = View.VISIBLE
-                    tv_close_test.visibility = View.GONE
-                } else {
+                if(test.dateClose != null) {
+                    li_do_test.visibility = View.GONE
+                    li_show_result.visibility = View.VISIBLE
+                } else if(test.dateOpen != null) {
                     tv_open_test.visibility = View.GONE
                     tv_close_test.visibility = View.VISIBLE
-                }
-                if(test.dateClose != null) {
-                    li_show_result.visibility = View.VISIBLE
+                } else {
+                    tv_open_test.visibility = View.VISIBLE
+                    tv_close_test.visibility = View.GONE
                 }
             } else {
                 if(test.dateClose != null) {
@@ -116,6 +117,7 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
                     li_do_test.visibility = View.GONE
                 }
             }
+            hideProgressDialog()
         }
     }
 

@@ -42,7 +42,6 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             .findById(testId)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 it.questions.sortBy { it.id }
                 viewState.setData(it)
@@ -56,7 +55,6 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             .getTestResult(testId, userId)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 Log.d(TAG_LOG, "test result = \n${gson.toJson(it)}")
                 it.questions.sortBy { it.id }

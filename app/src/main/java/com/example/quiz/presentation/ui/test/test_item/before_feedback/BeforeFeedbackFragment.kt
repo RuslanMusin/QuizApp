@@ -47,7 +47,6 @@ class BeforeFeedbackFragment : BaseFragment(), BeforeFeedbackView, BackButtonLis
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_before_feedback, container, false)
 
-
         val testStr: String? = arguments?.getString(Const.TEST_ITEM)
         test = Const.gson.fromJson(testStr, Test::class.java)
 

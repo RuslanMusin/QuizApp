@@ -104,6 +104,60 @@
             android:text="@string/sign_up"
             android:textColor="@color/colorWhite" />
 
+        <TextView
+                android:id="@+id/tv_ruslan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textSize="@dimen/text.18"
+                android:text="rast@ma.ru"
+        />
+
+        <TextView
+                android:id="@+id/tv_valera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textSize="@dimen/text.18"
+                android:text="valera@ma.ru"
+        />
+
+        <TextView
+                android:id="@+id/tv_azat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textSize="@dimen/text.18"
+                android:text="azat@ma.ru"
+        />
+
+        <TextView
+                android:id="@+id/tv_aygul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textSize="@dimen/text.18"
+                android:text="aygul@ma.ru"
+        />
+
+        <TextView
+                android:id="@+id/tv_ivan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textSize="@dimen/text.18"
+                android:text="ivan@ma.ru"
+        />
+
+        <TextView
+                android:id="@+id/tv_damir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textSize="@dimen/text.18"
+                android:text="damir@ma.ru"
+        />
+
     </LinearLayout>
 </ScrollView>
 

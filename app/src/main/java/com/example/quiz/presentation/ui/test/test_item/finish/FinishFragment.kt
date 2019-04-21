@@ -38,21 +38,8 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
     var wrongQuestions: MutableList<QuestionResult> = ArrayList()
     var procent: Long = 0
 
-   /* override fun onBackPressed() {
-       *//* val args: Bundle = Bundle()
-        args.putString(TEST_JSON, gsonConverter.toJson(test))
-        val fragment = FinishFragment.newInstance(args)
-        (activity as BaseBackActivity).changeFragment(fragment)*//*
-    }
-
-    override fun onOk() {
-        btn_finish_test.performClick()
-    }*/
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_finish_test, container, false)
-       /* (activity as BaseBackActivity).currentTag = TestActivity.FINISH_FRAGMENT
-        (activity as ChangeToolbarListener).changeToolbar(FINISH_FRAGMENT,"Результат")*/
-
        test = gson.fromJson(arguments?.getString(TEST_ITEM),TestResult::class.java)
        for(question in test.questions) {
            if(question.type.equals(TEST_TEXT_TYPE)) {
@@ -107,7 +94,8 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
         setToolbar()
         tv_right_answers.text = test.rightQuestions.size.toString()
         tv_wrong_answers.text = test.wrongQuestions.size.toString()
-//        setCardText()
+
+        hideProgressDialog()
 
         btn_finish_test.setOnClickListener(this)
         li_wrong_answers.setOnClickListener(this)
@@ -118,19 +106,7 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
 
     private fun setToolbar() {
         setActionBar(toolbar)
-//        setActionBarTitle(R.string.test_result)
     }
-
-   /* fun setCardText() {
-        procent = Math.round((test.rightQuestions.size.toDouble() / test.questions.size.toDouble()) * 100)
-        Log.d(TAG_LOG, "procent = $procent")
-        if (procent >= 80) {
-            Log.d(TAG_LOG, "finish it")
-            presenter.finishTest(test)
-
-
-        }
-    }*/
 
 
     override fun onClick(v: View?) {

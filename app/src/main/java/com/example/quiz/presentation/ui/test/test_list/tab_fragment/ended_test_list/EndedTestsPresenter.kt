@@ -27,36 +27,11 @@ class EndedTestsPresenter @Inject constructor() : BasePresenter<EndedTestsView>(
         testRepository
             .findByUser(currentUser.id)
             .compose(PresentationSingleTransformer())
-            /*.doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }*/
             .subscribe({
-                viewState.hideProgressDialog()
                 viewState.showItems(it)
             }, {
 //                viewState.showSnackBar(exceptionProcessor.processException(it))
-                viewState.hideProgressDialog()
             }).disposeWhenDestroy()
-     /*   val type = object : TypeToken<List<Test>>(){}.type
-        val listStr = prefs.getString(Const.TESTS, "")
-        var list: MutableList<Test> = ArrayList()
-        if(!listStr.equals("")) {
-            list = Const.gson.fromJson(listStr, type)
-        }
-        val userList: MutableList<Test> = ArrayList()
-        var testStr = ""
-        var userTest = Test()
-        var key = ""
-        for(item in list) {
-            key = "${currentUser.email}${item.name}"
-            testStr = prefs.getString(key, "")
-            Log.d(TAG_LOG, "testStr = $testStr")
-            if(!testStr.equals("")) {
-                userTest = gson.fromJson(testStr, Test::class.java)
-                userList.add(userTest)
-            }
-        }
-        Log.d(TAG_LOG, "userList.size = ${userList.size}")
-        viewState.showItems(userList)*/
     }
 
     fun onTestClick(args: Bundle) {

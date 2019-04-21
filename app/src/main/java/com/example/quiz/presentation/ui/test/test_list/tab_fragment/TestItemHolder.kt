@@ -10,16 +10,20 @@ import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.MAX_LENGTH
 import com.example.quiz.presentation.util.Const.cutLongDescription
 import kotlinx.android.synthetic.main.item_test.view.*
+import kotlinx.android.synthetic.main.layout_test.*
 
 class TestItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(item: Test) {
         itemView.tv_name.text = item.name
-        itemView.tv_description.text = item.description?.let { cutLongDescription(it, MAX_LENGTH) }
-        if(item.dateOpen != null && item.dateClose == null) {
-            itemView.tv_open_test.text = itemView.context.getString(R.string.yes)
+        itemView.tv_id.text = item.id.toString()
+
+        if(item.dateClose != null) {
+            itemView.tv_status.text = itemView.context.getString(R.string.test_closed)
+        } else if(item.dateOpen != null) {
+            itemView.tv_status.text = itemView.context.getString(R.string.test_opened)
         } else {
-            itemView.tv_open_test.text = itemView.context.getString(R.string.no)
+            itemView.tv_status.text = itemView.context.getString(R.string.test_not_started)
         }
     }
 

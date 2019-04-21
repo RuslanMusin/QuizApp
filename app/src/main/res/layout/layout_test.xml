@@ -46,6 +46,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normal"
+                    android:text="@string/test_id"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text.16" />
+
+            <TextView
+                    android:id="@+id/tv_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small"
+                    android:layout_marginBottom="@dimen/small"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/text.14"
+                    tools:text="Yes" />
+
+            <include layout="@layout/layout_divider"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal"
                     android:text="@string/test_questions"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/text.16" />

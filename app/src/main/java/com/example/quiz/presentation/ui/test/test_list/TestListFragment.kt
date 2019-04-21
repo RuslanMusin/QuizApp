@@ -52,6 +52,7 @@ class TestListFragment : BaseFragment(), TestListView, BackButtonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        hideProgressDialog()
     }
 
     private fun initViews() {

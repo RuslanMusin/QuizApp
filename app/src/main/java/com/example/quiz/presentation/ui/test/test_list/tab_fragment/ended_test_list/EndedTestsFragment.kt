@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,18 +120,29 @@ class EndedTestsFragment : BaseFragment(), EndedTestsView, View.OnClickListener 
 
     override fun onItemClick(item: Test) {
         val args = Bundle()
-        args.putString(Const.TEST_ITEM, gson.toJson(item))
+        args.putString(Const.TEST_ITEM, item.id.toString())
         presenter.onTestClick(args)
     }
 
     override fun findByQuery(query: String) {
+        val idPattern = Pattern.compile("[0-9]+")
         val pattern: Pattern = Pattern.compile("${query.toLowerCase()}.*")
         val list: MutableList<Test> = java.util.ArrayList()
-        for(skill in tests) {
-            if(pattern.matcher(skill.name?.toLowerCase()).matches()) {
-                list.add(skill)
+        val flag = idPattern.matcher(query).matches()
+        if(flag) {
+            for(skill in tests) {
+                if (skill.id.toString().equals(query)) {
+                    list.add(skill)
+                }
+            }
+        } else {
+            for(skill in tests) {
+                if (pattern.matcher(skill.name?.toLowerCase()).matches()) {
+                    list.add(skill)
+                }
             }
         }
+        Log.d(Const.TAG_LOG, "list.size = ${list.size}")
         changeDataSet(list)
     }
 
