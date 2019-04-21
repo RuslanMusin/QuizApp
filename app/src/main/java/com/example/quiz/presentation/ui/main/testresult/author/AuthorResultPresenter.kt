@@ -33,6 +33,7 @@ class AuthorResultPresenter @Inject constructor() : BasePresenter<AuthorResultVi
                 }
                 .doAfterTerminate { viewState.hideProgress() }
                 .subscribe({ result ->
+                    viewState.setTestInfo(result)
                     result.questions?.let { viewState.showBarChartAnswers(it) }
                     result.feedbacks?.get(0)?.let { viewState.showPieChartFeedbackOne(it) }
                     result.feedbacks?.get(1)?.let { viewState.showPieChartFeedbackTwo(it) }

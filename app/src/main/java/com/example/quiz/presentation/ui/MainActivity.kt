@@ -47,7 +47,7 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            navigator.applyCommands(arrayOf(Replace(Screens.getAuthorResultScreen())))
+            navigator.applyCommands(arrayOf(Replace(Screens.SignInScreen())))
         }
 //        presenter.removeTests()
 

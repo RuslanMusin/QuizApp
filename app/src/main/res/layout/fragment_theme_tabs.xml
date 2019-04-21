@@ -17,30 +17,20 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-            app:title="@string/tests"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/tests" />
 
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="?attr/colorPrimary"
-        app:tabIndicatorColor="@color/colorWhite"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/colorWhite"
-        app:tabTextColor="@color/primary_light"
-        app:tabGravity="fill"
-        />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="?attr/colorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorWhite"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="@color/primary_light" />
 
     </android.support.design.widget.AppBarLayout>
 

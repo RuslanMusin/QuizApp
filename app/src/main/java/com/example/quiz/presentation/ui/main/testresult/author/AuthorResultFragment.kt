@@ -10,7 +10,9 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.model.result.AuthorQuestion
+import com.example.quiz.presentation.model.result.AuthorResult
 import com.example.quiz.presentation.util.BarChartFormatter
+import com.example.quiz.presentation.util.parseToLocalDate
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -20,6 +22,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.fragment_author_test_result.*
 import kotlinx.android.synthetic.main.layout_progress_error.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -44,6 +48,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setActionBar(toolbar)
     }
 
     override fun showBarChartAnswers(questions: List<AuthorQuestion>) {
@@ -269,5 +274,14 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
 
     override fun hideRetry() {
         progress_error.visibility = View.GONE
+    }
+
+    override fun setTestInfo(item: AuthorResult) {
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale("ru"))
+
+        tv_author_result_name.text = item.name
+        tv_author_result_desc.text = item.description
+        tv_author_result_create_date_name.text = item.createDate?.parseToLocalDate()
+        tv_author_result_participants.text = item.participantsNumber.toString()
     }
 }
