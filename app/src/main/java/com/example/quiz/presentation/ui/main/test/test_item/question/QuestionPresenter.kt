@@ -23,16 +23,12 @@ class QuestionPresenter @Inject constructor() : BasePresenter<QuestionView>() {
         router.newRootChain(Screens.TestScreen(args))
     }
 
-    fun onFinishClick(args: Bundle) {
-        router.newRootChain(Screens.FinishScreen(args))
-    }
-
     fun onNextQuestionClick(args: Bundle) {
         router.replaceScreen(Screens.QuestionScreen(args))
     }
 
     fun onBeforeFeedbackClick(args: Bundle) {
-        router.replaceScreen(Screens.BeforeFeedbackScreen(args))
+        router.newRootChain(Screens.BeforeFeedbackScreen(args))
     }
 
 }

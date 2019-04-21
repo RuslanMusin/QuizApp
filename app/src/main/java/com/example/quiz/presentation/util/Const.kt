@@ -22,6 +22,7 @@ object Const {
     const val RIGHT_ANSWERS = "right_answers"
     const val WRONG_ANSWERS = "wrong_answers"
     const val ANSWERS_TYPE = "type_answers"
+    const val TEST_PASSED = "isDone"
 
     //TestType
     const val TEST_ONE_TYPE = "one"

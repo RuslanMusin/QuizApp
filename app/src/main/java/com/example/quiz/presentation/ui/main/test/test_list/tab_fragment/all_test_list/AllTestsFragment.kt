@@ -122,6 +122,7 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
     override fun onItemClick(item: Test) {
         val args = Bundle()
         args.putString(Const.TEST_ITEM, item.id.toString())
+        args.putBoolean(Const.TEST_PASSED, false)
         presenter.onTestClick(args)
     }
 

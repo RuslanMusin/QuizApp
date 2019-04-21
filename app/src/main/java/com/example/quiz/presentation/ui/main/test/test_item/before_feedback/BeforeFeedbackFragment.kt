@@ -55,6 +55,7 @@ class BeforeFeedbackFragment : BaseFragment(), BeforeFeedbackView, BackButtonLis
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        hideProgressDialog()
         initViews(view)
         setListeners()
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +63,6 @@ class BeforeFeedbackFragment : BaseFragment(), BeforeFeedbackView, BackButtonLis
 
     private fun initViews(view: View) {
         setActionBar(toolbar)
-        toolbar.title = test.name
         toolbar.setNavigationOnClickListener { shouldCancel() }
     }
 
