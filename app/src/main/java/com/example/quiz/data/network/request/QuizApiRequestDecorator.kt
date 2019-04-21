@@ -5,6 +5,7 @@ import com.example.quiz.data.network.exception.TimeOutException
 import com.example.quiz.data.network.exception.UnknownException
 import com.example.quiz.data.network.exception.domain.DomainException
 import com.example.quiz.presentation.model.common.ElementId
+import com.example.quiz.presentation.model.result.AuthorResult
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.model.user.User
@@ -119,15 +120,15 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getTestResult(testId: Int, userId: Int): Single<JsonObject> {
+    override fun getParticipantTestResult(testId: Int, userId: Int): Single<JsonObject> {
         return apiRequest
-            .getTestResult(testId, userId)
+            .getParticipantTestResult(testId, userId)
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getTestResults(id: Int): Single<JsonObject> {
+    override fun getAuthorTestResults(id: Int): Single<AuthorResult> {
         return apiRequest
-            .getTestResults(id)
+            .getAuthorTestResults(id)
             .compose(ApiRequestErrorSingleTransformer())
     }
 
