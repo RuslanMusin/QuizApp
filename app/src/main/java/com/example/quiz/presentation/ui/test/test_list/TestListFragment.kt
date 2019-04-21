@@ -115,7 +115,6 @@ class TestListFragment : BaseFragment(), TestListView {
                 return false
             }
         })
-
     }
 
     companion object {

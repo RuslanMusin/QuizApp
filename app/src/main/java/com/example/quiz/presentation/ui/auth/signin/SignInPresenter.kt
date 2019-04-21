@@ -84,5 +84,4 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     fun onBackCommandClick() {
         router.exit()
     }
-
 }

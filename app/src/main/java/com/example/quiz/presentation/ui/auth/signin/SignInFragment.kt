@@ -71,14 +71,12 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
         } else {
             ti_password.error = null
         }
-
     }
 
     private fun setListeners() {
         btn_enter.setOnClickListener(this)
         btn_sign_up.setOnClickListener(this)
         iv_cover.setOnClickListener(this)
-        tv_name.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -91,15 +89,9 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
                 presenter.signIn(email, password)
             }
 
-            R.id.tv_name -> {
+            R.id.iv_cover -> {
                 et_email.setText("rast@ma.ru")
                 et_password.setText("rastamka")
-
-            }
-
-            R.id.iv_cover -> {
-                et_email.setText("Прохор.Куклев.Брониславович")
-                et_password.setText("Прохор.Куклев.Брониславович")
             }
 
             R.id.btn_sign_up -> signUp(view)

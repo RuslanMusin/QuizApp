@@ -81,5 +81,4 @@ abstract class BaseActivity : MvpAppCompatActivity(), HasSupportFragmentInjector
     override fun changeWindowsSoftInputMode(mode: Int) {
         this.window.setSoftInputMode(mode);
     }
-
 }

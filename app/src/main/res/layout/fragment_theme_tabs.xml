@@ -34,8 +34,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="?attr/colorPrimary"
+        app:tabIndicatorColor="@color/white"
         app:tabMode="fixed"
-        app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/primary_light"
         app:tabGravity="fill"
         />
 
