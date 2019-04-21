@@ -38,7 +38,6 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
 
     private fun initViews() {
         setActionBar(toolbar)
-        setToolbarTitle(R.string.toolbar_login)
         setListeners()
     }
 
@@ -78,7 +77,7 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
         btn_enter.setOnClickListener(this)
         btn_sign_up.setOnClickListener(this)
         iv_cover.setOnClickListener(this)
-        tv_name.setOnClickListener(this)
+//        tv_name.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -91,11 +90,11 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
                 presenter.signIn(email, password)
             }
 
-            R.id.tv_name -> {
+           /* R.id.tv_name -> {
                 et_email.setText("rast@ma.ru")
                 et_password.setText("rastamka")
 
-            }
+            }*/
 
             R.id.iv_cover -> {
                 et_email.setText("ryst@ma.ru")

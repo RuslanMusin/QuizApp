@@ -121,7 +121,6 @@ class TestListFragment : BaseFragment(), TestListView, BackButtonListener {
                 return false
             }
         })
-
     }
 
     companion object {
