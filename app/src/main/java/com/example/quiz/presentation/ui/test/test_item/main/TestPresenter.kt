@@ -106,4 +106,8 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()    }
 
+    fun onAnswersClick(args: Bundle) {
+        router.navigateTo(Screens.AnswersScreen(args))
+    }
+
 }

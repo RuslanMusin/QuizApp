@@ -45,10 +45,10 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
         }
     }
 
-    override fun logout(): Completable {
+    override fun logout(): Single<JsonObject> {
         return apiRequest
                 .logout()
-                .compose(ApiRequestErrorCompletableTransformer())
+                .compose(ApiRequestErrorSingleTransformer())
     }
 
     override fun getUser(id: Int): Single<User> {

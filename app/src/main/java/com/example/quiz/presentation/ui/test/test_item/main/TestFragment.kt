@@ -12,10 +12,13 @@ import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
+import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.currentUser
+import com.example.quiz.presentation.util.Const.getStringFromDate
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_test.*
 import kotlinx.android.synthetic.main.layout_expandable_text_view.*
@@ -81,13 +84,23 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         expand_text_view.text = test.description
         tv_name.text = test.name
         tv_questions.text = test.questions.size.toString()
+        tv_date_creation.text = test.dateCreation?.let { getStringFromDate(it) }
+
+        if(test.dateClose != null) {
+            tv_status.text = getString(R.string.test_closed)
+        } else if(test.dateOpen != null) {
+            tv_status.text = getString(R.string.test_opened)
+        } else {
+            tv_status.text = getString(R.string.test_not_started)
+        }
 
         Log.d(TAG_LOG, "owner id = ${test.owner?.id} and userId = ${currentUser.id}")
         test.owner?.id?.let {
             if(it == currentUser.id) {
                 Log.d(TAG_LOG, "owner test")
                 tv_do_test.visibility = View.GONE
-                if(test.dateClose != null || (test.dateClose == null && test.dateOpen == null)) {
+                li_show_answers.visibility = View.VISIBLE
+                if(test.dateOpen == null) {
                     tv_open_test.visibility = View.VISIBLE
                     tv_close_test.visibility = View.GONE
                 } else {
@@ -117,6 +130,7 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         tv_open_test.setOnClickListener(this)
         tv_close_test.setOnClickListener(this)
         tv_show_result.setOnClickListener(this)
+        li_show_answers.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -139,7 +153,20 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
             }
 
             R.id.tv_show_result -> showResult()
+
+            R.id.li_show_answers -> showAnswers()
         }
+    }
+
+    private fun showAnswers() {
+        test.rightQuestions = ArrayList()
+        for(question in test.questions) {
+            test.rightQuestions.add(question)
+        }
+        val args: Bundle = Bundle()
+        args.putString(Const.ANSWERS_TYPE, RIGHT_ANSWERS)
+        args.putString(TEST_ITEM, gson.toJson(test))
+        presenter.onAnswersClick(args)
     }
 
     private fun showResult() {

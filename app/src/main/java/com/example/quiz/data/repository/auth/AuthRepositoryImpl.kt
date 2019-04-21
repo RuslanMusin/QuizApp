@@ -4,6 +4,7 @@ import com.example.quiz.data.network.request.AuthApiRequest
 import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.presentation.model.auth.LoginResult
 import com.example.quiz.presentation.model.user.User
+import com.google.gson.JsonObject
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository {
                 .login(user)
     }
 
-    override fun logout(): Completable {
+    override fun logout(): Single<JsonObject> {
         return apiRequest
                 .logout()
     }

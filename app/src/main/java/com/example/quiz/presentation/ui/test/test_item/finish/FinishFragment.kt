@@ -146,7 +146,7 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
                 }
 //                removeStackDownTo()
                 val args: Bundle = Bundle()
-                args.putString(TEST_ITEM, gson.toJson(test))
+                args.putString(TEST_ITEM, test.id.toString())
                 presenter.onTestClick(args)
             }
 

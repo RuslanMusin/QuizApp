@@ -63,14 +63,14 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 .negativeText(R.string.disagree)
                 .onPositive(object :MaterialDialog.SingleButtonCallback {
                     override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                        for(question in test.questions) {
+                        /*for(question in test.questions) {
                             question.userRight = false
                             for(answer in question.answers) {
                                 answer.userClicked = false
                             }
-                        }
+                        }*/
                         val args = Bundle()
-                        args.putString(TEST_ITEM, gson.toJson(test))
+                        args.putString(TEST_ITEM, test.id.toString())
                         presenter.onTestClick(args)
                     }
 

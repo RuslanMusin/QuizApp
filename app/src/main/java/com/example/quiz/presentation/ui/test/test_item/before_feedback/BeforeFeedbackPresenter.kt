@@ -22,18 +22,9 @@ class BeforeFeedbackPresenter @Inject constructor() : BasePresenter<BeforeFeedba
     lateinit var exceptionProcessor: ExceptionProcessor
 
     fun onTestClick(id: Int) {
-        testRepository
-            .findById(id)
-            .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
-            .subscribe({
-                val args: Bundle = Bundle()
-                args.putString(Const.TEST_ITEM, Const.gson.toJson(it))
-                router.newRootChain(Screens.TestScreen(args))
-            }, {
-                viewState.showSnackBar(exceptionProcessor.processException(it))
-            }).disposeWhenDestroy()
+        val args: Bundle = Bundle()
+        args.putString(Const.TEST_ITEM, id.toString())
+        router.newRootChain(Screens.TestScreen(args))
     }
 
     fun onFeedbackClick(args: Bundle) {

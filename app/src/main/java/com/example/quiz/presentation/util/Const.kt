@@ -2,6 +2,8 @@ package com.example.quiz.presentation.util
 
 import com.example.quiz.presentation.model.user.User
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Const {
 
@@ -31,8 +33,25 @@ object Const {
 
     //Http request
     const val AUTHORIZATION = "Authorization"
-    var TOKEN = "Token "
-
+    const val ORIGINAL_TOKEN = "Token "
+    var TOKEN = ORIGINAL_TOKEN
     const val TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    const val SIMPLE_TIME_FORMAT = "dd.MM.yyyy"
+
+    const val MAX_LENGTH = 50
+    const val MORE_TEXT = "..."
+
+    fun cutLongDescription(description: String, maxLength: Int): String {
+        return if (description.length < maxLength) {
+            description
+        } else {
+            description.substring(0, maxLength - MORE_TEXT.length) + MORE_TEXT
+        }
+    }
+
+    fun getStringFromDate(date: Date): String {
+        val cbDateFormat = SimpleDateFormat(SIMPLE_TIME_FORMAT)
+        return cbDateFormat.format(date)
+    }
 
 }

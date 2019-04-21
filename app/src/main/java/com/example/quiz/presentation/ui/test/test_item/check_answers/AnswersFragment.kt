@@ -26,6 +26,7 @@ import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.WRONG_ANSWERS
+import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_question.*
 import kotlinx.android.synthetic.main.layout_text_question.*
@@ -174,8 +175,13 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     private fun finishQuestions() {
 //        removeStackDownTo()
         val args: Bundle = Bundle()
-        args.putString(TEST_ITEM, gson.toJson(test))
-        presenter.onFinishClick(args)
+        if(currentUser.id.equals(test.owner?.id)) {
+            args.putString(TEST_ITEM, test.id.toString())
+            presenter.onFinishClick(args, true)
+        } else {
+            args.putString(TEST_ITEM, gson.toJson(test))
+            presenter.onFinishClick(args, false)
+        }
     }
 
     private fun nextQuestion() {
@@ -219,6 +225,9 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_text_question,li_answers,false) as LinearLayout
         li_answers.addView(view)
         tv_right_answer.text = question.answers[0].content
+        if(type.equals(RIGHT_ANSWERS)) {
+            question.userAnswer = question.answers[0].content!!
+        }
         tv_your_answer.text = question.userAnswer
     }
 
