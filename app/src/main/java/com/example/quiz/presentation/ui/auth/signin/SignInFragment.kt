@@ -11,6 +11,12 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
+import com.example.quiz.presentation.util.Const.ORIGINAL_TOKEN
+import com.example.quiz.presentation.util.Const.TOKEN
+import com.example.quiz.presentation.util.Const.USER_DATA_PREFERENCES
+import com.example.quiz.presentation.util.Const.USER_ITEM
+import com.example.quiz.presentation.util.Const.currentUser
+import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -45,16 +51,6 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
 
     private fun signUp(v: View) {
         presenter.onSignUpClick()
-    }
-
-    private fun checkUserSession() {
-        activity?.getSharedPreferences(USER_DATA_PREFERENCES, Context.MODE_PRIVATE)?.let {
-            if (it.contains(USER_USERNAME)) {
-                val email: String = it.getString(USER_USERNAME, "")
-                val password: String = it.getString(USER_PASSWORD, "")
-                presenter.signIn(email, password)
-            }
-        }
     }
 
     override fun showEmailError(hasError: Boolean) {
@@ -149,14 +145,12 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
         ti_password.error = getString(R.string.enter_correct_password)
     }
 
-    override fun createCookie(email: String, password: String) {
+    override fun createCookie() {
         activity?.getSharedPreferences(USER_DATA_PREFERENCES, Context.MODE_PRIVATE)?.let {
-            if (!it.contains(USER_USERNAME)) {
-                val editor = it.edit()
-                editor.putString(USER_USERNAME, email)
-                editor.putString(USER_PASSWORD, password)
-                editor.apply()
-            }
+            val editor = it.edit()
+            editor.putString(ORIGINAL_TOKEN, TOKEN)
+            editor.putString(USER_ITEM, gson.toJson(currentUser))
+            editor.apply()
         }
     }
 
@@ -166,10 +160,6 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
     }
 
     companion object {
-
-        private const val USER_DATA_PREFERENCES = "user_data"
-        private const val USER_USERNAME = "user_username"
-        private const val USER_PASSWORD = "user_password"
 
         fun newInstance(args: Bundle): Fragment {
             val fragment = SignInFragment()

@@ -54,6 +54,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
             .compose(PresentationSingleTransformer())
             .subscribe({user ->
                 Const.currentUser = user
+                viewState.createCookie()
                 Log.d(TAG_LOG, "userId = ${currentUser.id}")
                 onProfileClick()
             }, {

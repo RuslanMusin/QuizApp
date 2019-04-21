@@ -1,5 +1,6 @@
 package com.example.quiz.presentation.ui.main.profile
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -66,6 +67,15 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener, BackBu
             R.id.li_logout -> presenter.logout()
 
             R.id.li_tests -> presenter.onTestListClick()
+        }
+    }
+
+    override fun removeCookie() {
+        activity?.getSharedPreferences(Const.USER_DATA_PREFERENCES, Context.MODE_PRIVATE)?.let {
+            val editor = it.edit()
+            editor.remove(Const.ORIGINAL_TOKEN)
+            editor.remove(Const.USER_ITEM)
+            editor.apply()
         }
     }
 

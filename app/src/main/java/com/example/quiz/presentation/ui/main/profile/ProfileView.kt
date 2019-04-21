@@ -6,5 +6,7 @@ import com.example.quiz.presentation.base.BaseView
 
 interface ProfileView: BaseView {
 
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun removeCookie()
 
 }

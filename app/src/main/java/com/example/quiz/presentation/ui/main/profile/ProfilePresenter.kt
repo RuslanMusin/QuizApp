@@ -32,6 +32,7 @@ class ProfilePresenter @Inject constructor() : BasePresenter<ProfileView>() {
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .subscribe({
                     TOKEN = ORIGINAL_TOKEN
+                    viewState.removeCookie()
                     onLogoutClick()
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))

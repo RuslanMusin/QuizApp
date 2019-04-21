@@ -18,5 +18,5 @@ interface SignInView: BaseView {
     fun showError()
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun createCookie(email: String, password: String)
+    fun createCookie()
 }

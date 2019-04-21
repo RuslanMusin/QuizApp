@@ -9,6 +9,7 @@ object Const {
 
     const val TAG_LOG = "TAG_LOG"
     const val TEST_PREFS = "TESTS_PREFS"
+    const val USER_DATA_PREFERENCES = "user_data"
     const val TESTS = "tests"
     const val TEST_USER = "test_user"
 

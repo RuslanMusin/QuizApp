@@ -1,5 +1,6 @@
 package com.example.quiz.presentation.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -9,6 +10,14 @@ import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseActivity
 import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.base.navigation.ChainHolder
+import com.example.quiz.presentation.model.user.User
+import com.example.quiz.presentation.ui.auth.signin.SignInFragment
+import com.example.quiz.presentation.util.Const.ORIGINAL_TOKEN
+import com.example.quiz.presentation.util.Const.TOKEN
+import com.example.quiz.presentation.util.Const.USER_DATA_PREFERENCES
+import com.example.quiz.presentation.util.Const.USER_ITEM
+import com.example.quiz.presentation.util.Const.currentUser
+import com.example.quiz.presentation.util.Const.gson
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
@@ -47,9 +56,12 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            navigator.applyCommands(arrayOf(Replace(Screens.SignInScreen())))
+            if(checkUserSession()) {
+                navigator.applyCommands(arrayOf(Replace(Screens.ProfileScreen())))
+            } else {
+                navigator.applyCommands(arrayOf(Replace(Screens.SignInScreen())))
+            }
         }
-
     }
 
     override fun onResume() {
@@ -72,6 +84,18 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun checkUserSession(): Boolean {
+        var flag = false
+        getSharedPreferences(USER_DATA_PREFERENCES, Context.MODE_PRIVATE)?.let {
+            if (it.contains(ORIGINAL_TOKEN)) {
+                flag = true
+                TOKEN = it.getString(ORIGINAL_TOKEN, "")
+                currentUser = gson.fromJson(it.getString(USER_ITEM, ""), User::class.java)
+            }
+        }
+        return flag
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.quiz.presentation.ui.auth.signup
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.currentUser
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import javax.inject.Inject
@@ -111,6 +113,14 @@ class SignUpFragment : BaseFragment(), SignUpView, BackButtonListener, View.OnCl
         return true
     }
 
+    override fun createCookie() {
+        activity?.getSharedPreferences(Const.USER_DATA_PREFERENCES, Context.MODE_PRIVATE)?.let {
+            val editor = it.edit()
+            editor.putString(Const.ORIGINAL_TOKEN, Const.TOKEN)
+            editor.putString(Const.USER_ITEM, Const.gson.toJson(currentUser))
+            editor.apply()
+        }
+    }
 
     companion object {
 
