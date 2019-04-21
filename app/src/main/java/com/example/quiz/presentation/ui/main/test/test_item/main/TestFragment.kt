@@ -62,34 +62,51 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_test, container, false)
 
-        val testStr: String? = arguments?.getString(TEST_ITEM)
-        test = gson.fromJson(testStr,Test::class.java)
-        Log.d(TAG_LOG, "test json = \n$testStr")
+        val testId: Int? = arguments?.getString(TEST_ITEM)?.toInt()
+        testId?.let { presenter.findTest(it) }
+        /*test = gson.fromJson(testId,Test::class.java)
+        Log.d(TAG_LOG, "test json = \n$testId")*/
         return view
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews(view)
         setListeners()
-        setData()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun setData() {
+    override fun setData(test: Test) {
+        this.test = test
+        initViews()
         expand_text_view.text = test.description
         tv_name.text = test.name
         tv_questions.text = test.questions.size.toString()
 
-        test.owner?.pk?.let {
-            if(it.equals(currentUser.pk)) {
+        Log.d(TAG_LOG, "owner id = ${test.owner?.id} and userId = ${currentUser.id}")
+        test.owner?.id?.let {
+            if(it == currentUser.id) {
+                Log.d(TAG_LOG, "owner test")
                 tv_do_test.visibility = View.GONE
-                tv_open_test.visibility = View.VISIBLE
+                if(test.dateClose != null || (test.dateClose == null && test.dateOpen == null)) {
+                    tv_open_test.visibility = View.VISIBLE
+                    tv_close_test.visibility = View.GONE
+                } else {
+                    tv_open_test.visibility = View.GONE
+                    tv_close_test.visibility = View.VISIBLE
+                }
+                if(test.dateClose != null) {
+                    li_show_result.visibility = View.VISIBLE
+                }
+            } else {
+                if(test.dateClose != null) {
+                    li_show_result.visibility = View.VISIBLE
+                    li_do_test.visibility = View.GONE
+                }
             }
         }
     }
 
-    private fun initViews(view: View) {
+    private fun initViews() {
         setActionBar(toolbar)
         toolbar.title = test.name
         toolbar.setNavigationOnClickListener { presenter.onTestListClick() }
@@ -98,6 +115,8 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     private fun setListeners() {
         tv_do_test.setOnClickListener(this)
         tv_open_test.setOnClickListener(this)
+        tv_close_test.setOnClickListener(this)
+        tv_show_result.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -118,6 +137,18 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
             R.id.tv_close_test -> {
                 presenter.closeTest(test.id)
             }
+
+            R.id.tv_show_result -> showResult()
+        }
+    }
+
+    private fun showResult() {
+        currentUser.id.let {
+            if(it == test.owner?.id) {
+                presenter.showResultOverview(test.id)
+            } else {
+                presenter.showResult(test.id, it)
+            }
         }
     }
 
@@ -125,12 +156,14 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         showSnackBar(R.string.test_opened)
         tv_open_test.visibility = View.GONE
         tv_close_test.visibility = View.VISIBLE
+        li_show_result.visibility = View.GONE
     }
 
     override fun afterTestClosed() {
         showSnackBar(R.string.test_closed)
         tv_open_test.visibility = View.VISIBLE
         tv_close_test.visibility = View.GONE
+        li_show_result.visibility = View.VISIBLE
     }
 
 

@@ -122,6 +122,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     private fun setTextAnswer() {
         layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
         changeButtons()
+        question.answers[0].userClicked = true
     }
 
     private fun setStartAnswers() {

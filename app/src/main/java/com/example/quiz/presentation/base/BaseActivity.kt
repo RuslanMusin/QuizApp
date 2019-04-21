@@ -71,10 +71,10 @@ abstract class BaseActivity : MvpAppCompatActivity(), HasSupportFragmentInjector
     }
 
     override fun showProgressDialog() {
-        WaitDialog.getInstance().show(supportFragmentManager, TAG_WAIT_DIALOG)
+//        WaitDialog.getInstance().show(supportFragmentManager, TAG_WAIT_DIALOG)
     }
 
     override fun hideProgressDialog() {
-        (supportFragmentManager.findFragmentByTag(TAG_WAIT_DIALOG) as? DialogFragment)?.dismiss()
+//        (supportFragmentManager.findFragmentByTag(TAG_WAIT_DIALOG) as? DialogFragment)?.dismiss()
     }
 }

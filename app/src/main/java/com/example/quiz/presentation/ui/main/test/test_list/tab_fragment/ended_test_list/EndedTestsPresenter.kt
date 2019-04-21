@@ -25,14 +25,16 @@ class EndedTestsPresenter @Inject constructor() : BasePresenter<EndedTestsView>(
 
     fun loadTests() {
         testRepository
-            .findByUser(currentUser.pk)
+            .findByUser(currentUser.id)
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
+            /*.doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }*/
             .subscribe({
+                viewState.hideProgressDialog()
                 viewState.showItems(it)
             }, {
-                viewState.showSnackBar(exceptionProcessor.processException(it))
+//                viewState.showSnackBar(exceptionProcessor.processException(it))
+                viewState.hideProgressDialog()
             }).disposeWhenDestroy()
      /*   val type = object : TypeToken<List<Test>>(){}.type
         val listStr = prefs.getString(Const.TESTS, "")

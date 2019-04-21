@@ -1,4 +1,4 @@
-package com.example.quiz.presentation.ui.main.test.add.question
+package com.example.quiz.presentation.ui.test.add_test.question
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -10,6 +10,7 @@ import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.Const.TAG_LOG
+import com.example.quiz.presentation.util.Const.gson
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -28,6 +29,8 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
     lateinit var prefs: SharedPreferences
 
     fun createTest(test: Test) {
+        val testStr = gson.toJson(test)
+        Log.d(TAG_LOG, "test json = \n$testStr")
         testRepository
             .createTest(test)
             .compose(PresentationSingleTransformer())
@@ -35,8 +38,8 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 test.id = it.id
-                Log.d(TAG_LOG, "pk = ${test.id}")
-                viewState.navigateToTest()
+                Log.d(TAG_LOG, "id = ${test.id}")
+                viewState.navigateToTest(test.id)
             }, {
                 Log.d(TAG_LOG,"error process")
 //                viewState.showSnackBar(exceptionProcessor.processException(it))

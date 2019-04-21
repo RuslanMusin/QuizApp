@@ -19,7 +19,4 @@ interface SignInView: BaseView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun createCookie(email: String, password: String)
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
-    fun goToProfile(curator: User)
 }

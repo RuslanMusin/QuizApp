@@ -18,9 +18,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
-import com.example.quiz.presentation.model.test.Answer
-import com.example.quiz.presentation.model.test.Question
-import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.model.test.*
 import com.example.quiz.presentation.util.Const.ANSWERS_TYPE
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
@@ -45,8 +43,8 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     @ProvidePresenter
     fun providePresenter(): AnswersPresenter = presenterProvider.get()
 
-    private lateinit var question: Question
-    private lateinit var test: Test
+    private lateinit var question: QuestionResult
+    private lateinit var test: TestResult
     private lateinit var type: String
     private var listSize: Int = 0
     private var number: Int = 0
@@ -69,7 +67,7 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
         arguments?.let {
             type = it.getString(ANSWERS_TYPE)
             number = it.getInt(QUESTION_NUMBER)
-            test = gson.fromJson(it.getString(TEST_ITEM), Test::class.java)
+            test = gson.fromJson(it.getString(TEST_ITEM), TestResult::class.java)
 
         }
         if(type.equals(RIGHT_ANSWERS)) {
@@ -199,7 +197,7 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
                 args.putString(TEST_JSON, gsonConverter.toJson(test))
                 activity!!.supportFragmentManager
                         .beginTransaction()
-                        .replace(R.pk.fragment_container, TestFragment.newInstance(args))
+                        .replace(R.id.fragment_container, TestFragment.newInstance(args))
                         .addToBackStack("AddQuestionFragment")
                         .commit()        */
             }

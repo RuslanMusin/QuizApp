@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.base.recycler.ReloadableView
 import com.example.quiz.presentation.base.recycler.SearchListener
 import com.example.quiz.presentation.ui.main.test.test_list.tab_fragment.all_test_list.AllTestsFragment
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_theme_tabs.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class TestListFragment : BaseFragment(), TestListView {
+class TestListFragment : BaseFragment(), TestListView, BackButtonListener {
 
     @InjectPresenter
     lateinit var presenter: TestListPresenter
@@ -31,6 +32,11 @@ class TestListFragment : BaseFragment(), TestListView {
 
     private var fragments: MutableList<Fragment> = ArrayList()
     lateinit private var currentFragment: SearchListener
+
+    override fun onBackPressed(): Boolean {
+        presenter.onBackClick()
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +55,7 @@ class TestListFragment : BaseFragment(), TestListView {
 
     private fun initViews() {
         setActionBar(toolbar)
-        setToolbarTitle(R.string.tests)
+        toolbar.setNavigationOnClickListener { presenter.onBackClick() }
         setupViewPager(viewpager)
         tab_layout.setupWithViewPager(viewpager)
         viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))

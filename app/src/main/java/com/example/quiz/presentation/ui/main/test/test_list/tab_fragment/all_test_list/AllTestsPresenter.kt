@@ -26,14 +26,14 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
         testRepository
             .findAll()
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
+            /*.doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }*/
             .subscribe({
-               /* val list: MutableList<Test> = ArrayList()
-                list.add(it)*/
+                viewState.hideProgressDialog()
                 viewState.showItems(it)
             }, {
-                viewState.showSnackBar(exceptionProcessor.processException(it))
+//                viewState.showSnackBar(exceptionProcessor.processException(it))
+                viewState.hideProgressDialog()
             }).disposeWhenDestroy()
        /* val type = object : TypeToken<List<Test>>(){}.type
         val listStr = prefs.getString(Const.TESTS, "")

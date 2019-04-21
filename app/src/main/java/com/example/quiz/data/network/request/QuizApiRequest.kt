@@ -4,6 +4,7 @@ import com.example.quiz.presentation.model.common.ElementId
 import com.example.quiz.presentation.model.result.AuthorResult
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
+import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.model.user.User
 import com.google.gson.JsonObject
 import io.reactivex.Completable
@@ -15,8 +16,7 @@ interface QuizApiRequest {
     @POST("auth/logout/")
     fun logout(): Completable
 
-    @POST("auth/register/")
-    fun signUp(@Body user: User): Single<User>
+
 
     @GET("curators/{curator_id}")
     fun getUser(@Path("curator_id") id: Int): Single<User>
@@ -60,7 +60,7 @@ interface QuizApiRequest {
             @Path("user_id") userId: Int
     ): Single<JsonObject>
 
-    @GET("auth/user/")
+    @GET("auth/user")
     fun findUser(): Single<User>
 
 }

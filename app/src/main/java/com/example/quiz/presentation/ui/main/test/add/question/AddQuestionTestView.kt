@@ -5,5 +5,5 @@ import com.example.quiz.presentation.base.BaseView
 
 interface AddQuestionTestView: BaseView {
 
-    fun navigateToTest()
+    fun navigateToTest(id: Int)
 }

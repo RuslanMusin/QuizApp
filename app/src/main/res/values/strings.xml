@@ -4,6 +4,7 @@
     <string name="email">Электронная почта</string>
     <string name="password">Пароль</string>
     <string name="login">Войти</string>
+    <string name="logout">Выйти</string>
 
     <!--Новое приложение-->
     <string name="menu_profile">Профиль</string>
@@ -89,4 +90,5 @@
 
     <string name="toolbar_login">Вход</string>
     <string name="toolbar_create_acc">Регистрация</string>
+    <string name="show_result">Посмотреть результат</string>
 </resources>

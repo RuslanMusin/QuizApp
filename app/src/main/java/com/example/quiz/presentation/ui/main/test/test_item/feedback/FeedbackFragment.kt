@@ -1,4 +1,4 @@
-package com.example.quiz.presentation.ui.main.test.test_item.feedback
+package com.example.quiz.presentation.ui.test.test_item.feedback
 
 import android.content.Context
 import android.os.Bundle
@@ -20,6 +20,7 @@ import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Answer
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.ui.main.test.test_item.question.QuestionFragment
 import com.example.quiz.presentation.util.Const
@@ -115,6 +116,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     private fun setTextAnswer() {
         layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
         changeButtons()
+        question.answers[0].userClicked = true
     }
 
     private fun setStartAnswers() {
@@ -200,11 +202,12 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
         }
     }
 
-    private fun getTestResult(): TestResult {
-        val testResult = TestResult()
+    private fun getTestResult(): TestSubmit {
+        val testResult = TestSubmit()
         var questionRes: Question
         for(question in test.questions) {
             questionRes = Question()
+            questionRes.id = question.id
             for(answer in question.answers) {
                 if(answer.userClicked) {
                     answer.isRight = question.userRight
@@ -218,6 +221,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
         }
         for(question in test.feedbackQuestions) {
             questionRes = Question()
+            questionRes.id = question.id
             for(answer in question.answers) {
                 if(answer.userClicked) {
                     if(question.type.equals(Const.TEST_TEXT_TYPE)) {
@@ -247,7 +251,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     companion object {
 
         fun newInstance(args: Bundle): Fragment {
-            val fragment = QuestionFragment()
+            val fragment = FeedbackFragment()
             fragment.arguments = args
             return fragment
         }
