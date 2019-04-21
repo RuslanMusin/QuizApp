@@ -49,7 +49,6 @@ open class MainActivity: BaseActivity(), MainView, ChainHolder {
         if (savedInstanceState == null) {
             navigator.applyCommands(arrayOf(Replace(Screens.SignInScreen())))
         }
-//        presenter.removeTests()
 
     }
 

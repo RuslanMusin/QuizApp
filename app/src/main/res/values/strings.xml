@@ -100,4 +100,7 @@
     <string name="test_not_started">Тест не открыт</string>
     <string name="test_id">Идентификатор теста</string>
     <string name="test_result">Результат</string>
+    <string name="graph_axis">X - номер вопроса\nY - кол-во правильных ответов</string>
+    <string name="repeat">Повторить</string>
+    <string name="download_error">Произошла ошибка при загрузке данных</string>
 </resources>

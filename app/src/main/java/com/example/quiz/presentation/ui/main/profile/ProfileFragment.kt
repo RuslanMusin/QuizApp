@@ -11,7 +11,6 @@ import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.ui.auth.signup.SignUpFragment
-import com.example.quiz.presentation.ui.test.test_item.before_feedback.BeforeFeedbackPresenter
 import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.currentUser
 import kotlinx.android.synthetic.main.fragment_profile.*

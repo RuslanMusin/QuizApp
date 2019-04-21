@@ -3,17 +3,19 @@ package com.example.quiz.presentation.ui
 import com.example.quiz.presentation.ui.auth.signin.SignInFragment
 import com.example.quiz.presentation.ui.auth.signup.SignUpFragment
 import com.example.quiz.presentation.ui.main.profile.ProfileFragment
-import com.example.quiz.presentation.ui.test.add_test.main.AddMainTestFragment
-import com.example.quiz.presentation.ui.test.add_test.question.AddQuestionTestFragment
-import com.example.quiz.presentation.ui.test.test_item.before_feedback.BeforeFeedbackFragment
-import com.example.quiz.presentation.ui.test.test_item.check_answers.AnswersFragment
-import com.example.quiz.presentation.ui.test.test_item.feedback.FeedbackFragment
-import com.example.quiz.presentation.ui.test.test_item.finish.FinishFragment
-import com.example.quiz.presentation.ui.test.test_item.main.TestFragment
-import com.example.quiz.presentation.ui.test.test_item.question.QuestionFragment
-import com.example.quiz.presentation.ui.test.test_list.TestListFragment
-import com.example.quiz.presentation.ui.test.test_list.tab_fragment.all_test_list.AllTestsFragment
-import com.example.quiz.presentation.ui.test.test_list.tab_fragment.ended_test_list.EndedTestsFragment
+import com.example.quiz.presentation.ui.main.test.add.main.AddMainTestFragment
+import com.example.quiz.presentation.ui.main.test.add.question.AddQuestionTestFragment
+import com.example.quiz.presentation.ui.main.test.test_item.before_feedback.BeforeFeedbackFragment
+import com.example.quiz.presentation.ui.main.test.test_item.check_answers.AnswersFragment
+import com.example.quiz.presentation.ui.main.test.test_item.feedback.FeedbackFragment
+import com.example.quiz.presentation.ui.main.test.test_item.finish.FinishFragment
+import com.example.quiz.presentation.ui.main.test.test_item.main.TestFragment
+import com.example.quiz.presentation.ui.main.test.test_item.question.QuestionFragment
+import com.example.quiz.presentation.ui.main.test.test_list.TestListFragment
+import com.example.quiz.presentation.ui.main.test.test_list.tab_fragment.all_test_list.AllTestsFragment
+import com.example.quiz.presentation.ui.main.test.test_list.tab_fragment.ended_test_list.EndedTestsFragment
+import com.example.quiz.presentation.ui.main.testresult.author.AuthorResultFragment
+import com.example.quiz.presentation.ui.main.testresult.author.AuthorResultModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -61,5 +63,8 @@ abstract class MainBuilder {
 
     @ContributesAndroidInjector
     abstract fun buildBeforeFeedbackFragment(): BeforeFeedbackFragment
+
+    @ContributesAndroidInjector(modules = [AuthorResultModule::class])
+    abstract fun buildAuthorResultFragment(): AuthorResultFragment
 
 }

@@ -100,5 +100,8 @@ dependencies {
 
     //Cicerone
     implementation "ru.terrakok.cicerone:cicerone:$cicerone"
+
+    //GraphView
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     
 }
