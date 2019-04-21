@@ -3,19 +3,14 @@ package com.example.quiz.presentation.ui.auth.signin
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
-import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
-import com.example.quiz.presentation.util.Const
-import com.example.quiz.presentation.util.Const.TAG_LOG
-import com.example.quiz.presentation.util.Const.currentUser
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -48,7 +43,7 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
     }
 
     private fun signUp(v: View) {
-        presenter.onForwardCommandClick()
+        presenter.onSignUpClick()
     }
 
     private fun checkUserSession() {

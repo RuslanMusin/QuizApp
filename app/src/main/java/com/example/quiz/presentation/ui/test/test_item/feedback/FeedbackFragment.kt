@@ -205,6 +205,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
         var questionRes: Question
         for(question in test.questions) {
             questionRes = Question()
+            questionRes.id = question.id
             for(answer in question.answers) {
                 if(answer.userClicked) {
                     answer.isRight = question.userRight
@@ -218,6 +219,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
         }
         for(question in test.feedbackQuestions) {
             questionRes = Question()
+            questionRes.id = question.id
             for(answer in question.answers) {
                 if(answer.userClicked) {
                     if(question.type.equals(Const.TEST_TEXT_TYPE)) {

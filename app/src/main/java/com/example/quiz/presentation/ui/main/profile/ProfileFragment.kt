@@ -6,15 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.ui.auth.signup.SignUpFragment
+import com.example.quiz.presentation.ui.test.test_item.before_feedback.BeforeFeedbackPresenter
+import com.example.quiz.presentation.util.Const
+import com.example.quiz.presentation.util.Const.currentUser
 import kotlinx.android.synthetic.main.fragment_profile.*
+import javax.inject.Inject
+import javax.inject.Provider
 
-class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener {
+class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener, BackButtonListener {
 
     @InjectPresenter
-    lateinit var studentPresenter: ProfilePresenter
+    lateinit var presenter: ProfilePresenter
+    @Inject
+    lateinit var presenterProvider: Provider<ProfilePresenter>
+    @ProvidePresenter
+    fun providePresenter(): ProfilePresenter = presenterProvider.get()
+
+    override fun onBackPressed(): Boolean {
+        presenter.onBackClick()
+        return true
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
@@ -24,28 +40,33 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        setData()
     }
 
     private fun initViews() {
-//        setBottomVisibility(true)
         setActionBar(toolbar)
-        setToolbarTitle(R.string.menu_profile)
         setListeners()
     }
 
+    private fun setData() {
+        tv_email.text = currentUser.email
+        tv_first_name.text = currentUser.name
+        tv_last_name.text = currentUser.lastname
+        tv_name.text = currentUser.getFullName()
+    }
+
     private fun setListeners() {
-        btn_quit.setOnClickListener(this)
+        li_logout.setOnClickListener(this)
+        li_tests.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when(v.id) {
 
-            R.id.btn_quit -> studentPresenter.logout()
+            R.id.li_logout -> presenter.logout()
+
+            R.id.li_tests -> presenter.onTestListClick()
         }
-    }
-
-    override fun logout() {
-
     }
 
     companion object {

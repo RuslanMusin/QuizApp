@@ -58,7 +58,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 viewState.hideProgressDialog()
                 Const.currentUser = user
                 Log.d(TAG_LOG, "userId = ${currentUser.id}")
-                onNewRootCommandClick()
+                onProfileClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
@@ -88,12 +88,12 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
         }
     }
 
-    fun onForwardCommandClick() {
+    fun onSignUpClick() {
         router.navigateTo(Screens.SignUpScreen())
     }
 
-    fun onNewRootCommandClick() {
-        router.newRootScreen(Screens.TestListScreen())
+    fun onProfileClick() {
+        router.newRootScreen(Screens.ProfileScreen())
     }
 
     fun onBackCommandClick() {

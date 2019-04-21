@@ -1,7 +1,6 @@
 package com.example.quiz.presentation.ui.auth.signup
 
 import android.text.TextUtils
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.data.repository.auth.AuthRepository
@@ -37,7 +36,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 .subscribe({
                     Const.currentUser = user
                     login(user)
-                    onTestListClick()
+                    onProfileClick()
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
@@ -51,7 +50,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 Const.TOKEN = Const.TOKEN + it.key
-                onTestListClick()
+                onProfileClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
@@ -82,11 +81,11 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     }
 
     fun onSignInCommandClick() {
-        router.exit()
+        router.newRootScreen(Screens.SignInScreen())
     }
 
-    fun onTestListClick() {
-        router.newRootScreen(Screens.TestListScreen())
+    fun onProfileClick() {
+        router.newRootScreen(Screens.ProfileScreen())
     }
 
     fun onBackCommandClick() {

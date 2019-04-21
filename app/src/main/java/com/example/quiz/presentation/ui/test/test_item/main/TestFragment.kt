@@ -87,12 +87,12 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
             if(it == currentUser.id) {
                 Log.d(TAG_LOG, "owner test")
                 tv_do_test.visibility = View.GONE
-                if(test.dateOpen != null) {
-                    tv_open_test.visibility = View.GONE
-                    tv_close_test.visibility = View.VISIBLE
-                } else {
+                if(test.dateClose != null || (test.dateClose == null && test.dateOpen == null)) {
                     tv_open_test.visibility = View.VISIBLE
                     tv_close_test.visibility = View.GONE
+                } else {
+                    tv_open_test.visibility = View.GONE
+                    tv_close_test.visibility = View.VISIBLE
                 }
                 if(test.dateClose != null) {
                     li_show_result.visibility = View.VISIBLE
@@ -156,12 +156,14 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         showSnackBar(R.string.test_opened)
         tv_open_test.visibility = View.GONE
         tv_close_test.visibility = View.VISIBLE
+        li_show_result.visibility = View.GONE
     }
 
     override fun afterTestClosed() {
         showSnackBar(R.string.test_closed)
         tv_open_test.visibility = View.VISIBLE
         tv_close_test.visibility = View.GONE
+        li_show_result.visibility = View.VISIBLE
     }
 
 

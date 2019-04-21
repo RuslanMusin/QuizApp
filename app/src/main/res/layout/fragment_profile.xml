@@ -1,70 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+
+>
+
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primary"
+                app:title="@string/menu_profile"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+    <RelativeLayout
+            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingTop="56dp"
-            android:paddingRight="24dp">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large"
+                    android:layout_marginStart="@dimen/large"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:id="@+id/li_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <RelativeLayout
+                            android:id="@+id/profileInfo"
+                            android:layout_width="match_parent"
+                            android:minHeight="120dp"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:id="@+id/imageContainer"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginEnd="@dimen/large"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                        >
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/iv_profile"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:alpha="1"
+                                    android:src="@drawable/student" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                                android:id="@+id/linearLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentTop="true"
+                                android:layout_toEndOf="@+id/imageContainer"
+                                android:layout_centerVertical="true"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:id="@+id/tv_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/app_name"
+                                    android:textColor="@color/primary_text"
+                                    android:textSize="@dimen/text.20"
+                            />
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_cover"
-                android:layout_width="wrap_content"
-                android:layout_height="72dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
-                android:alpha="1"
-                android:src="@drawable/student"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="1dp" />
+                        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"
-                android:text="@string/authorized"
-                android:textSize="@dimen/text.24" />
+                    </RelativeLayout>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_quit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/primary"
-                android:padding="12dp"
-                android:text="@string/quit"
-                android:textColor="@color/colorWhite" />
+                </LinearLayout>
 
-        </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"/>
 
-    </ScrollView>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/small"
+                        android:paddingBottom="@dimen/small"
+                >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text.16" />
+
+                <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="@dimen/text.14"
+                        tools:text="Email" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_divider"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/small"
+                        android:paddingBottom="@dimen/small"
+                >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/first_name"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/text.16" />
+
+                    <TextView
+                            android:id="@+id/tv_first_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/text.14"
+                            tools:text="Email" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_divider"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/small"
+                        android:paddingBottom="@dimen/small"
+                >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/last_name"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/text.16" />
+
+                    <TextView
+                            android:id="@+id/tv_last_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/text.14"
+                            tools:text="Email" />
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_divider"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                >
+
+                    <LinearLayout
+                            android:id="@+id/li_tests"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/normal"
+                            android:paddingBottom="@dimen/normal"
+                            android:orientation="horizontal">
+
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                app:srcCompat="@drawable/ic_insert_drive_file_black_24dp"/>
+
+                        <TextView
+                                android:id="@+id/tv_crossings"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/small"
+                                android:text="@string/tests"
+                                android:textColor="@color/primary_text"
+                                android:textSize="@dimen/text.16" />
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_divider"/>
+
+
+                    <LinearLayout
+                            android:id="@+id/li_logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/normal"
+                            android:paddingBottom="@dimen/normal"
+                            android:orientation="horizontal">
+
+                        <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_exit_to_app_black_24dp"/>
+
+                        <TextView
+                                android:id="@+id/tv_logout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/small"
+                                android:text="@string/logout"
+                                android:textColor="@color/primary_text"
+                                android:textSize="@dimen/text.16" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>

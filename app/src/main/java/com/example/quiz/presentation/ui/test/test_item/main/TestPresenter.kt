@@ -75,7 +75,7 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             .doOnSubscribe { viewState.showProgressDialog() }
             .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
-
+                Log.d(TAG_LOG, "result overview\n$it")
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
