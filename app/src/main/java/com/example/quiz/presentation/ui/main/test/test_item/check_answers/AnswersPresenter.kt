@@ -17,8 +17,12 @@ class AnswersPresenter @Inject constructor() : BasePresenter<AnswersView>() {
         router.replaceScreen(Screens.AnswersScreen(args))
     }
 
-    fun onFinishClick(args: Bundle) {
-        router.newRootChain(Screens.FinishScreen(args))
+    fun onFinishClick(args: Bundle, isOwner: Boolean) {
+        if(isOwner) {
+            router.newRootChain(Screens.TestScreen(args))
+        } else {
+            router.newRootChain(Screens.FinishScreen(args))
+        }
     }
 
     fun onNextAnswerClick(args: Bundle) {

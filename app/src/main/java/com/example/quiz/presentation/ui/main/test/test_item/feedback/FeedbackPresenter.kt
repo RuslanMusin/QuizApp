@@ -31,7 +31,6 @@ class FeedbackPresenter @Inject constructor() : BasePresenter<FeedbackView>() {
     }
 
     fun onFinishClick() {
-//        router.newRootChain(Screens.FinishScreen(args))
         router.newRootChain(Screens.TestListScreen())
     }
 
@@ -44,7 +43,6 @@ class FeedbackPresenter @Inject constructor() : BasePresenter<FeedbackView>() {
             .postTestResult(testId, testSubmit)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 Log.d(TAG_LOG, "testSubmit = \n${gson.toJson(testSubmit)}")
                 viewState.showSnackBar(R.string.wait_test_result)

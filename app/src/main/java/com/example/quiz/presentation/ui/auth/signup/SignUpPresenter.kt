@@ -1,6 +1,7 @@
 package com.example.quiz.presentation.ui.auth.signup
 
 import android.text.TextUtils
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.data.repository.auth.AuthRepository
@@ -9,6 +10,9 @@ import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
 import com.example.quiz.presentation.util.Const
+import com.example.quiz.presentation.util.Const.ORIGINAL_TOKEN
+import com.example.quiz.presentation.util.Const.TAG_LOG
+import com.example.quiz.presentation.util.Const.TOKEN
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -32,11 +36,9 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
         userRepository.createUser(user)
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
-                .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
                     Const.currentUser = user
                     login(user)
-                    onProfileClick()
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
@@ -46,10 +48,9 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
         authRepository
             .login(user)
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
-                Const.TOKEN = Const.TOKEN + it.key
+                Const.TOKEN = ORIGINAL_TOKEN + it.key
+                Log.d(TAG_LOG, "token = $TOKEN")
                 onProfileClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
@@ -91,5 +92,4 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     fun onBackCommandClick() {
         router.exit()
     }
-
 }

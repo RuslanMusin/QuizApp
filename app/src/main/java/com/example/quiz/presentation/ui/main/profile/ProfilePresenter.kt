@@ -7,7 +7,9 @@ import com.example.quiz.data.repository.auth.AuthRepository
 import com.example.quiz.QuizApplication
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationCompletableTransformer
+import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const.ORIGINAL_TOKEN
 import com.example.quiz.presentation.util.Const.TOKEN
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import io.reactivex.disposables.CompositeDisposable
@@ -26,11 +28,10 @@ class ProfilePresenter @Inject constructor() : BasePresenter<ProfileView>() {
     fun logout() {
         authRepository
                 .logout()
-                .compose(PresentationCompletableTransformer())
+                .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
-                .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
-                    TOKEN = "Token"
+                    TOKEN = ORIGINAL_TOKEN
                     onLogoutClick()
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))

@@ -35,9 +35,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small"
+                android:layout_marginBottom="@dimen/small"
                 android:textColor="@color/secondary_text"
                 android:textSize="@dimen/text.14"
                 tools:text="Yes" />
+
+            <include layout="@layout/layout_divider"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal"
+                    android:text="@string/test_id"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text.16" />
+
+            <TextView
+                    android:id="@+id/tv_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small"
+                    android:layout_marginBottom="@dimen/small"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/text.14"
+                    tools:text="Yes" />
 
             <include layout="@layout/layout_divider"/>
 
@@ -54,6 +75,47 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small"
+                    android:layout_marginBottom="@dimen/small"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/text.14"
+                    tools:text="Yes" />
+
+            <include layout="@layout/layout_divider"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal"
+                    android:text="@string/date_creation"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text.16" />
+
+            <TextView
+                    android:id="@+id/tv_date_creation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small"
+                    android:layout_marginBottom="@dimen/small"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/text.14"
+                    tools:text="Yes" />
+
+            <include layout="@layout/layout_divider"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normal"
+                    android:text="@string/status"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text.16" />
+
+            <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small"
+                    android:layout_marginBottom="@dimen/small"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/text.14"
                     tools:text="Yes" />
@@ -120,6 +182,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/show_result"
+                    android:textSize="@dimen/text.16"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:layout_marginTop="@dimen/normal"
+                    android:layout_marginBottom="@dimen/normal"
+            />
+
+            <include layout="@layout/layout_divider"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/li_show_answers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+        >
+            <TextView
+                    android:id="@+id/tv_show_answes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_answers"
                     android:textSize="@dimen/text.16"
                     android:textStyle="bold"
                     android:textColor="@color/primary"

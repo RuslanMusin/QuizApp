@@ -22,6 +22,7 @@ import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Answer
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
@@ -50,6 +51,8 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     @ProvidePresenter
     fun providePresenter(): QuestionPresenter = presenterProvider.get()
 
+    private lateinit var checkListener: View.OnClickListener
+
     override fun onBackPressed(): Boolean {
         shouldCancel()
         return true
@@ -63,14 +66,14 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 .negativeText(R.string.disagree)
                 .onPositive(object :MaterialDialog.SingleButtonCallback {
                     override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                        for(question in test.questions) {
+                        /*for(question in test.questions) {
                             question.userRight = false
                             for(answer in question.answers) {
                                 answer.userClicked = false
                             }
-                        }
+                        }*/
                         val args = Bundle()
-                        args.putString(TEST_ITEM, gson.toJson(test))
+                        args.putString(TEST_ITEM, test.id.toString())
                         presenter.onTestClick(args)
                     }
 
@@ -91,8 +94,8 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews(view)
         setListeners()
+        initViews(view)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -150,8 +153,16 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         btn_ok.setOnClickListener(this)
         btn_cancel.setOnClickListener(this)
         btn_forward.setOnClickListener(this)
-
         btn_back.visibility = View.GONE
+        checkListener = object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                if(question.type.equals(Const.TEST_ONE_TYPE)) {
+                    Log.d(TAG_LOG,"change on one type")
+                    changeToOneType(v as CheckBox)
+
+                }
+            }
+        }
     }
 
     private fun finishQuestions() {
@@ -168,6 +179,27 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         args.putInt(QUESTION_NUMBER, ++number)
         presenter.onNextQuestionClick(args)
     }
+
+    private fun changeToOneType(check: CheckBox?) {
+        Log.d(TAG_LOG, "changeToOneType")
+        var count = if (check == null) 0 else 1
+        val boxes: MutableList<CheckBox> = ArrayList()
+        for (checkBox in checkBoxes) {
+            if (checkBox.isChecked && check != checkBox) {
+                Log.d(TAG_LOG,"add to box")
+                boxes.add(checkBox)
+            }
+        }
+        for (checkBox in boxes) {
+            if (checkBox.isChecked) {
+                count++
+                checkBox.isChecked = if (count > 1 ) false else true
+                Log.d(TAG_LOG,"checkbox is checked = ${checkBox.isChecked}")
+            }
+        }
+
+    }
+
     override fun onClick(v: View) {
 
 
@@ -231,6 +263,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         textViews?.add(tvAnswer)
         Log.d(TAG_LOG,"content tv = ${tvAnswer.text}")
         val checkBox: CheckBox = view.findViewWithTag("checkbox")
+        checkBox.setOnClickListener(checkListener)
         checkBoxes?.add(checkBox)
         Log.d(TAG_LOG,"checkboxes size = ${checkBoxes?.size}")
         li_answers.addView(view)

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_sign_up.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnClickListener {
+class SignUpFragment : BaseFragment(), SignUpView, BackButtonListener, View.OnClickListener {
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter
@@ -39,15 +39,12 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
 
     private fun initViews() {
         setActionBar(toolbar)
-        setToolbarTitle(R.string.toolbar_create_acc)
-//        setBottomVisibility(false)
         setListeners()
     }
 
     private fun setListeners() {
         btn_sign_up.setOnClickListener(this)
         btn_login.setOnClickListener(this)
-        iv_cover.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -86,7 +83,7 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
     }
 
     override fun showEmailError(hasError: Boolean) {
-        if(hasError) {
+        if (hasError) {
             ti_email.error = getString(R.string.enter_correct_name)
         } else {
             ti_email.error = null
@@ -95,7 +92,7 @@ class SignUpFragment: BaseFragment(), SignUpView, BackButtonListener, View.OnCli
     }
 
     override fun showPasswordError(hasError: Boolean) {
-        if(hasError) {
+        if (hasError) {
             ti_password.error = getString(R.string.enter_correct_password)
         } else {
             ti_password.error = null

@@ -38,11 +38,11 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .login(user)
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
-                .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
                     TOKEN = TOKEN + it.key
                     findUser()
                 }, {
+                    viewState.hideProgressDialog()
                     viewState.showErrorDialog(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
 
@@ -52,10 +52,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
         userRepository
             .findUser()
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({user ->
-                viewState.hideProgressDialog()
                 Const.currentUser = user
                 Log.d(TAG_LOG, "userId = ${currentUser.id}")
                 onProfileClick()
@@ -99,5 +96,4 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     fun onBackCommandClick() {
         router.exit()
     }
-
 }

@@ -26,22 +26,11 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
         testRepository
             .findAll()
             .compose(PresentationSingleTransformer())
-            /*.doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }*/
             .subscribe({
-                viewState.hideProgressDialog()
                 viewState.showItems(it)
             }, {
 //                viewState.showSnackBar(exceptionProcessor.processException(it))
-                viewState.hideProgressDialog()
             }).disposeWhenDestroy()
-       /* val type = object : TypeToken<List<Test>>(){}.type
-        val listStr = prefs.getString(Const.TESTS, "")
-        var list: MutableList<Test> = ArrayList()
-        if(!listStr.equals("")) {
-            list = Const.gson.fromJson(listStr, type)
-        }
-        viewState.showItems(list)*/
     }
 
     fun onTestClick(args: Bundle) {

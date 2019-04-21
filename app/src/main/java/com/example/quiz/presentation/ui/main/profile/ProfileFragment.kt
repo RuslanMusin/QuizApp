@@ -52,6 +52,7 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener, BackBu
         tv_first_name.text = currentUser.name
         tv_last_name.text = currentUser.lastname
         tv_name.text = currentUser.getFullName()
+        hideProgressDialog()
     }
 
     private fun setListeners() {

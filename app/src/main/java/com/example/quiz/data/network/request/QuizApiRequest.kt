@@ -14,9 +14,7 @@ import retrofit2.http.*
 interface QuizApiRequest {
 
     @POST("auth/logout/")
-    fun logout(): Completable
-
-
+    fun logout(): Single<JsonObject>
 
     @GET("curators/{curator_id}")
     fun getUser(@Path("curator_id") id: Int): Single<User>

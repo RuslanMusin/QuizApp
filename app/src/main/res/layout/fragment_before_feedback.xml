@@ -43,16 +43,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pass_feedback_next"
-                    android:textSize="@dimen/text.24"
+                    android:textSize="@dimen/text.20"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="24dp"
             />
 
             <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btn_evaluate"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/normal"
                     android:padding="12dp"
                     android:background="@color/primary"
                     android:textColor="@color/colorWhite"

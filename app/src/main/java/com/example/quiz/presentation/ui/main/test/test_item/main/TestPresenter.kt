@@ -42,7 +42,6 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             .findById(testId)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 it.questions.sortBy { it.id }
                 viewState.setData(it)
@@ -56,7 +55,6 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             .getParticipantTestResult(testId, userId)
             .compose(PresentationSingleTransformer())
             .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 Log.d(TAG_LOG, "test result = \n${gson.toJson(it)}")
                 it.questions.sortBy { it.id }
@@ -105,5 +103,9 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()    }
+
+    fun onAnswersClick(args: Bundle) {
+        router.navigateTo(Screens.AnswersScreen(args))
+    }
 
 }

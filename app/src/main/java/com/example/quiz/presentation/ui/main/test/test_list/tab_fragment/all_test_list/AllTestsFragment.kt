@@ -132,7 +132,7 @@ class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
         val flag = idPattern.matcher(query).matches()
         if(flag) {
             for(skill in tests) {
-                if (skill.id.equals(query)) {
+                if (skill.id.toString().equals(query)) {
                     list.add(skill)
                 }
             }

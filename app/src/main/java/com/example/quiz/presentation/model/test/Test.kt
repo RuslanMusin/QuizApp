@@ -25,8 +25,8 @@ class Test : Identified {
     var questions: MutableList<Question> = ArrayList()
     @SerializedName("questions_feedback")
     var feedbackQuestions: MutableList<Question> = ArrayList()
-    lateinit var rightQuestions: List<Question>
+    lateinit var rightQuestions: MutableList<Question>
 
-    lateinit var wrongQuestions: List<Question>
+    lateinit var wrongQuestions: MutableList<Question>
 
 }

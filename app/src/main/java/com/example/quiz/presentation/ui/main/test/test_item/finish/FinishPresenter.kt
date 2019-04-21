@@ -22,22 +22,6 @@ class FinishPresenter @Inject constructor() : BasePresenter<FinishView>() {
     @Inject
     lateinit var prefs: SharedPreferences
 
-
-    fun finishTest(test: Test) {
-        val editor = prefs.edit()
-        val key = "${currentUser.email}${test.name}"
-        editor.putString(key, gson.toJson(test))
-        editor.apply()
-       /* AppHelper.currentUser?.let {user ->
-            val absId = test.card?.cardId
-            absId?.let {
-                cardRepository.findMyAbstractCardStates(absId, user.id).subscribe { cards ->
-                    testRepository.finishTest(test, user, cards).subscribe() }
-                }
-
-            }*/
-    }
-
     fun onTestClick(args: Bundle) {
         router.newRootChain(Screens.TestScreen(args))
     }
