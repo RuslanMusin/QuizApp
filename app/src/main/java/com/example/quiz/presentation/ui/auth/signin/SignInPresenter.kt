@@ -52,10 +52,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
         userRepository
             .findUser()
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({user ->
-                viewState.hideProgressDialog()
                 Const.currentUser = user
                 Log.d(TAG_LOG, "userId = ${currentUser.id}")
                 onProfileClick()

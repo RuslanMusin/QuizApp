@@ -33,12 +33,14 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideProgressDialog()
         initViews()
     }
 
     private fun initViews() {
         setActionBar(toolbar)
         setListeners()
+        hideProgressDialog()
     }
 
     private fun signUp(v: View) {
@@ -77,7 +79,12 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
         btn_enter.setOnClickListener(this)
         btn_sign_up.setOnClickListener(this)
         iv_cover.setOnClickListener(this)
-//        tv_name.setOnClickListener(this)
+        tv_valera.setOnClickListener(this)
+        tv_azat.setOnClickListener(this)
+        tv_ivan.setOnClickListener(this)
+        tv_damir.setOnClickListener(this)
+        tv_aygul.setOnClickListener(this)
+        tv_ruslan.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -90,18 +97,50 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
                 presenter.signIn(email, password)
             }
 
-           /* R.id.tv_name -> {
-                et_email.setText("rast@ma.ru")
-                et_password.setText("rastamka")
-
-            }*/
+            R.id.btn_sign_up -> signUp(view)
 
             R.id.iv_cover -> {
                 et_email.setText("ryst@ma.ru")
                 et_password.setText("rystam")
             }
 
-            R.id.btn_sign_up -> signUp(view)
+            R.id.tv_ruslan -> {
+                et_email.setText("rast@ma.ru")
+                et_password.setText("rastamka")
+
+            }
+
+            R.id.tv_valera -> {
+                et_email.setText("valera@ma.ru")
+                et_password.setText("valera")
+
+            }
+
+            R.id.tv_azat -> {
+                et_email.setText("azat@ma.ru")
+                et_password.setText("azat")
+
+            }
+
+            R.id.tv_damir -> {
+                et_email.setText("damir@ma.ru")
+                et_password.setText("damir")
+
+            }
+
+            R.id.tv_aygul -> {
+                et_email.setText("aygul@ma.ru")
+                et_password.setText("aygul")
+
+            }
+
+            R.id.tv_ivan -> {
+                et_email.setText("ivan98@ma.ru")
+                et_password.setText("ivanov")
+
+            }
+
+
         }
     }
 

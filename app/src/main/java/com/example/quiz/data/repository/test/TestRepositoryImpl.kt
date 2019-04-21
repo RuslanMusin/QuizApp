@@ -2,8 +2,10 @@ package com.example.quiz.data.repository.test
 
 import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.presentation.model.common.ElementId
+import com.example.quiz.presentation.model.result.AuthorResult
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.test.TestResult
+import com.google.gson.Gson
 import com.example.quiz.presentation.model.test.TestSubmit
 import com.google.gson.JsonObject
 import io.reactivex.Single
@@ -16,47 +18,47 @@ class TestRepositoryImpl @Inject constructor() : TestRepository {
 
     override fun findById(id: Int): Single<Test> {
         return apiRequest
-            .getTest(id)
+                .getTest(id)
     }
 
     override fun findAll(): Single<List<Test>> {
         return apiRequest
-            .getTests()
+                .getTests()
     }
 
     override fun findByUser(userId: Int): Single<List<Test>> {
         return apiRequest
-            .getTestsByUser(userId)
+                .getTestsByUser(userId)
     }
 
     override fun createTest(test: Test): Single<ElementId> {
         return apiRequest
-            .createTest(test)
+                .createTest(test)
     }
 
     override fun openTest(id: Int): Single<JsonObject> {
         return apiRequest
-            .openTest(id)
+                .openTest(id)
     }
 
     override fun closeTest(id: Int): Single<JsonObject> {
         return apiRequest
-            .closeTest(id)
+                .closeTest(id)
     }
 
-    override fun postTestResult(testId: Int, testSubmit: TestSubmit): Single<JsonObject> {
+    override fun postTestResult(testId: Int, testSubmit: TestSubmit): Single<TestSubmit> {
         return apiRequest
-            .postTestResult(testId, testSubmit)
+                .postTestResult(testId, testSubmit)
     }
 
-    override fun getTestResult(testId: Int, userId: Int): Single<TestResult> {
+    override fun getParticipantTestResult(testId: Int, userId: Int): Single<TestResult> {
         return apiRequest
-            .getTestResult(testId, userId)
+                .getParticipantTestResult(testId, userId)
     }
 
-    override fun getTestResults(id: Int): Single<JsonObject> {
+    override fun getAuthorTestResults(id: Int): Single<AuthorResult> {
         return apiRequest
-            .getTestResults(id)
+                .getAuthorTestResults(id)
     }
 
 }

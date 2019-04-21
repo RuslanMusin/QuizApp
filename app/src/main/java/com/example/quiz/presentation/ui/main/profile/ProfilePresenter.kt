@@ -30,7 +30,6 @@ class ProfilePresenter @Inject constructor() : BasePresenter<ProfileView>() {
                 .logout()
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
-                .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
                     TOKEN = ORIGINAL_TOKEN
                     onLogoutClick()

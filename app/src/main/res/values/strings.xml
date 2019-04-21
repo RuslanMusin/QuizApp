@@ -80,7 +80,7 @@
     <string name="close_test">Закрыть тест</string>
     <string name="test_opened">Тест открыт</string>
     <string name="test_closed">Тест закрыт</string>
-    <string name="pass_feedback_next">Основной тест был пройден. Оцените выступление, ответив на пару вопросов</string>
+    <string name="pass_feedback_next">Основной тест был пройден.\nОцените выступление, ответив \nна пару вопросов</string>
     <string name="evaluate_lector">Оценить</string>
     <string name="give_feedback">Отзыв</string>
     <string name="wait_test_result">Ожидайте результата теста</string>
@@ -98,4 +98,9 @@
     <string name="date_creation">Дата создания</string>
     <string name="status">Состояние</string>
     <string name="test_not_started">Тест не открыт</string>
+    <string name="test_id">Идентификатор теста</string>
+    <string name="test_result">Результат</string>
+    <string name="graph_axis">X - номер вопроса\nY - кол-во правильных ответов</string>
+    <string name="repeat">Повторить</string>
+    <string name="download_error">Произошла ошибка при загрузке данных</string>
 </resources>

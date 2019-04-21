@@ -11,7 +11,6 @@ import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.ui.auth.signup.SignUpFragment
-import com.example.quiz.presentation.ui.test.test_item.before_feedback.BeforeFeedbackPresenter
 import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.currentUser
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -53,6 +52,7 @@ class ProfileFragment: BaseFragment(), ProfileView, View.OnClickListener, BackBu
         tv_first_name.text = currentUser.name
         tv_last_name.text = currentUser.lastname
         tv_name.text = currentUser.getFullName()
+        hideProgressDialog()
     }
 
     private fun setListeners() {

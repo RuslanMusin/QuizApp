@@ -37,6 +37,34 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:id="@+id/li_id"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="8dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:text="@string/test_id"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text.16" />
+
+        <TextView
+                android:id="@+id/tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text.14"
+                tools:text="Authors" />
+
+    </LinearLayout>
+
 
     <LinearLayout
             android:id="@+id/li_is_open"
@@ -51,41 +79,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normal"
-                android:text="@string/is_test_open"
+                android:text="@string/status"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/text.16" />
 
         <TextView
-                android:id="@+id/tv_open_test"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textColor="@color/secondary_text"
-                android:textSize="@dimen/text.14"
-                tools:text="Authors" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-            android:id="@+id/li_description"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_marginBottom="8dp">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:text="@string/test_desc"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text.16" />
-
-        <TextView
-                android:id="@+id/tv_description"
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normal"
