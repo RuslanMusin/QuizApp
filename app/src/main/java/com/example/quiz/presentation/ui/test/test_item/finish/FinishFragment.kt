@@ -1,6 +1,5 @@
 package com.example.quiz.presentation.ui.test.test_item.finish
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -11,18 +10,17 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
-import com.example.quiz.presentation.model.test.Question
-import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.ui.test.test_item.check_answers.AnswersPresenter
+import com.example.quiz.presentation.model.test.*
 import com.example.quiz.presentation.util.Const.ANSWERS_TYPE
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.TEST_MANY_TYPE
+import com.example.quiz.presentation.util.Const.TEST_ONE_TYPE
+import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.WRONG_ANSWERS
 import com.example.quiz.presentation.util.Const.gson
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_finish_test.*
-import kotlinx.android.synthetic.main.toolbar_test.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -35,9 +33,9 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
     @ProvidePresenter
     fun providePresenter(): FinishPresenter = presenterProvider.get()
 
-    lateinit var test: Test
-    var rightQuestions: MutableList<Question> = ArrayList()
-    var wrongQuestions: MutableList<Question> = ArrayList()
+    lateinit var test: TestResult
+    var rightQuestions: MutableList<QuestionResult> = ArrayList()
+    var wrongQuestions: MutableList<QuestionResult> = ArrayList()
     var procent: Long = 0
 
    /* override fun onBackPressed() {
@@ -55,14 +53,49 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
        /* (activity as BaseBackActivity).currentTag = TestActivity.FINISH_FRAGMENT
         (activity as ChangeToolbarListener).changeToolbar(FINISH_FRAGMENT,"Результат")*/
 
-        test = gson.fromJson(arguments?.getString(TEST_ITEM),Test::class.java)
-        for(question in test.questions) {
-            if(question.userRight) {
-                rightQuestions.add(question)
-            } else {
-                wrongQuestions.add(question)
-            }
-        }
+       test = gson.fromJson(arguments?.getString(TEST_ITEM),TestResult::class.java)
+       for(question in test.questions) {
+           if(question.type.equals(TEST_TEXT_TYPE)) {
+               val answer = question.participantAnswers[0]
+               question.userAnswer = answer.content!!
+               if(answer.isRight) {
+                   rightQuestions.add(question)
+               } else {
+                   wrongQuestions.add(question)
+               }
+           }
+           if(question.type.equals(TEST_ONE_TYPE)) {
+               val userAnswer = question.participantAnswers[0]
+               for(answer in question.answers) {
+                   if(answer.id == userAnswer.id) {
+                       answer.userClicked = true
+                       if(answer.isRight) {
+                           rightQuestions.add(question)
+                       } else {
+                           wrongQuestions.add(question)
+                       }
+                   }
+               }
+           }
+           if(question.type.equals(TEST_MANY_TYPE)) {
+               var flag = true
+               for(userAnswer in question.participantAnswers) {
+                   for(answer in question.answers) {
+                       if(answer.id == userAnswer.id) {
+                           answer.userClicked = true
+                           if(answer.isRight != answer.userClicked) {
+                               flag = false
+                           }
+                       }
+                   }
+               }
+               if(flag) {
+                   rightQuestions.add(question)
+               } else {
+                   wrongQuestions.add(question)
+               }
+           }
+       }
         test.rightQuestions = rightQuestions
         test.wrongQuestions = wrongQuestions
 
@@ -72,9 +105,9 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setToolbar()
-        tv_right_answers.text = rightQuestions.size.toString()
-        tv_wrong_answers.text = wrongQuestions.size.toString()
-        setCardText()
+        tv_right_answers.text = test.rightQuestions.size.toString()
+        tv_wrong_answers.text = test.wrongQuestions.size.toString()
+//        setCardText()
 
         btn_finish_test.setOnClickListener(this)
         li_wrong_answers.setOnClickListener(this)
@@ -88,7 +121,7 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
 //        setActionBarTitle(R.string.test_result)
     }
 
-    fun setCardText() {
+   /* fun setCardText() {
         procent = Math.round((test.rightQuestions.size.toDouble() / test.questions.size.toDouble()) * 100)
         Log.d(TAG_LOG, "procent = $procent")
         if (procent >= 80) {
@@ -97,7 +130,7 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
 
 
         }
-    }
+    }*/
 
 
     override fun onClick(v: View?) {
@@ -113,7 +146,7 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
                 }
 //                removeStackDownTo()
                 val args: Bundle = Bundle()
-                args.putString(TEST_ITEM, gson.toJson(test))
+                args.putString(TEST_ITEM, test.id.toString())
                 presenter.onTestClick(args)
             }
 

@@ -3,9 +3,9 @@ package com.example.quiz.presentation.model.user
 import com.example.quiz.presentation.model.common.Identified
 import com.google.gson.annotations.SerializedName
 
-open class User: Identified {
+open class User {
 
-    override lateinit var id: String
+    var id: Int = -1
     lateinit var email: String
     lateinit var password: String
     lateinit var username: String

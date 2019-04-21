@@ -9,7 +9,9 @@ import com.example.quiz.presentation.ui.auth.signup.SignUpFragment
 import com.example.quiz.presentation.ui.main.profile.ProfileFragment
 import com.example.quiz.presentation.ui.test.add_test.main.AddMainTestFragment
 import com.example.quiz.presentation.ui.test.add_test.question.AddQuestionTestFragment
+import com.example.quiz.presentation.ui.test.test_item.before_feedback.BeforeFeedbackFragment
 import com.example.quiz.presentation.ui.test.test_item.check_answers.AnswersFragment
+import com.example.quiz.presentation.ui.test.test_item.feedback.FeedbackFragment
 import com.example.quiz.presentation.ui.test.test_item.finish.FinishFragment
 import com.example.quiz.presentation.ui.test.test_item.main.TestFragment
 import com.example.quiz.presentation.ui.test.test_item.question.QuestionFragment
@@ -84,6 +86,16 @@ class Screens {
         }
     }
 
+    class BeforeFeedbackScreen(val args: Bundle) : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            return BeforeFeedbackFragment.newInstance(args)
+        }
+    }
 
+    class FeedbackScreen(val args: Bundle) : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            return FeedbackFragment.newInstance(args)
+        }
+    }
 
 }

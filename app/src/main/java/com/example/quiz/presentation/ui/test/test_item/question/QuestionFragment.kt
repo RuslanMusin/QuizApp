@@ -22,7 +22,6 @@ import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Answer
 import com.example.quiz.presentation.model.test.Question
 import com.example.quiz.presentation.model.test.Test
-import com.example.quiz.presentation.ui.test.test_item.finish.FinishFragment
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
@@ -51,22 +50,6 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     @ProvidePresenter
     fun providePresenter(): QuestionPresenter = presenterProvider.get()
 
-   /* override fun onBackPressed() {
-        shouldCancel()
-    }
-
-    override fun onCancel() {
-        shouldCancel()
-    }
-
-    override fun onForward() {
-        nextQuestion()
-    }
-
-    override fun onOk() {
-        finishQuestions()
-    }*/
-
     override fun onBackPressed(): Boolean {
         shouldCancel()
         return true
@@ -80,19 +63,15 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 .negativeText(R.string.disagree)
                 .onPositive(object :MaterialDialog.SingleButtonCallback {
                     override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                        for(question in test.questions) {
+                        /*for(question in test.questions) {
                             question.userRight = false
                             for(answer in question.answers) {
                                 answer.userClicked = false
                             }
-                        }
-//                        removeStackDownTo()
+                        }*/
                         val args = Bundle()
-                        args.putString(TEST_ITEM, gson.toJson(test))
+                        args.putString(TEST_ITEM, test.id.toString())
                         presenter.onTestClick(args)
-                        /*val fragment = TestFragment.newInstance(args)
-                        pushFragments(fragment, true)*/
-//                        TestActivity.start(activity as Activity,test)
                     }
 
                 })
@@ -107,10 +86,6 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
             test = gson.fromJson(it.getString(TEST_ITEM), Test::class.java)
             question = test.questions[number]
         }
-
-
-       /* (activity as BaseBackActivity).currentTag = TestActivity.QUESTION_FRAGMENT + number
-        (activity as ChangeToolbarListener).changeToolbar(QUESTION_FRAGMENT,"Вопрос ${number+1}/${test.questions.size}")*/
 
         return view
     }
@@ -147,7 +122,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     private fun setTextAnswer() {
         layoutInflater.inflate(R.layout.layout_item_add_text_question,li_answers,true)
         changeButtons()
-//        li_answers.addView(view)
+        question.answers[0].userClicked = true
     }
 
     private fun setStartAnswers() {
@@ -180,13 +155,10 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     }
 
     private fun finishQuestions() {
-//        removeStackDownTo()
         checkAnswers()
         val args: Bundle = Bundle()
         args.putString(TEST_ITEM, gson.toJson(test))
-        val fragment = FinishFragment.newInstance(args)
-        presenter.onFinishClick(args)
-//        pushFragments(fragment, true)
+        presenter.onBeforeFeedbackClick(args)
     }
 
     private fun nextQuestion() {
@@ -195,8 +167,6 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         args.putString(TEST_ITEM, gson.toJson(test))
         args.putInt(QUESTION_NUMBER, ++number)
         presenter.onNextQuestionClick(args)
-       /* val fragment = QuestionFragment.newInstance(args)
-        pushFragments(fragment, true)*/
     }
     override fun onClick(v: View) {
 
@@ -206,19 +176,10 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
             R.id.btn_finish_questions -> {
 
                finishQuestions()
-               /* activity!!.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, FinishFragment.newInstance(args))
-                        .addToBackStack("AddQuestionFragment")
-                        .commit()      */      }
+            }
 
             R.id.btn_next_question -> {
                 nextQuestion()
-               /* activity!!.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, QuestionFragment.newInstance(args))
-                        .addToBackStack("AddQuestionFragment")
-                        .commit()*/
             }
 
             R.id.btn_ok -> finishQuestions()
@@ -240,7 +201,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 val answer: Answer = question.answers[i]
                 if (checkBoxes.get(i).isChecked) {
                     answer.userClicked = true
-                    Log.d(TAG_LOG, "checked answer = ${answer.text}")
+                    Log.d(TAG_LOG, "checked answer = ${answer.content}")
                 }
                 if (answer.userClicked != answer.isRight) {
                     question.userRight = false
@@ -248,11 +209,11 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 }
                 Log.d(
                     TAG_LOG,
-                    "userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.text}"
+                    "userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.content}"
                 )
             }
         } else {
-            val rightAnswer = question.answers[0].text
+            val rightAnswer = question.answers[0].content
             val userAnswer = et_text_answer.text.toString()
             question.userAnswer = userAnswer
             if(rightAnswer.equals(userAnswer)) {
@@ -266,7 +227,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     private fun addAnswer(answer: Answer) {
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_item_question,li_answers,false) as LinearLayout
         val tvAnswer: TextView = view.findViewWithTag("tv_answer")
-        tvAnswer.text = answer.text
+        tvAnswer.text = answer.content
         textViews?.add(tvAnswer)
         Log.d(TAG_LOG,"content tv = ${tvAnswer.text}")
         val checkBox: CheckBox = view.findViewWithTag("checkbox")

@@ -8,6 +8,7 @@ import com.example.quiz.data.repository.user.UserRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -33,10 +34,26 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
-                    viewState.goToProfile(it)
+                    Const.currentUser = user
+                    login(user)
+                    onProfileClick()
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
+    }
+
+    private fun login(user: User) {
+        authRepository
+            .login(user)
+            .compose(PresentationSingleTransformer())
+            .doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }
+            .subscribe({
+                Const.TOKEN = Const.TOKEN + it.key
+                onProfileClick()
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
     }
 
     private fun validateForm(user: User): Boolean {
@@ -64,15 +81,14 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     }
 
     fun onSignInCommandClick() {
-        router.exit()
+        router.newRootScreen(Screens.SignInScreen())
     }
 
-    fun onProfileCommandClick() {
-        router.newRootScreen(Screens.TestListScreen())
+    fun onProfileClick() {
+        router.newRootScreen(Screens.ProfileScreen())
     }
 
     fun onBackCommandClick() {
-        router.finishChain()
+        router.exit()
     }
-
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList
 
 class Question : Identified {
 
-    override lateinit var id: String
+    override var id: Int = -1
 
     var description: String? = null
 

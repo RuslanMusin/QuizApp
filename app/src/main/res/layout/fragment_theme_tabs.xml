@@ -17,6 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+            app:title="@string/tests"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
@@ -34,8 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="?attr/colorPrimary"
+        app:tabIndicatorColor="@color/colorWhite"
         app:tabMode="fixed"
-        app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabTextColor="@color/primary_light"
         app:tabGravity="fill"
         />
 

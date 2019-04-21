@@ -14,7 +14,7 @@
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -30,7 +30,7 @@
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/text.18"
         android:layout_toRightOf="@id/btn_back"
         android:layout_marginStart="16dp"

@@ -18,9 +18,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
-import com.example.quiz.presentation.model.test.Answer
-import com.example.quiz.presentation.model.test.Question
-import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.model.test.*
 import com.example.quiz.presentation.util.Const.ANSWERS_TYPE
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
@@ -28,6 +26,7 @@ import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
 import com.example.quiz.presentation.util.Const.TEST_TEXT_TYPE
 import com.example.quiz.presentation.util.Const.WRONG_ANSWERS
+import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_question.*
 import kotlinx.android.synthetic.main.layout_text_question.*
@@ -45,8 +44,8 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     @ProvidePresenter
     fun providePresenter(): AnswersPresenter = presenterProvider.get()
 
-    private lateinit var question: Question
-    private lateinit var test: Test
+    private lateinit var question: QuestionResult
+    private lateinit var test: TestResult
     private lateinit var type: String
     private var listSize: Int = 0
     private var number: Int = 0
@@ -69,7 +68,7 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
         arguments?.let {
             type = it.getString(ANSWERS_TYPE)
             number = it.getInt(QUESTION_NUMBER)
-            test = gson.fromJson(it.getString(TEST_ITEM), Test::class.java)
+            test = gson.fromJson(it.getString(TEST_ITEM), TestResult::class.java)
 
         }
         if(type.equals(RIGHT_ANSWERS)) {
@@ -176,8 +175,13 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     private fun finishQuestions() {
 //        removeStackDownTo()
         val args: Bundle = Bundle()
-        args.putString(TEST_ITEM, gson.toJson(test))
-        presenter.onFinishClick(args)
+        if(currentUser.id.equals(test.owner?.id)) {
+            args.putString(TEST_ITEM, test.id.toString())
+            presenter.onFinishClick(args, true)
+        } else {
+            args.putString(TEST_ITEM, gson.toJson(test))
+            presenter.onFinishClick(args, false)
+        }
     }
 
     private fun nextQuestion() {
@@ -220,14 +224,17 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     private fun addTextAnswer() {
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_text_question,li_answers,false) as LinearLayout
         li_answers.addView(view)
-        tv_right_answer.text = question.answers[0].text
+        tv_right_answer.text = question.answers[0].content
+        if(type.equals(RIGHT_ANSWERS)) {
+            question.userAnswer = question.answers[0].content!!
+        }
         tv_your_answer.text = question.userAnswer
     }
 
     private fun addAnswer(answer: Answer) {
         val view: LinearLayout = layoutInflater.inflate(R.layout.layout_item_question,li_answers,false) as LinearLayout
         val tvAnswer: TextView = view.findViewWithTag("tv_answer")
-        tvAnswer.text = answer.text
+        tvAnswer.text = answer.content
         textViews?.add(tvAnswer)
         val checkBox: CheckBox = view.findViewWithTag("checkbox")
         if(answer.isRight) {

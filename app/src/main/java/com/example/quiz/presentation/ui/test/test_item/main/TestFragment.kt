@@ -2,6 +2,7 @@ package com.example.quiz.presentation.ui.test.test_item.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,17 @@ import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.Test
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
+import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
+import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.currentUser
+import com.example.quiz.presentation.util.Const.getStringFromDate
 import com.example.quiz.presentation.util.Const.gson
 import kotlinx.android.synthetic.main.fragment_test.*
 import kotlinx.android.synthetic.main.layout_expandable_text_view.*
 import kotlinx.android.synthetic.main.layout_test.*
-import kotlinx.android.synthetic.main.toolbar_test.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -60,28 +65,61 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_test, container, false)
 
-
-        val testStr: String? = arguments?.getString(TEST_ITEM)
-        test = gson.fromJson(testStr,Test::class.java)
-
+        val testId: Int? = arguments?.getString(TEST_ITEM)?.toInt()
+        testId?.let { presenter.findTest(it) }
+        /*test = gson.fromJson(testId,Test::class.java)
+        Log.d(TAG_LOG, "test json = \n$testId")*/
         return view
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews(view)
         setListeners()
-        setData()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun setData() {
+    override fun setData(test: Test) {
+        this.test = test
+        initViews()
         expand_text_view.text = test.description
         tv_name.text = test.name
         tv_questions.text = test.questions.size.toString()
+        tv_date_creation.text = test.dateCreation?.let { getStringFromDate(it) }
+
+        if(test.dateClose != null) {
+            tv_status.text = getString(R.string.test_closed)
+        } else if(test.dateOpen != null) {
+            tv_status.text = getString(R.string.test_opened)
+        } else {
+            tv_status.text = getString(R.string.test_not_started)
+        }
+
+        Log.d(TAG_LOG, "owner id = ${test.owner?.id} and userId = ${currentUser.id}")
+        test.owner?.id?.let {
+            if(it == currentUser.id) {
+                Log.d(TAG_LOG, "owner test")
+                tv_do_test.visibility = View.GONE
+                li_show_answers.visibility = View.VISIBLE
+                if(test.dateOpen == null) {
+                    tv_open_test.visibility = View.VISIBLE
+                    tv_close_test.visibility = View.GONE
+                } else {
+                    tv_open_test.visibility = View.GONE
+                    tv_close_test.visibility = View.VISIBLE
+                }
+                if(test.dateClose != null) {
+                    li_show_result.visibility = View.VISIBLE
+                }
+            } else {
+                if(test.dateClose != null) {
+                    li_show_result.visibility = View.VISIBLE
+                    li_do_test.visibility = View.GONE
+                }
+            }
+        }
     }
 
-    private fun initViews(view: View) {
+    private fun initViews() {
         setActionBar(toolbar)
         toolbar.title = test.name
         toolbar.setNavigationOnClickListener { presenter.onTestListClick() }
@@ -89,6 +127,10 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
 
     private fun setListeners() {
         tv_do_test.setOnClickListener(this)
+        tv_open_test.setOnClickListener(this)
+        tv_close_test.setOnClickListener(this)
+        tv_show_result.setOnClickListener(this)
+        li_show_answers.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -101,7 +143,54 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
                 presenter.onQuestionClick(args)
 
             }
+
+            R.id.tv_open_test -> {
+                presenter.openTest(test.id)
+            }
+
+            R.id.tv_close_test -> {
+                presenter.closeTest(test.id)
+            }
+
+            R.id.tv_show_result -> showResult()
+
+            R.id.li_show_answers -> showAnswers()
         }
+    }
+
+    private fun showAnswers() {
+        test.rightQuestions = ArrayList()
+        for(question in test.questions) {
+            test.rightQuestions.add(question)
+        }
+        val args: Bundle = Bundle()
+        args.putString(Const.ANSWERS_TYPE, RIGHT_ANSWERS)
+        args.putString(TEST_ITEM, gson.toJson(test))
+        presenter.onAnswersClick(args)
+    }
+
+    private fun showResult() {
+        currentUser.id.let {
+            if(it == test.owner?.id) {
+                presenter.showResultOverview(test.id)
+            } else {
+                presenter.showResult(test.id, it)
+            }
+        }
+    }
+
+    override fun afterTestOpened() {
+        showSnackBar(R.string.test_opened)
+        tv_open_test.visibility = View.GONE
+        tv_close_test.visibility = View.VISIBLE
+        li_show_result.visibility = View.GONE
+    }
+
+    override fun afterTestClosed() {
+        showSnackBar(R.string.test_closed)
+        tv_open_test.visibility = View.VISIBLE
+        tv_close_test.visibility = View.GONE
+        li_show_result.visibility = View.VISIBLE
     }
 
 

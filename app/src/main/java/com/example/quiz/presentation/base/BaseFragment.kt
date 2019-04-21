@@ -17,32 +17,20 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
         super.onCreate(savedInstanceState)
     }
 
-    override fun showProgressDialog(message: String) {
-        (activity as BaseView).showProgressDialog(message)
-    }
-
-    override fun showProgressDialog(messageId: Int) {
-        (activity as BaseView).showProgressDialog(messageId)
-    }
-
-    override fun hideProgressDialog() {
-        (activity as BaseView).hideProgressDialog()
-    }
-
     override fun showSnackBar(message: String) {
-        (activity as BaseView).showSnackBar(message)
+        (activity as? BaseActivity)?.showSnackBar(message)
     }
 
     override fun showSnackBar(messageId: Int) {
-        (activity as BaseView).showSnackBar(messageId)
+        (activity as? BaseActivity)?.showSnackBar(messageId)
     }
 
     override fun setActionBar(toolbar: Toolbar) {
-        (activity as BaseView).setActionBar(toolbar)
+        (activity as? BaseActivity)?.setActionBar(toolbar)
     }
 
     override fun setToolbarTitle(id: Int) {
-        (activity as BaseView).setToolbarTitle(id)
+        (activity as? BaseActivity)?.setToolbarTitle(id)
     }
 
     override fun onAttach(context: Context?) {
@@ -71,6 +59,22 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseView {
     }
 
     override fun changeWindowsSoftInputMode(mode: Int) {
-        (activity as BaseView).changeWindowsSoftInputMode(mode)
+        (activity as? BaseActivity)?.changeWindowsSoftInputMode(mode)
+    }
+
+    override fun showErrorDialog(errorText: String) {
+        (activity as? BaseActivity)?.showErrorDialog(errorText)
+    }
+
+    override fun showErrorDialog(errorText: Int) {
+        (activity as? BaseActivity)?.showErrorDialog(errorText)
+    }
+
+    override fun showProgressDialog() {
+        (activity as? BaseActivity)?.showProgressDialog()
+    }
+
+    override fun hideProgressDialog() {
+        (activity as? BaseActivity)?.hideProgressDialog()
     }
 }

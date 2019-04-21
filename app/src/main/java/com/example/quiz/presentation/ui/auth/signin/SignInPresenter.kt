@@ -1,6 +1,7 @@
 package com.example.quiz.presentation.ui.auth.signin
 
 import android.text.TextUtils
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.quiz.data.repository.auth.AuthRepository
 import com.example.quiz.data.repository.user.UserRepository
@@ -8,6 +9,9 @@ import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
 import com.example.quiz.presentation.ui.Screens
+import com.example.quiz.presentation.util.Const
+import com.example.quiz.presentation.util.Const.TAG_LOG
+import com.example.quiz.presentation.util.Const.TOKEN
 import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
@@ -36,13 +40,28 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
-                    viewState.hideProgressDialog()
-                    viewState.createCookie(user.email, user.password)
-                    viewState.goToProfile(user)
+                    TOKEN = TOKEN + it.key
+                    findUser()
                 }, {
-                    viewState.showSnackBar(exceptionProcessor.processException(it))
+                    viewState.showErrorDialog(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
 
+    }
+
+    private fun findUser() {
+        userRepository
+            .findUser()
+            .compose(PresentationSingleTransformer())
+            .doOnSubscribe { viewState.showProgressDialog() }
+            .doAfterTerminate { viewState.hideProgressDialog() }
+            .subscribe({user ->
+                viewState.hideProgressDialog()
+                Const.currentUser = user
+                Log.d(TAG_LOG, "userId = ${currentUser.id}")
+                onProfileClick()
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
     }
 
     private fun validateForm(email: String, password: String): Boolean {
@@ -50,7 +69,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     }
 
     private fun checkEmail(email: String): Boolean {
-        return if (TextUtils.isEmpty(email)) {
+        return if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             viewState.showEmailError(true)
             false
         } else {
@@ -69,16 +88,15 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
         }
     }
 
-    fun onForwardCommandClick() {
+    fun onSignUpClick() {
         router.navigateTo(Screens.SignUpScreen())
     }
 
-    fun onNewRootCommandClick() {
-        router.newRootScreen(Screens.TestListScreen())
+    fun onProfileClick() {
+        router.newRootScreen(Screens.ProfileScreen())
     }
 
     fun onBackCommandClick() {
         router.exit()
     }
-
 }

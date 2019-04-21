@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
-import com.example.quiz.presentation.model.user.User
 import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.base.navigation.BackButtonListener
-import com.example.quiz.presentation.util.Const
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -39,11 +37,12 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
     }
 
     private fun initViews() {
+        setActionBar(toolbar)
         setListeners()
     }
 
     private fun signUp(v: View) {
-        presenter.onForwardCommandClick()
+        presenter.onSignUpClick()
     }
 
     private fun checkUserSession() {
@@ -78,7 +77,7 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
         btn_enter.setOnClickListener(this)
         btn_sign_up.setOnClickListener(this)
         iv_cover.setOnClickListener(this)
-        tv_name.setOnClickListener(this)
+//        tv_name.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -91,24 +90,19 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
                 presenter.signIn(email, password)
             }
 
-            R.id.tv_name -> {
+           /* R.id.tv_name -> {
                 et_email.setText("rast@ma.ru")
                 et_password.setText("rastamka")
 
-            }
+            }*/
 
             R.id.iv_cover -> {
-                et_email.setText("Прохор.Куклев.Брониславович")
-                et_password.setText("Прохор.Куклев.Брониславович")
+                et_email.setText("ryst@ma.ru")
+                et_password.setText("rystam")
             }
 
             R.id.btn_sign_up -> signUp(view)
         }
-    }
-
-    override fun goToProfile(user: User) {
-        Const.currentUser = user
-        presenter.onNewRootCommandClick()
     }
 
     override fun showError() {
@@ -144,9 +138,6 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
             return fragment
         }
 
-        fun newInstance(): Fragment {
-            val fragment = SignInFragment()
-            return fragment
-        }
+        fun newInstance() = SignInFragment()
     }
 }

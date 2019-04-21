@@ -1,7 +1,12 @@
 package com.example.quiz.data.network
 
+import com.example.quiz.data.network.interceptor.ApiKeyInterceptor
+import com.example.quiz.data.network.request.AuthApiRequest
+import com.example.quiz.data.network.request.AuthRequestDecorator
 import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.data.network.request.QuizApiRequestDecorator
+import com.example.quiz.presentation.util.Const.TIME_FORMAT
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -13,6 +18,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -32,7 +38,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun apiInterceptor(): ApiKeyInterceptor {
+        return ApiKeyInterceptor()
+    }
+
+    @Singleton
+    @Provides
+    @Named("AuthClient")
+    fun provideAuthHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .writeTimeout(15, TimeUnit.SECONDS)
@@ -42,10 +55,22 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    @Named("MainClient")
+    fun provideMainHttpClient(@Named("AuthClient") okHttpClient: OkHttpClient,
+                          apiKeyInterceptor: ApiKeyInterceptor): OkHttpClient {
+        return okHttpClient.newBuilder()
+            .addInterceptor(apiKeyInterceptor)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    @Named("AuthRetrofit")
+    fun provideAuthRetrofit(@Named("AuthClient") okHttpClient: OkHttpClient): Retrofit {
+        val gson = GsonBuilder().setDateFormat(TIME_FORMAT).create()
         return Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
@@ -53,7 +78,24 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideQuizApi(retrofit: Retrofit): QuizApiRequest {
+    @Named("MainRetrofit")
+    fun provideMainRetrofit(@Named("AuthRetrofit") retrofit: Retrofit,
+                        @Named("MainClient") okHttpClient: OkHttpClient): Retrofit {
+        return retrofit.newBuilder()
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthApi(@Named("AuthRetrofit") retrofit: Retrofit): AuthApiRequest {
+        val service = retrofit.create(AuthApiRequest::class.java)
+        return AuthRequestDecorator(service)
+    }
+
+    @Singleton
+    @Provides
+    fun provideQuizApi(@Named("MainRetrofit") retrofit: Retrofit): QuizApiRequest {
         val service = retrofit.create(QuizApiRequest::class.java)
         return QuizApiRequestDecorator(service)
     }
