@@ -51,6 +51,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             .subscribe({
                 Const.TOKEN = ORIGINAL_TOKEN + it.key
                 Log.d(TAG_LOG, "token = $TOKEN")
+                viewState.createCookie()
                 onProfileClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))

@@ -17,6 +17,7 @@ import com.example.quiz.presentation.util.Const.QUESTION_NUMBER
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TEST_ITEM
+import com.example.quiz.presentation.util.Const.TEST_PASSED
 import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.Const.getStringFromDate
 import com.example.quiz.presentation.util.Const.gson
@@ -39,6 +40,8 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     @ProvidePresenter
     fun providePresenter(): TestPresenter = presenterProvider.get()
 
+    var isPassed: Boolean = false
+
     companion object {
 
         fun newInstance(args: Bundle): Fragment {
@@ -48,15 +51,6 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         }
     }
 
-  /*  override fun onBackPressed() {
-        *//* val args: Bundle = Bundle()
-         args.putString(TEST_JSON, gsonConverter.toJson(test))
-         val fragment = FinishFragment.newInstance(args)
-         (activity as BaseBackActivity).changeFragment(fragment)*//*
-
-        TestListActivity.start(activity as Activity)
-    }*/
-
     override fun onBackPressed(): Boolean {
         presenter.onTestListClick()
         return true
@@ -65,10 +59,9 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_test, container, false)
 
+        isPassed = arguments?.getBoolean(TEST_PASSED)!!
         val testId: Int? = arguments?.getString(TEST_ITEM)?.toInt()
         testId?.let { presenter.findTest(it) }
-        /*test = gson.fromJson(testId,Test::class.java)
-        Log.d(TAG_LOG, "test json = \n$testId")*/
         return view
     }
 
@@ -89,10 +82,15 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
 
         if(test.dateClose != null) {
             tv_status.text = getString(R.string.test_closed)
+            li_do_test.visibility = View.GONE
         } else if(test.dateOpen != null) {
             tv_status.text = getString(R.string.test_opened)
+            if(isPassed) {
+                li_do_test.visibility = View.GONE
+            }
         } else {
             tv_status.text = getString(R.string.test_not_started)
+            li_do_test.visibility = View.GONE
         }
 
         Log.d(TAG_LOG, "owner id = ${test.owner?.id} and userId = ${currentUser.id}")

@@ -23,143 +23,141 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
-            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+        >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingStart="@dimen/xlarge"
-        android:paddingTop="32dp"
-        android:paddingEnd="@dimen/xlarge"
-        android:paddingBottom="@dimen/xlarge">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/xlarge"
+                    android:paddingEnd="@dimen/xlarge"
+                    android:paddingBottom="@dimen/xlarge">
 
-        <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="350dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="@dimen/xlarge"
-            android:layout_marginBottom="@dimen/xlarge"
-            android:src="@drawable/logotype" />
+                <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="350dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="@dimen/xlarge"
+                        android:layout_marginBottom="@dimen/xlarge"
+                        android:src="@drawable/logotype"/>
 
-        <!-- Email Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/ti_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+                <!-- Email Label -->
+                <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
 
-            <EditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
+                    <EditText
+                            android:id="@+id/et_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/email"
+                            android:inputType="textEmailAddress"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <!-- Password Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/ti_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+                <!-- Password Label -->
+                <android.support.design.widget.TextInputLayout
+                        android:id="@+id/ti_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
 
-            <EditText
-                android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
+                    <EditText
+                            android:id="@+id/et_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_enter"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@color/primary"
-            android:padding="12dp"
-            android:text="@string/login"
-            android:textColor="@color/colorWhite" />
+                <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btn_enter"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:background="@color/primary"
+                        android:padding="12dp"
+                        android:text="@string/login"
+                        android:textColor="@color/colorWhite"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_sign_up"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/primary"
-            android:padding="12dp"
-            android:text="@string/sign_up"
-            android:textColor="@color/colorWhite" />
+                <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btn_sign_up"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/primary"
+                        android:padding="12dp"
+                        android:text="@string/sign_up"
+                        android:textColor="@color/colorWhite"/>
 
-        <TextView
-                android:id="@+id/tv_ruslan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textSize="@dimen/text.18"
-                android:text="rast@ma.ru"
-        />
+                <TextView
+                        android:id="@+id/tv_ruslan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal"
+                        android:textSize="@dimen/text.18"
+                        android:text="rast@ma.ru"
+                />
 
-        <TextView
-                android:id="@+id/tv_valera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textSize="@dimen/text.18"
-                android:text="valera@ma.ru"
-        />
+                <TextView
+                        android:id="@+id/tv_valera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal"
+                        android:textSize="@dimen/text.18"
+                        android:text="valera@ma.ru"
+                />
 
-        <TextView
-                android:id="@+id/tv_azat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textSize="@dimen/text.18"
-                android:text="azat@ma.ru"
-        />
+                <TextView
+                        android:id="@+id/tv_azat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal"
+                        android:textSize="@dimen/text.18"
+                        android:text="azat@ma.ru"
+                />
 
-        <TextView
-                android:id="@+id/tv_aygul"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textSize="@dimen/text.18"
-                android:text="aygul@ma.ru"
-        />
+                <TextView
+                        android:id="@+id/tv_aygul"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal"
+                        android:textSize="@dimen/text.18"
+                        android:text="aygul@ma.ru"
+                />
 
-        <TextView
-                android:id="@+id/tv_ivan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textSize="@dimen/text.18"
-                android:text="ivan@ma.ru"
-        />
+                <TextView
+                        android:id="@+id/tv_ivan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal"
+                        android:textSize="@dimen/text.18"
+                        android:text="ivan@ma.ru"
+                />
 
-        <TextView
-                android:id="@+id/tv_damir"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal"
-                android:textSize="@dimen/text.18"
-                android:text="damir@ma.ru"
-        />
+                <TextView
+                        android:id="@+id/tv_damir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normal"
+                        android:textSize="@dimen/text.18"
+                        android:text="damir@ma.ru"
+                />
 
-    </LinearLayout>
-</ScrollView>
+            </LinearLayout>
+        </ScrollView>
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -9,6 +9,7 @@ object Const {
 
     const val TAG_LOG = "TAG_LOG"
     const val TEST_PREFS = "TESTS_PREFS"
+    const val USER_DATA_PREFERENCES = "user_data"
     const val TESTS = "tests"
     const val TEST_USER = "test_user"
 
@@ -21,6 +22,7 @@ object Const {
     const val RIGHT_ANSWERS = "right_answers"
     const val WRONG_ANSWERS = "wrong_answers"
     const val ANSWERS_TYPE = "type_answers"
+    const val TEST_PASSED = "isDone"
 
     //TestType
     const val TEST_ONE_TYPE = "one"

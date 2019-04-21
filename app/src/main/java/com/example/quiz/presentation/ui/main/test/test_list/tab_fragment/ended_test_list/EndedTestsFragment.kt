@@ -16,6 +16,7 @@ import com.example.quiz.presentation.base.BaseFragment
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.ui.main.test.test_list.tab_fragment.TestAdapter
 import com.example.quiz.presentation.util.Const
+import com.example.quiz.presentation.util.Const.TEST_PASSED
 import com.example.quiz.presentation.util.Const.gson
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_theme_list.*
@@ -121,6 +122,7 @@ class EndedTestsFragment : BaseFragment(), EndedTestsView, View.OnClickListener 
     override fun onItemClick(item: Test) {
         val args = Bundle()
         args.putString(Const.TEST_ITEM, item.id.toString())
+        args.putBoolean(TEST_PASSED, true)
         presenter.onTestClick(args)
     }
 

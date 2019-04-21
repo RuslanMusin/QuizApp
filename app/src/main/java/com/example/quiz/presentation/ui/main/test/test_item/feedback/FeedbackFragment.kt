@@ -89,8 +89,8 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews(view)
         setListeners()
+        initViews(view)
         hideProgressDialog()
         super.onViewCreated(view, savedInstanceState)
     }

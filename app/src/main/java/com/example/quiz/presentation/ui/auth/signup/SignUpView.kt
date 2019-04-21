@@ -17,4 +17,7 @@ interface SignUpView: BaseView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showError()
 
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun createCookie()
+
 }
