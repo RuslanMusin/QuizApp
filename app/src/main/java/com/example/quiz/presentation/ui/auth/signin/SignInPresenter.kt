@@ -38,11 +38,11 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .login(user)
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
+                .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
                     TOKEN = TOKEN + it.key
                     findUser()
                 }, {
-                    viewState.hideProgressDialog()
                     viewState.showErrorDialog(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
 

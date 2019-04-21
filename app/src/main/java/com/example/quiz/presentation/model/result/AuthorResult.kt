@@ -7,8 +7,10 @@ class AuthorResult {
     val id: Int? = null
     @field:SerializedName("name")
     val name: String? = null
-    @field:SerializedName("date_open")
-    val openDate: String? = null
+    @field:SerializedName("description")
+    val description: String? = null
+    @field:SerializedName("date_creation")
+    val createDate: String? = null
     @field:SerializedName("date_close")
     val closeDate: String? = null
     @field:SerializedName("questions")
