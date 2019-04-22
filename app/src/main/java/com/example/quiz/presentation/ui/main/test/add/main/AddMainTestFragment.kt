@@ -46,8 +46,8 @@ class AddMainTestFragment : BaseFragment(), AddMainTestView, BackButtonListener,
 
         if(arguments == null) {
             test = Test()
-            et_test_name.setText("Test")
-            et_test_desc.setText("Test description")
+           /* et_test_name.setText("Test")
+            et_test_desc.setText("Test description")*/
         } else {
             test = gson.fromJson(arguments?.getString(TEST_ITEM), Test::class.java)
             setTestData()
