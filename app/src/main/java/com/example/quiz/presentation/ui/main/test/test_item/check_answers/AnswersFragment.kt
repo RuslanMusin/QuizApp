@@ -79,7 +79,6 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
             listSize = test.wrongQuestions.size
 
         }
-
         return view
     }
 
@@ -143,10 +142,7 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
         } else {
             addTextAnswer()
         }
-
-
     }
-
 
     private fun setListeners() {
         btn_finish_questions!!.setOnClickListener(this)
@@ -173,7 +169,6 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
     }
 
     private fun finishQuestions() {
-//        removeStackDownTo()
         val args: Bundle = Bundle()
         if(currentUser.id.equals(test.owner?.id)) {
             args.putString(TEST_ITEM, test.id.toString())
@@ -197,16 +192,7 @@ class AnswersFragment : BaseFragment(), AnswersView, BackButtonListener, View.On
 
         when (v.id) {
 
-            R.id.btn_finish_questions -> {
-                finishQuestions()
-               /* val args: Bundle = Bundle()
-                args.putString(TEST_JSON, gsonConverter.toJson(test))
-                activity!!.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, TestFragment.newInstance(args))
-                        .addToBackStack("AddQuestionFragment")
-                        .commit()        */
-            }
+            R.id.btn_finish_questions -> finishQuestions()
 
             R.id.btn_next_question -> nextQuestion()
 

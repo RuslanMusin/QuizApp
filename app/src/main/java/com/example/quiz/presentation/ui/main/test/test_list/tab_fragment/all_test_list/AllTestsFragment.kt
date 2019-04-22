@@ -28,9 +28,7 @@ import javax.inject.Provider
 class AllTestsFragment : BaseFragment(), AllTestsView, View.OnClickListener {
 
     private lateinit var adapter: TestAdapter
-
     var tests: MutableList<Test> = ArrayList()
-    lateinit var userId: String
 
     @InjectPresenter
     lateinit var presenter: AllTestsPresenter

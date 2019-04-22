@@ -16,49 +16,40 @@ interface QuizApiRequest {
     @POST("auth/logout/")
     fun logout(): Single<JsonObject>
 
-    @GET("curators/{curator_id}")
-    fun getUser(@Path("curator_id") id: Int): Single<User>
-
-    @GET("curators")
-    fun getUsers(): Single<List<User>>
-
-    @PUT("curators/{curator_id}")
-    fun updateUser(@Path("curator_id") id: Int, @Body curator: User): Single<User>
-
-    @GET("test/{test_id}")
+    @GET("test/{test_id}/")
     fun getTest(@Path("test_id") id: Int): Single<Test>
 
     @GET("test")
     fun getTests(): Single<List<Test>>
 
-    @GET("test/submission/{user_id}")
+    @GET("test/submission/{user_id}/")
     fun getTestsByUser(@Path("user_id") id: Int): Single<List<Test>>
 
-    @POST("test")
+    @POST("test/")
     fun createTest(@Body test: Test): Single<ElementId>
 
-    @POST("test/{test_id}/open")
+    @POST("test/{test_id}/open/")
     fun openTest(@Path("test_id") id: Int): Single<JsonObject>
 
-    @POST("test/{test_id}/close")
+    @POST("test/{test_id}/close/")
     fun closeTest(@Path("test_id") id: Int): Single<JsonObject>
 
-    @POST("test/{test_id}/submit")
+    @POST("test/{test_id}/submit/")
     fun postTestResult(
             @Path("test_id") id: Int,
             @Body testResult: TestSubmit
     ): Single<TestSubmit>
 
-    @GET("test/{test_id}/result")
+    @GET("test/{test_id}/result/")
     fun getAuthorTestResults(@Path("test_id") id: Int): Single<AuthorResult>
 
-    @GET("test/{test_id}/result/{user_id}")
+    @GET("test/{test_id}/result/{user_id}/")
     fun getParticipantTestResult(
             @Path("test_id") testId: Int,
             @Path("user_id") userId: Int
     ): Single<TestResult>
 
-    @GET("auth/user")
+    @GET("auth/user/")
     fun findUser(): Single<User>
 
 }

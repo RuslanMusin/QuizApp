@@ -93,7 +93,6 @@ class BeforeFeedbackFragment : BaseFragment(), BeforeFeedbackView, BackButtonLis
                 override fun onClick(dialog: MaterialDialog, which: DialogAction) {
                     presenter.onTestClick(test.id)
                 }
-
             })
             .show()
     }

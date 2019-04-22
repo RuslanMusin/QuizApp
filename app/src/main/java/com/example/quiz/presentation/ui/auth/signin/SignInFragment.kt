@@ -25,10 +25,8 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
 
     @InjectPresenter
     lateinit var presenter: SignInPresenter
-
     @Inject
     lateinit var presenterProvider: Provider<SignInPresenter>
-
     @ProvidePresenter
     fun providePresenter(): SignInPresenter = presenterProvider.get()
 
@@ -39,7 +37,6 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideProgressDialog()
         initViews()
     }
 
@@ -74,13 +71,13 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
     private fun setListeners() {
         btn_enter.setOnClickListener(this)
         btn_sign_up.setOnClickListener(this)
-        iv_cover.setOnClickListener(this)
-        tv_valera.setOnClickListener(this)
+//        iv_cover.setOnClickListener(this)
+       /* tv_valera.setOnClickListener(this)
         tv_azat.setOnClickListener(this)
         tv_ivan.setOnClickListener(this)
         tv_damir.setOnClickListener(this)
         tv_aygul.setOnClickListener(this)
-        tv_ruslan.setOnClickListener(this)
+        tv_ruslan.setOnClickListener(this)*/
     }
 
     override fun onClick(view: View) {
@@ -95,7 +92,7 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
 
             R.id.btn_sign_up -> signUp(view)
 
-            R.id.iv_cover -> {
+           /* R.id.iv_cover -> {
                 et_email.setText("ryst@ma.ru")
                 et_password.setText("rystam")
             }
@@ -134,9 +131,7 @@ class SignInFragment : BaseFragment(), SignInView, BackButtonListener, View.OnCl
                 et_email.setText("ivan98@ma.ru")
                 et_password.setText("ivanov")
 
-            }
-
-
+            }*/
         }
     }
 

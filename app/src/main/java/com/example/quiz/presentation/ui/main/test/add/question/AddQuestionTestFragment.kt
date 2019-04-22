@@ -153,7 +153,7 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     }
 
     private fun setStartFields() {
-        et_question.setText(getString(R.string.add_question_number, number + 1))
+//        et_question.setText(getString(R.string.add_question_number, number + 1))
     }
 
     private fun setStartAnswers() {
@@ -256,7 +256,6 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
     }
 
     override fun navigateToTest(id: Int) {
-//        removeStackDownTo()
         val args = Bundle()
         args.putString(TEST_ITEM, id.toString())
         presenter.onTestClick(args)
@@ -379,18 +378,13 @@ class AddQuestionTestFragment : BaseFragment(), AddQuestionTestView,
         }
     }
 
-    /* fun finishQuestion() {
-         prepareQuestion()
-         addTestView!!.createTest()
-     }
- */
     private fun addAnswer() {
         answerSize++
         val view: View = layoutInflater.inflate(R.layout.layout_item_add_question, li_answers, false)
         val editText: EditText = view.findViewById(R.id.et_answer)
         val checkBox: CheckBox = view.findViewById(R.id.checkbox)
 
-        editText.setText("Answer $answerSize")
+//        editText.setText("Answer $answerSize")
         checkBox.setOnClickListener(checkListener)
 
         editTexts?.add(editText)

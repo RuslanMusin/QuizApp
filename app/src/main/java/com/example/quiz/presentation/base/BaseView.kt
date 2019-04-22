@@ -3,15 +3,14 @@ package com.example.quiz.presentation.base
 import android.support.v7.widget.Toolbar
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.example.quiz.R
 
 interface BaseView: MvpView {
 
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun showProgressDialog()
 
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun hideProgressDialog()
 
     @StateStrategyType(OneExecutionStateStrategy::class)

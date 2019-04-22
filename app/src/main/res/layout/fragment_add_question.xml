@@ -59,6 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
+                        android:hint="@string/question_text"
                         android:maxLength="200"
                         android:maxLines="5"
                         android:textSize="@dimen/text.18" />

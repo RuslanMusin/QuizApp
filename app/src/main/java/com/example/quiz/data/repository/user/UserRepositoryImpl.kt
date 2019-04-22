@@ -19,21 +19,6 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
             .findUser()
     }
 
-    override fun findById(id: Int): Single<User> {
-        return apiRequest
-                .getUser(id)
-    }
-
-    override fun findAll(): Single<List<User>> {
-        return apiRequest
-                .getUsers()
-    }
-
-    override fun update(id: Int, curator: User): Single<User> {
-        return apiRequest
-                .updateUser(id, curator)
-    }
-
     override fun createUser(user: User): Single<User> {
         return authRequest
                 .signUp(user)

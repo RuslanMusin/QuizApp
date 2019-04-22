@@ -31,14 +31,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
+        android:paddingTop="@dimen/large"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large"
+            android:layout_marginTop="@dimen/small"
             android:text="@string/question_text"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.18" />

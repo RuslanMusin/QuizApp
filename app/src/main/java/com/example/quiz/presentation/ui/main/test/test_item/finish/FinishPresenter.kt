@@ -19,8 +19,6 @@ class FinishPresenter @Inject constructor() : BasePresenter<FinishView>() {
     lateinit var testRepository: TestRepository
     @Inject
     lateinit var router: Router
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     fun onTestClick(args: Bundle) {
         router.newRootChain(Screens.TestScreen(args))

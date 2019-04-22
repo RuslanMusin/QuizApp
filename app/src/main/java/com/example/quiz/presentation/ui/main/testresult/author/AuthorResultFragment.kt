@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlin.collections.ArrayList
 
 class AuthorResultFragment : BaseFragment(), AuthorResultView {
 
@@ -60,6 +61,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
 
         }
         setActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
     }
 
     override fun showBarChartAnswers(questions: List<AuthorQuestion>) {
@@ -123,7 +125,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
             setDrawInside(false)
             xEntrySpace = 5f
             yEntrySpace = 0f
-            yOffset = 250f
+            yOffset = 235f
             xOffset = 20f
             textSize = 14f
 
@@ -179,7 +181,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
             setDrawInside(false)
             xEntrySpace = 5f
             yEntrySpace = 0f
-            yOffset = 250f
+            yOffset = 235f
             xOffset = 20f
             textSize = 14f
 
@@ -198,7 +200,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
             sliceSpace = 3f
             selectionShift = 10f
             valueTextSize = 12f
-            colors = ColorTemplate.MATERIAL_COLORS.toList()
+            colors = ColorTemplate.JOYFUL_COLORS.toList()
         }
 
         val data = PieData(dataSet)
@@ -236,7 +238,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
             setDrawInside(false)
             xEntrySpace = 5f
             yEntrySpace = 0f
-            yOffset = 250f
+            yOffset = 235f
             xOffset = 20f
             textSize = 14f
 
@@ -245,17 +247,21 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
         val entries = mutableListOf<PieEntry>()
         val count = feedback.answers?.size ?: 0
 
-        for (i in 0 until count) {
+        for (i in 0 until count - 1) {
             val fb = feedback.answers?.get(i)
             entries.add(PieEntry(fb?.choicesNumber?.toFloat() ?: 0f, fb?.content))
-
         }
 
         val dataSet = PieDataSet(entries, "").apply {
             sliceSpace = 3f
             selectionShift = 10f
             valueTextSize = 12f
-            colors = ColorTemplate.MATERIAL_COLORS.toList()
+
+            val myColors = ArrayList<Int>()
+            myColors.addAll(ColorTemplate.COLORFUL_COLORS.toList())
+            myColors.addAll(ColorTemplate.PASTEL_COLORS.toList())
+
+            colors = myColors
         }
 
         val data = PieData(dataSet)

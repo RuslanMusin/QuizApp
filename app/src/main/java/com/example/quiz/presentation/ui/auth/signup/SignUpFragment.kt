@@ -22,10 +22,8 @@ class SignUpFragment : BaseFragment(), SignUpView, BackButtonListener, View.OnCl
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter
-
     @Inject
     lateinit var presenterProvider: Provider<SignUpPresenter>
-
     @ProvidePresenter
     fun providePresenter(): SignUpPresenter = presenterProvider.get()
 
@@ -56,17 +54,10 @@ class SignUpFragment : BaseFragment(), SignUpView, BackButtonListener, View.OnCl
                 presenter.createAccount(user)
             }
 
-            R.id.btn_login -> goToLogin()
+            R.id.btn_login -> presenter.onSignInCommandClick()
 
-            R.id.iv_cover -> setupText()
+
         }
-    }
-
-    private fun setupText() {
-        et_email.setText("rast@ma.ru")
-        et_password.setText("rastamka")
-        et_lastname.setText("rastamka")
-        et_name.setText("rastamka")
     }
 
     private fun buildUser(): User {
@@ -101,12 +92,6 @@ class SignUpFragment : BaseFragment(), SignUpView, BackButtonListener, View.OnCl
         }
 
     }
-
-    private fun goToLogin() {
-        presenter.onSignInCommandClick()
-    }
-
-
 
     override fun onBackPressed(): Boolean {
         presenter.onBackCommandClick()
