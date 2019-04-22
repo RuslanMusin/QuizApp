@@ -247,7 +247,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
         val entries = mutableListOf<PieEntry>()
         val count = feedback.answers?.size ?: 0
 
-        for (i in 0 until count) {
+        for (i in 0 until count - 1) {
             val fb = feedback.answers?.get(i)
             entries.add(PieEntry(fb?.choicesNumber?.toFloat() ?: 0f, fb?.content))
         }
