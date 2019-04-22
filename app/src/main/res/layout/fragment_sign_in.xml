@@ -102,7 +102,7 @@
                         android:text="@string/sign_up"
                         android:textColor="@color/colorWhite"/>
 
-               <!-- <TextView
+                <TextView
                         android:id="@+id/tv_ruslan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                         android:layout_marginTop="@dimen/normal"
                         android:textSize="@dimen/text.18"
                         android:text="damir@ma.ru"
-                />-->
+                />
 
             </LinearLayout>
         </ScrollView>

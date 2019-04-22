@@ -71,7 +71,12 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener, BackBut
            }
            if(question.type.equals(TEST_MANY_TYPE)) {
                var flag = true
+               var count = 0
+               var userCount = 0
                for(userAnswer in question.participantAnswers) {
+                   if(userAnswer.isRight) {
+                       userCount++
+                   }
                    for(answer in question.answers) {
                        if(answer.id == userAnswer.id) {
                            answer.userClicked = true
@@ -80,6 +85,14 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener, BackBut
                            }
                        }
                    }
+               }
+               for(answer in question.answers) {
+                   if(answer.isRight) {
+                       count++
+                   }
+               }
+               if(userCount != count) {
+                   flag = false
                }
                if(flag) {
                    rightQuestions.add(question)

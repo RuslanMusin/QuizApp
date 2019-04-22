@@ -61,7 +61,7 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
     }
 
     fun onTestClick(args: Bundle) {
-        router.navigateTo(Screens.TestScreen(args))
+        router.newRootScreen(Screens.TestScreen(args))
     }
 
 }
