@@ -1,16 +1,21 @@
 package com.example.quiz.presentation.ui.main.test.test_item.finish
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.quiz.R
 import com.example.quiz.presentation.base.BaseFragment
+import com.example.quiz.presentation.base.navigation.BackButtonListener
 import com.example.quiz.presentation.model.test.*
+import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.ANSWERS_TYPE
 import com.example.quiz.presentation.util.Const.RIGHT_ANSWERS
 import com.example.quiz.presentation.util.Const.TAG_LOG
@@ -24,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_finish_test.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
+class FinishFragment : BaseFragment(), FinishView, View.OnClickListener, BackButtonListener {
 
     @InjectPresenter
     lateinit var presenter: FinishPresenter
@@ -120,7 +125,6 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
                         answer.userClicked = false
                     }
                 }
-//                removeStackDownTo()
                 val args: Bundle = Bundle()
                 args.putString(TEST_ITEM, test.id.toString())
                 presenter.onTestClick(args)
@@ -147,6 +151,12 @@ class FinishFragment : BaseFragment(), FinishView, View.OnClickListener {
         presenter.onAnswersClick(args)
     }
 
+    override fun onBackPressed(): Boolean {
+        val args: Bundle = Bundle()
+        args.putString(TEST_ITEM, test.id.toString())
+        presenter.onTestClick(args)
+        return true
+    }
 
     companion object {
 

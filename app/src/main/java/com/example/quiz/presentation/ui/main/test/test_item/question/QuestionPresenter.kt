@@ -24,6 +24,7 @@ class QuestionPresenter @Inject constructor() : BasePresenter<QuestionView>() {
     }
 
     fun onNextQuestionClick(args: Bundle) {
+        viewState.hideProgressDialog()
         router.replaceScreen(Screens.QuestionScreen(args))
     }
 

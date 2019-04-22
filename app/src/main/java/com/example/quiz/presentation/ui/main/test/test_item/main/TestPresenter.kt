@@ -29,7 +29,7 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
     }
 
     fun onQuestionClick(args: Bundle) {
-        router.newChain(Screens.QuestionScreen(args))
+        router.newRootChain(Screens.QuestionScreen(args))
     }
 
     fun onResultClick(args: Bundle) {
@@ -69,25 +69,12 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
         val args = Bundle()
         args.putInt(TEST_ITEM, testId)
         router.replaceScreen(Screens.getAuthorResultScreen(args))
-        /*testRepository
-            .getAuthorTestResults(testId)
-            .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
-            .subscribe({
-                Log.d(TAG_LOG, "result overview\n$it")
-
-            }, {
-                viewState.showSnackBar(exceptionProcessor.processException(it))
-            }).disposeWhenDestroy()*/
     }
 
     fun openTest(id: Int) {
         testRepository
             .openTest(id)
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 viewState.afterTestOpened()
             }, {
@@ -99,8 +86,6 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
         testRepository
             .closeTest(id)
             .compose(PresentationSingleTransformer())
-            .doOnSubscribe { viewState.showProgressDialog() }
-            .doAfterTerminate { viewState.hideProgressDialog() }
             .subscribe({
                 viewState.afterTestClosed()
             }, {
@@ -108,7 +93,7 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             }).disposeWhenDestroy()    }
 
     fun onAnswersClick(args: Bundle) {
-        router.navigateTo(Screens.AnswersScreen(args))
+        router.newRootChain(Screens.AnswersScreen(args))
     }
 
 }

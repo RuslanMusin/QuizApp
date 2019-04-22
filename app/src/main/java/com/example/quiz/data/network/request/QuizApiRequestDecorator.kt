@@ -52,27 +52,6 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
                 .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun getUser(id: Int): Single<User> {
-        return apiRequest
-                .getUser(id)
-                .compose(ApiRequestErrorSingleTransformer())
-    }
-
-    override fun getUsers(): Single<List<User>> {
-        return apiRequest
-                .getUsers()
-                .compose(ApiRequestErrorSingleTransformer())
-
-    }
-
-    override fun updateUser(id: Int, curator: User): Single<User> {
-        return apiRequest
-                .updateUser(id, curator)
-                .compose(ApiRequestErrorSingleTransformer())
-    }
-
-
-
     override fun getTest(id: Int): Single<Test> {
         return apiRequest
             .getTest(id)

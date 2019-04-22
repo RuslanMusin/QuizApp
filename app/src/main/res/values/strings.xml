@@ -62,8 +62,8 @@
     <string name="exception_time_out">Сервер просыпается&#8230;&#8230;&#8230;</string>
     <string name="exception_unknown">Неизвестная ошибка</string>
     <string name="tests">Тесты</string>
-    <string name="all_tests">Все</string>
-    <string name="my_tests">Пройденные</string>
+    <string name="new_tests">Новые</string>
+    <string name="passed_tests">Пройденные</string>
     <string name="test_questions">Количество вопросов</string>
     <string name="description">Описание</string>
     <string name="do_test">Пройти тест</string>
@@ -103,4 +103,10 @@
     <string name="graph_axis">X - номер вопроса\nY - кол-во правильных ответов</string>
     <string name="repeat">Повторить</string>
     <string name="download_error">Произошла ошибка при загрузке данных</string>
+    <string name="close_test_result_title">Завершить просмотр</string>
+
+    <string name="stat_on_each_answer">Статистика по выбору правильного ответа на каждый вопрос</string>
+    <string name="stat_on_feedback">Статистика по фидбэку</string>
+    <string name="number_of_participants">Количество прохождений</string>
+    <string name="main_info">Основная информация</string>
 </resources>

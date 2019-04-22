@@ -66,12 +66,6 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 .negativeText(R.string.disagree)
                 .onPositive(object :MaterialDialog.SingleButtonCallback {
                     override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                        /*for(question in test.questions) {
-                            question.userRight = false
-                            for(answer in question.answers) {
-                                answer.userClicked = false
-                            }
-                        }*/
                         val args = Bundle()
                         args.putString(TEST_ITEM, test.id.toString())
                         presenter.onTestClick(args)
@@ -103,10 +97,8 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         setToolbar()
         if(number + 1 == test.questions.size) {
             btn_ok.visibility = View.VISIBLE
-//            (activity as ChangeToolbarListener).showOk(true)
         } else {
             btn_ok.visibility = View.GONE
-//            (activity as ChangeToolbarListener).showOk(false)
         }
         tv_question.text = question.description
 
@@ -129,7 +121,6 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     }
 
     private fun setStartAnswers() {
-
         for (answer in question.answers) {
             addAnswer(answer)
         }
@@ -166,18 +157,20 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
     }
 
     private fun finishQuestions() {
-        checkAnswers()
-        val args: Bundle = Bundle()
-        args.putString(TEST_ITEM, gson.toJson(test))
-        presenter.onBeforeFeedbackClick(args)
+        if(checkAnswers()) {
+            val args: Bundle = Bundle()
+            args.putString(TEST_ITEM, gson.toJson(test))
+            presenter.onBeforeFeedbackClick(args)
+        }
     }
 
     private fun nextQuestion() {
-        checkAnswers()
-        val args: Bundle = Bundle()
-        args.putString(TEST_ITEM, gson.toJson(test))
-        args.putInt(QUESTION_NUMBER, ++number)
-        presenter.onNextQuestionClick(args)
+        if(checkAnswers()) {
+            val args: Bundle = Bundle()
+            args.putString(TEST_ITEM, gson.toJson(test))
+            args.putInt(QUESTION_NUMBER, ++number)
+            presenter.onNextQuestionClick(args)
+        }
     }
 
     private fun changeToOneType(check: CheckBox?) {
@@ -202,17 +195,11 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
 
     override fun onClick(v: View) {
 
-
         when (v.id) {
 
-            R.id.btn_finish_questions -> {
+            R.id.btn_finish_questions -> finishQuestions()
 
-               finishQuestions()
-            }
-
-            R.id.btn_next_question -> {
-                nextQuestion()
-            }
+            R.id.btn_next_question -> nextQuestion()
 
             R.id.btn_ok -> finishQuestions()
 
@@ -225,14 +212,17 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
         }
     }
 
-    private fun checkAnswers() {
+    private fun checkAnswers(): Boolean {
+        var flag = true
         if(!question.type.equals(TEST_TEXT_TYPE)) {
             Log.d(TAG_LOG, "questioin = ${question.description}")
             question.userRight = true
+            var count = 0
             for (i in question.answers.indices) {
                 val answer: Answer = question.answers[i]
                 if (checkBoxes.get(i).isChecked) {
                     answer.userClicked = true
+                    count++
                     Log.d(TAG_LOG, "checked answer = ${answer.content}")
                 }
                 if (answer.userClicked != answer.isRight) {
@@ -244,9 +234,17 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                     "userclick = ${answer.userClicked} and q right = ${answer.isRight} and content = ${answer.content}"
                 )
             }
+            if(count == 0) {
+                flag = false
+                showSnackBar("Выберите хотя бы один ответ!")
+            }
         } else {
             val rightAnswer = question.answers[0].content
             val userAnswer = et_text_answer.text.toString()
+            if(userAnswer.equals("")) {
+                flag = false
+                ti_answer.error = "Напишите ответ"
+            }
             question.userAnswer = userAnswer
             if(rightAnswer.equals(userAnswer)) {
                 question.userRight = true
@@ -254,6 +252,7 @@ class QuestionFragment : BaseFragment(), QuestionView, BackButtonListener, View.
                 question.userRight = false
             }
         }
+        return flag
     }
 
     private fun addAnswer(answer: Answer) {

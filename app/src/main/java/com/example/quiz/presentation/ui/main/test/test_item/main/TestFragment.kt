@@ -31,8 +31,6 @@ import javax.inject.Provider
 
 class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickListener {
 
-    lateinit var test: Test
-
     @InjectPresenter
     lateinit var presenter: TestPresenter
     @Inject
@@ -40,6 +38,7 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
     @ProvidePresenter
     fun providePresenter(): TestPresenter = presenterProvider.get()
 
+    lateinit var test: Test
     var isPassed: Boolean = false
 
     companion object {
@@ -67,19 +66,27 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setListeners()
+        initViews()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun initViews() {
+        setListeners()
     }
 
     override fun setData(test: Test) {
         this.test = test
-        initViews()
+        setToolbar()
+        setTextFields()
+        setVisibilityFields()
+    }
+
+    private fun setTextFields() {
         expand_text_view.text = test.description
         tv_name.text = test.name
         tv_id.text = test.id.toString()
         tv_questions.text = test.questions.size.toString()
         tv_date_creation.text = test.dateCreation?.let { getStringFromDate(it) }
-
         if(test.dateClose != null) {
             tv_status.text = getString(R.string.test_closed)
             li_do_test.visibility = View.GONE
@@ -92,11 +99,12 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
             tv_status.text = getString(R.string.test_not_started)
             li_do_test.visibility = View.GONE
         }
+    }
 
-        Log.d(TAG_LOG, "owner id = ${test.owner?.id} and userId = ${currentUser.id}")
+    private fun setVisibilityFields() {
         test.owner?.id?.let {
             if(it == currentUser.id) {
-                Log.d(TAG_LOG, "owner test")
+                li_do_test.visibility = View.VISIBLE
                 tv_do_test.visibility = View.GONE
                 li_show_answers.visibility = View.VISIBLE
                 if(test.dateClose != null) {
@@ -119,7 +127,7 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         }
     }
 
-    private fun initViews() {
+    private fun setToolbar() {
         setActionBar(toolbar)
         toolbar.title = test.name
         toolbar.setNavigationOnClickListener { presenter.onTestListClick() }
@@ -184,16 +192,16 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
         tv_open_test.visibility = View.GONE
         tv_close_test.visibility = View.VISIBLE
         li_show_result.visibility = View.GONE
+        tv_status.text = getString(R.string.test_opened)
     }
 
     override fun afterTestClosed() {
         showSnackBar(R.string.test_closed)
-        tv_open_test.visibility = View.VISIBLE
+        li_do_test.visibility = View.GONE
         tv_close_test.visibility = View.GONE
         li_show_result.visibility = View.VISIBLE
+        tv_status.text = getString(R.string.test_closed)
     }
-
-
 }
 
 

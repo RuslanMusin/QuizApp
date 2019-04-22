@@ -19,8 +19,6 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
     lateinit var exceptionProcessor: ExceptionProcessor
     @Inject
     lateinit var router: Router
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     fun loadTests() {
         testRepository
@@ -29,7 +27,7 @@ class AllTestsPresenter @Inject constructor() : BasePresenter<AllTestsView>() {
             .subscribe({
                 viewState.showItems(it)
             }, {
-//                viewState.showSnackBar(exceptionProcessor.processException(it))
+                viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
     }
 

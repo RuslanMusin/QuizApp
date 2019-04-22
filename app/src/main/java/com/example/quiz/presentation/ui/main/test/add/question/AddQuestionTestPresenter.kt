@@ -25,8 +25,6 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
     lateinit var testRepository: TestRepository
     @Inject
     lateinit var exceptionProcessor: ExceptionProcessor
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     fun createTest(test: Test) {
         val testStr = gson.toJson(test)
@@ -42,27 +40,8 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
                 viewState.navigateToTest(test.id)
             }, {
                 Log.d(TAG_LOG,"error process")
-//                viewState.showSnackBar(exceptionProcessor.processException(it))
+                viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
-       /* val type = object : TypeToken<List<Test>>(){}.type
-        val listStr = prefs.getString(TESTS, "")
-        var list: MutableList<Test> = ArrayList()
-        if(!listStr.equals("")) {
-            list = gson.fromJson(listStr, type)
-        }
-        val editor = prefs.edit()
-        var flag = false
-        for(item in list) {
-            if(item.name?.equals(test.name)!!) {
-                flag = true
-            }
-        }
-        if(!flag) {
-            list.add(test)
-        }
-        editor.putString(TESTS, gson.toJson(list))
-        editor.apply()*/
-//        viewState.navigateToTest()
     }
 
     fun onTestListClick() {
@@ -70,7 +49,6 @@ class AddQuestionTestPresenter @Inject constructor() : BasePresenter<AddQuestion
     }
 
     fun onBeforeQuestionClick(args: Bundle, toQuestion: Boolean) {
-//        router.navigateTo(Screens.AddQuestionScreen(args))
         if(toQuestion) {
             router.replaceScreen(Screens.AddQuestionScreen(args))
         } else {

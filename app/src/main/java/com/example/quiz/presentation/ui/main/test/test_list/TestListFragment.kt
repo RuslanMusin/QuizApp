@@ -86,8 +86,8 @@ class TestListFragment : BaseFragment(), TestListView, BackButtonListener {
         val adapter = FragViewPagerAdapter(childFragmentManager)
         fragments.add(AllTestsFragment.newInstance())
         fragments.add(EndedTestsFragment.newInstance())
-        adapter.addFragment(fragments[0], getString(R.string.all_tests))
-        adapter.addFragment(fragments[1], getString(R.string.my_tests))
+        adapter.addFragment(fragments[0], getString(R.string.new_tests))
+        adapter.addFragment(fragments[1], getString(R.string.passed_tests))
         viewPager.adapter = adapter
     }
 
@@ -105,8 +105,6 @@ class TestListFragment : BaseFragment(), TestListView, BackButtonListener {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-//                presenter.loadOfficialTestsByQUery(query)
-
                 if (!finalSearchView.isIconified) {
                     finalSearchView.isIconified = true
                 }

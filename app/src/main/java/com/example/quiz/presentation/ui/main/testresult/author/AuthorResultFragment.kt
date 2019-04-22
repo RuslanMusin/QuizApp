@@ -60,6 +60,7 @@ class AuthorResultFragment : BaseFragment(), AuthorResultView {
 
         }
         setActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
     }
 
     override fun showBarChartAnswers(questions: List<AuthorQuestion>) {

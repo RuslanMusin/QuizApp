@@ -28,9 +28,7 @@ import javax.inject.Provider
 class EndedTestsFragment : BaseFragment(), EndedTestsView, View.OnClickListener {
 
     private lateinit var adapter: TestAdapter
-
     var tests: MutableList<Test> = ArrayList()
-    lateinit var userId: String
 
     @InjectPresenter
     lateinit var presenter: EndedTestsPresenter
@@ -52,7 +50,7 @@ class EndedTestsFragment : BaseFragment(), EndedTestsView, View.OnClickListener 
 
     override fun reloadList() {
         if(tests.size > 0) {
-//            presenter.loadTests(userId)
+            presenter.loadTests()
         }
     }
 

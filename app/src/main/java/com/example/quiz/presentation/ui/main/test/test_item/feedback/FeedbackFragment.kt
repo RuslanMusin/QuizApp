@@ -62,12 +62,6 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
             .negativeText(R.string.disagree)
             .onPositive(object : MaterialDialog.SingleButtonCallback {
                 override fun onClick(dialog: MaterialDialog, which: DialogAction) {
-                    /*for(question in test.questions) {
-                        question.userRight = false
-                        for(answer in question.answers) {
-                            answer.userClicked = false
-                        }
-                    }*/
                     val args = Bundle()
                     args.putString(Const.TEST_ITEM, test.id.toString())
                     presenter.onTestClick(args)
@@ -123,7 +117,6 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     }
 
     private fun setStartAnswers() {
-
         for (answer in question.answers) {
             addAnswer(answer)
         }
@@ -139,7 +132,6 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
             btn_finish_questions.visibility = View.VISIBLE
         }
     }
-
 
     private fun setListeners() {
         btn_finish_questions!!.setOnClickListener(this)
@@ -160,17 +152,19 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
     }
 
     private fun finishQuestions() {
-        checkAnswers()
-        val testResult = getTestResult()
-        presenter.postTestResult(test.id, testResult)
+        if(checkAnswers()) {
+            val testResult = getTestResult()
+            presenter.postTestResult(test.id, testResult)
+        }
     }
 
     private fun nextQuestion() {
-        checkAnswers()
-        val args: Bundle = Bundle()
-        args.putString(Const.TEST_ITEM, Const.gson.toJson(test))
-        args.putInt(Const.QUESTION_NUMBER, ++number)
-        presenter.onNextQuestionClick(args)
+        if(checkAnswers()) {
+            val args: Bundle = Bundle()
+            args.putString(Const.TEST_ITEM, Const.gson.toJson(test))
+            args.putInt(Const.QUESTION_NUMBER, ++number)
+            presenter.onNextQuestionClick(args)
+        }
     }
 
     private fun changeToOneType(check: CheckBox?) {
@@ -197,15 +191,9 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
 
         when (v.id) {
 
-            R.id.btn_finish_questions -> {
+            R.id.btn_finish_questions -> finishQuestions()
 
-                finishQuestions()
-
-            }
-
-            R.id.btn_next_question -> {
-                nextQuestion()
-            }
+            R.id.btn_next_question -> nextQuestion()
 
             R.id.btn_ok -> finishQuestions()
 
@@ -218,19 +206,31 @@ class FeedbackFragment : BaseFragment(), FeedbackView, BackButtonListener, View.
         }
     }
 
-    private fun checkAnswers() {
+    private fun checkAnswers(): Boolean {
+        var flag = true
         if(!question.type.equals(Const.TEST_TEXT_TYPE)) {
+            var count = 0
             for (i in question.answers.indices) {
                 val answer: Answer = question.answers[i]
                 if (checkBoxes.get(i).isChecked) {
+                    count++
                     answer.userClicked = true
                     Log.d(Const.TAG_LOG, "checked answer = ${answer.content}")
                 }
             }
+            if(count == 0) {
+                flag = false
+                showSnackBar("Выберите хотя бы один ответ!")
+            }
         } else {
             val userAnswer = et_text_answer.text.toString()
+            if(userAnswer.equals("")) {
+                flag = false
+                ti_answer.error = "Напишите ответ"
+            }
             question.userAnswer = userAnswer
         }
+        return flag
     }
 
     private fun getTestResult(): TestSubmit {

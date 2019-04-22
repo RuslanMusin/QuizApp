@@ -87,7 +87,7 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
     }
 
     fun onSignUpClick() {
-        router.navigateTo(Screens.SignUpScreen())
+        router.replaceScreen(Screens.SignUpScreen())
     }
 
     fun onProfileClick() {
