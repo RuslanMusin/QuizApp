@@ -14,7 +14,6 @@ import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.ORIGINAL_TOKEN
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TOKEN
-import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -41,8 +40,9 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 .subscribe({
                     it.response()?.let { res ->
                         if (res.isSuccessful) {
-                            findUserAndLogin()
-                        } else if (res.code() == 400) {
+                            res.body()?.let { login(it) }
+                        }
+                        if (res.code() == 400) {
                             viewState.showSnackBar(R.string.email_exists)
                             viewState.hideProgressDialog()
                         }
@@ -52,13 +52,14 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 }).disposeWhenDestroy()
     }
 
-    private fun findUserAndLogin() {
+    private fun findUser() {
         userRepository
             .findUser()
             .compose(PresentationSingleTransformer())
             .subscribe({user ->
                 Const.currentUser = user
-                login(user)
+                viewState.createCookie()
+                onProfileClick()
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()
@@ -73,8 +74,7 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                     if (res.isSuccessful) {
                         TOKEN = ORIGINAL_TOKEN + res.body()?.key
                         Log.d(TAG_LOG, "token = $TOKEN")
-                        viewState.createCookie()
-                        onProfileClick()
+                        findUser()
                     } else if (res.code() == 400) {
                         viewState.showError()
                     }
