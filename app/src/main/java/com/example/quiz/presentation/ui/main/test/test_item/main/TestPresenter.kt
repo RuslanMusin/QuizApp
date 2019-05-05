@@ -3,6 +3,7 @@ package com.example.quiz.presentation.ui.main.test.test_item.main
 import android.os.Bundle
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
+import com.example.quiz.R
 import com.example.quiz.data.repository.test.TestRepository
 import com.example.quiz.presentation.base.BasePresenter
 import com.example.quiz.presentation.rx.transformer.PresentationSingleTransformer
@@ -87,7 +88,11 @@ class TestPresenter @Inject constructor() : BasePresenter<TestView>() {
             .closeTest(id)
             .compose(PresentationSingleTransformer())
             .subscribe({
-                viewState.afterTestClosed()
+               if(it.response()!!.code() == 400) {
+                    viewState.showSnackBar(R.string.test_should_be_passed)
+               } else if(it.response()!!.isSuccessful) {
+                   viewState.afterTestClosed()
+               }
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()    }

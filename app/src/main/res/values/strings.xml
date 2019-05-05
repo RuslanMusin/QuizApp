@@ -16,6 +16,8 @@
     <!--Auth-->
     <string name="enter_correct_name">Введите правильный email</string>
     <string name="enter_correct_password">Введите правильный пароль</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="enter_lastname">Введите фамилию</string>
     <string name="user_not_found">Пользователь с таким именем и паролем не найден.Введите корректные данные</string>
 
     <string name="progress_message">Загрузка…</string>
@@ -109,4 +111,6 @@
     <string name="stat_on_feedback">Статистика по фидбэку</string>
     <string name="number_of_participants">Количество прохождений</string>
     <string name="main_info">Основная информация</string>
+    <string name="test_should_be_passed">Тест не удалось закрыть. Тест должен быть пройден хотя бы одним участником!
+    </string>
 </resources>

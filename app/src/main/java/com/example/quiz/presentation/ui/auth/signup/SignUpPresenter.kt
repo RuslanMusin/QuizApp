@@ -59,11 +59,15 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
     }
 
     private fun validateForm(user: User): Boolean {
-        return checkEmail(user.email) && checkPassword(user.password)
+        return checkEmail(user.email)
+                && checkPassword(user.password)
+        && checkName(user.name)
+        && checkLastName(user.lastname)
+
     }
 
     private fun checkEmail(email: String): Boolean {
-        return if (TextUtils.isEmpty(email)) {
+        return if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             viewState.showEmailError(true)
             false
         } else {
@@ -78,6 +82,26 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             false
         } else {
             viewState.showPasswordError(false)
+            true
+        }
+    }
+
+    private fun checkLastName(lastname: String): Boolean {
+        return if (TextUtils.isEmpty(lastname)) {
+            viewState.showLastNameError(true)
+            false
+        } else {
+            viewState.showLastNameError(false)
+            true
+        }
+    }
+
+    private fun checkName(name: String): Boolean {
+        return if (TextUtils.isEmpty(name)) {
+            viewState.showNameError(true)
+            false
+        } else {
+            viewState.showNameError(false)
             true
         }
     }

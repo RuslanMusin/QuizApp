@@ -119,7 +119,9 @@ class TestFragment : BaseFragment(), TestView, BackButtonListener, View.OnClickL
                 }
             } else {
                 if(test.dateClose != null) {
-                    li_show_result.visibility = View.VISIBLE
+                    if(isPassed) {
+                        li_show_result.visibility = View.VISIBLE
+                    }
                     li_do_test.visibility = View.GONE
                 }
             }

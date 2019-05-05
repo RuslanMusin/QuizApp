@@ -9,6 +9,7 @@ import com.example.quiz.presentation.model.user.User
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.*
 
 interface QuizApiRequest {
@@ -32,7 +33,7 @@ interface QuizApiRequest {
     fun openTest(@Path("test_id") id: Int): Single<JsonObject>
 
     @POST("test/{test_id}/close/")
-    fun closeTest(@Path("test_id") id: Int): Single<JsonObject>
+    fun closeTest(@Path("test_id") id: Int): Single<Result<JsonObject>>
 
     @POST("test/{test_id}/submit/")
     fun postTestResult(

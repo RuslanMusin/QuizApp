@@ -7,6 +7,7 @@ import com.example.quiz.presentation.model.test.TestResult
 import com.example.quiz.presentation.model.test.TestSubmit
 import com.google.gson.JsonObject
 import io.reactivex.Single
+import retrofit2.adapter.rxjava2.Result
 
 interface TestRepository {
 
@@ -20,7 +21,7 @@ interface TestRepository {
 
     fun openTest(id: Int): Single<JsonObject>
 
-    fun closeTest(id: Int): Single<JsonObject>
+    fun closeTest(id: Int): Single<Result<JsonObject>>
 
     fun postTestResult(testId: Int, testSubmit: TestSubmit): Single<TestSubmit>
 
