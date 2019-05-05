@@ -40,8 +40,14 @@ class SignInPresenter @Inject constructor() : BasePresenter<SignInView>() {
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .doAfterTerminate { viewState.hideProgressDialog() }
                 .subscribe({
-                    TOKEN = TOKEN + it.key
-                    findUser()
+                    it.response()?.let { res ->
+                        if (res.isSuccessful) {
+                            TOKEN = Const.ORIGINAL_TOKEN + res.body()?.key
+                            findUser()
+                        } else if (res.code() == 400) {
+                            viewState.showError()
+                        }
+                    }
                 }, {
                     viewState.showErrorDialog(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()

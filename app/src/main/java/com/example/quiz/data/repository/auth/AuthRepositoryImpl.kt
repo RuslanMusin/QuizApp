@@ -7,6 +7,7 @@ import com.example.quiz.presentation.model.user.User
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.adapter.rxjava2.Result
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -18,7 +19,7 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository {
     @Inject
     lateinit var apiRequest: QuizApiRequest
 
-    override fun login(user: User): Single<LoginResult> {
+    override fun login(user: User): Single<Result<LoginResult>> {
         return authApiRequest
                 .login(user)
     }

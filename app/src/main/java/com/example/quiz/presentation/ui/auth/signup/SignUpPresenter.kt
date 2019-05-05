@@ -3,6 +3,7 @@ package com.example.quiz.presentation.ui.auth.signup
 import android.text.TextUtils
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
+import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.data.repository.auth.AuthRepository
 import com.example.quiz.data.repository.user.UserRepository
@@ -13,6 +14,7 @@ import com.example.quiz.presentation.util.Const
 import com.example.quiz.presentation.util.Const.ORIGINAL_TOKEN
 import com.example.quiz.presentation.util.Const.TAG_LOG
 import com.example.quiz.presentation.util.Const.TOKEN
+import com.example.quiz.presentation.util.Const.currentUser
 import com.example.quiz.presentation.util.exceptionprocessor.ExceptionProcessor
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -37,11 +39,29 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .subscribe({
-                    Const.currentUser = user
-                    login(user)
+                    it.response()?.let { res ->
+                        if (res.isSuccessful) {
+                            findUserAndLogin()
+                        } else if (res.code() == 400) {
+                            viewState.showSnackBar(R.string.email_exists)
+                            viewState.hideProgressDialog()
+                        }
+                    }
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
+    }
+
+    private fun findUserAndLogin() {
+        userRepository
+            .findUser()
+            .compose(PresentationSingleTransformer())
+            .subscribe({user ->
+                Const.currentUser = user
+                login(user)
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
     }
 
     private fun login(user: User) {
@@ -49,10 +69,16 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             .login(user)
             .compose(PresentationSingleTransformer())
             .subscribe({
-                Const.TOKEN = ORIGINAL_TOKEN + it.key
-                Log.d(TAG_LOG, "token = $TOKEN")
-                viewState.createCookie()
-                onProfileClick()
+                it.response()?.let { res ->
+                    if (res.isSuccessful) {
+                        TOKEN = ORIGINAL_TOKEN + res.body()?.key
+                        Log.d(TAG_LOG, "token = $TOKEN")
+                        viewState.createCookie()
+                        onProfileClick()
+                    } else if (res.code() == 400) {
+                        viewState.showError()
+                    }
+                }
             }, {
                 viewState.showSnackBar(exceptionProcessor.processException(it))
             }).disposeWhenDestroy()

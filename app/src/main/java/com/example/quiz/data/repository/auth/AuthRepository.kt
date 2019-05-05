@@ -9,7 +9,7 @@ import retrofit2.adapter.rxjava2.Result
 
 interface AuthRepository {
 
-    fun login(user: User): Single<LoginResult>
+    fun login(user: User): Single<Result<LoginResult>>
 
     fun logout(): Single<JsonObject>
 }

@@ -9,6 +9,7 @@ import com.example.quiz.presentation.model.auth.LoginResult
 import com.example.quiz.presentation.model.test.Test
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.*
+import retrofit2.adapter.rxjava2.Result
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -43,14 +44,14 @@ class AuthRequestDecorator(val authApiRequest: AuthApiRequest) : AuthApiRequest 
         }
     }
 
-    override fun login(user: User): Single<LoginResult> {
+    override fun login(user: User): Single<Result<LoginResult>> {
         return authApiRequest
             .login(user)
-            .onErrorResumeNext(LoginSingleErrorFunction())
+//            .onErrorResumeNext(LoginSingleErrorFunction())
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun signUp(user: User): Single<User> {
+    override fun signUp(user: User): Single<Result<User>> {
         return authApiRequest
             .signUp(user)
             .compose(ApiRequestErrorSingleTransformer())
