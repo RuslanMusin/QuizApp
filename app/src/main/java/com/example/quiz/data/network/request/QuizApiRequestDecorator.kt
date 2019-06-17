@@ -12,6 +12,7 @@ import com.example.quiz.presentation.model.test.TestSubmit
 import com.example.quiz.presentation.model.user.User
 import com.google.gson.JsonObject
 import io.reactivex.*
+import retrofit2.adapter.rxjava2.Result
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -84,7 +85,7 @@ class QuizApiRequestDecorator(val apiRequest: QuizApiRequest) : QuizApiRequest {
             .compose(ApiRequestErrorSingleTransformer())
     }
 
-    override fun closeTest(id: Int): Single<JsonObject> {
+    override fun closeTest(id: Int): Single<Result<JsonObject>> {
         return apiRequest
             .closeTest(id)
             .compose(ApiRequestErrorSingleTransformer())

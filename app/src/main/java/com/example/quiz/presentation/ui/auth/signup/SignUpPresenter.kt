@@ -3,6 +3,7 @@ package com.example.quiz.presentation.ui.auth.signup
 import android.text.TextUtils
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
+import com.example.quiz.R
 import com.example.quiz.presentation.model.user.User
 import com.example.quiz.data.repository.auth.AuthRepository
 import com.example.quiz.data.repository.user.UserRepository
@@ -37,20 +38,26 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
                 .compose(PresentationSingleTransformer())
                 .doOnSubscribe { viewState.showProgressDialog() }
                 .subscribe({
-                    Const.currentUser = user
-                    login(user)
+                    it.response()?.let { res ->
+                        if (res.isSuccessful) {
+                            res.body()?.let { login(it) }
+                        }
+                        if (res.code() == 400) {
+                            viewState.showSnackBar(R.string.email_exists)
+                            viewState.hideProgressDialog()
+                        }
+                    }
                 }, {
                     viewState.showSnackBar(exceptionProcessor.processException(it))
                 }).disposeWhenDestroy()
     }
 
-    private fun login(user: User) {
-        authRepository
-            .login(user)
+    private fun findUser() {
+        userRepository
+            .findUser()
             .compose(PresentationSingleTransformer())
-            .subscribe({
-                Const.TOKEN = ORIGINAL_TOKEN + it.key
-                Log.d(TAG_LOG, "token = $TOKEN")
+            .subscribe({user ->
+                Const.currentUser = user
                 viewState.createCookie()
                 onProfileClick()
             }, {
@@ -58,12 +65,35 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             }).disposeWhenDestroy()
     }
 
+    private fun login(user: User) {
+        authRepository
+            .login(user)
+            .compose(PresentationSingleTransformer())
+            .subscribe({
+                it.response()?.let { res ->
+                    if (res.isSuccessful) {
+                        TOKEN = ORIGINAL_TOKEN + res.body()?.key
+                        Log.d(TAG_LOG, "token = $TOKEN")
+                        findUser()
+                    } else if (res.code() == 400) {
+                        viewState.showError()
+                    }
+                }
+            }, {
+                viewState.showSnackBar(exceptionProcessor.processException(it))
+            }).disposeWhenDestroy()
+    }
+
     private fun validateForm(user: User): Boolean {
-        return checkEmail(user.email) && checkPassword(user.password)
+        return checkEmail(user.email)
+                && checkPassword(user.password)
+        && checkName(user.name)
+        && checkLastName(user.lastname)
+
     }
 
     private fun checkEmail(email: String): Boolean {
-        return if (TextUtils.isEmpty(email)) {
+        return if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             viewState.showEmailError(true)
             false
         } else {
@@ -78,6 +108,26 @@ class SignUpPresenter @Inject constructor() : BasePresenter<SignUpView>() {
             false
         } else {
             viewState.showPasswordError(false)
+            true
+        }
+    }
+
+    private fun checkLastName(lastname: String): Boolean {
+        return if (TextUtils.isEmpty(lastname)) {
+            viewState.showLastNameError(true)
+            false
+        } else {
+            viewState.showLastNameError(false)
+            true
+        }
+    }
+
+    private fun checkName(name: String): Boolean {
+        return if (TextUtils.isEmpty(name)) {
+            viewState.showNameError(true)
+            false
+        } else {
+            viewState.showNameError(false)
             true
         }
     }

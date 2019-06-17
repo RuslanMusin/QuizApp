@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.example.quiz.presentation.model.test.TestSubmit
 import com.google.gson.JsonObject
 import io.reactivex.Single
+import retrofit2.adapter.rxjava2.Result
 import javax.inject.Inject
 
 class TestRepositoryImpl @Inject constructor() : TestRepository {
@@ -41,7 +42,7 @@ class TestRepositoryImpl @Inject constructor() : TestRepository {
                 .openTest(id)
     }
 
-    override fun closeTest(id: Int): Single<JsonObject> {
+    override fun closeTest(id: Int): Single<Result<JsonObject>> {
         return apiRequest
                 .closeTest(id)
     }

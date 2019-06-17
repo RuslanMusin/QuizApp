@@ -4,6 +4,7 @@ import com.example.quiz.data.network.request.AuthApiRequest
 import com.example.quiz.data.network.request.QuizApiRequest
 import com.example.quiz.presentation.model.user.User
 import io.reactivex.Single
+import retrofit2.adapter.rxjava2.Result
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -19,7 +20,7 @@ class UserRepositoryImpl @Inject constructor() : UserRepository {
             .findUser()
     }
 
-    override fun createUser(user: User): Single<User> {
+    override fun createUser(user: User): Single<Result<User>> {
         return authRequest
                 .signUp(user)
     }

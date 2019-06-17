@@ -90,7 +90,22 @@ class SignUpFragment : BaseFragment(), SignUpView, BackButtonListener, View.OnCl
         } else {
             ti_password.error = null
         }
+    }
 
+    override fun showLastNameError(hasError: Boolean) {
+        if (hasError) {
+            ti_lastname.error = getString(R.string.enter_lastname)
+        } else {
+            ti_lastname.error = null
+        }
+    }
+
+    override fun showNameError(hasError: Boolean) {
+        if (hasError) {
+            ti_name.error = getString(R.string.enter_name)
+        } else {
+            ti_name.error = null
+        }
     }
 
     override fun onBackPressed(): Boolean {
